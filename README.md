@@ -128,8 +128,12 @@ docs/       textos de cadastro e checklist do edital
 
 ## Publicação
 
-GitHub Pages servindo a pasta `/site` do branch `main`
-(Settings → Pages → Source: Deploy from a branch → `main` / `/site`).
+Vercel, a partir deste repositório. A configuração está em `vercel.json`: sem build, sem
+instalação de dependências, servindo a pasta `site/` como estático. Cada push em `main`
+gera um novo deploy de produção.
+
+Os dados vivem em `site/data/`, versionados junto com o código — a atualização mensal é
+rodar o pipeline e commitar os JSONs gerados.
 
 ## Licenças
 
