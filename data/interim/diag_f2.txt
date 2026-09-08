@@ -1,0 +1,91 @@
+F2 — 202604_AbonoPermanencia.csv — mes_ref=2026-04
+cabeçalho original (12 colunas): ['Descrição do cargo', 'Nível de escolaridade', 'Denominação do órgão de atuação', 'UF da UPAG de vinculação', 'Denominação da unidade organizacional', 'UF da residência', 'Cidade da residência', 'Situação do servidor', 'Anos de serviço público', 'Meses de serviço público', 'Ano/mês inicial do abono', 'Valor']
+mapa de colunas: {'Descrição do cargo': 'cargo', 'Nível de escolaridade': 'escolaridade', 'Denominação do órgão de atuação': 'org_atuacao', 'UF da UPAG de vinculação': 'uf_upag', 'Denominação da unidade organizacional': 'uorg', 'UF da residência': 'uf_residencia', 'Cidade da residência': 'cidade_residencia', 'Situação do servidor': 'situacao', 'Anos de serviço público': 'tempo_servico', 'Ano/mês inicial do abono': 'anomes_inicio'}
+linhas lidas=10859  mantidas=10859  abonos finais=10859
+preenchimento UF residência=96.9% (P1 exige > 90%)
+divergência UPAG x residência=1178/10525 (11.2%)
+
+== value_counts situacao ==
+    10859  ATIVO PERMANENTE
+
+== value_counts uf_residencia ==
+     2459  DF
+     1366  TO
+     1015  PB
+      555  RR
+      529  SC
+      461  AP
+      430  RJ
+      385  BA
+      369  AM
+      350  RN
+      334  
+      309  PA
+      267  RS
+      247  MS
+      223  AL
+      170  MA
+      166  SE
+      160  PR
+      155  CE
+      151  MT
+      148  GO
+      147  PI
+      118  ES
+      114  AC
+       66  RO
+       65  MG
+       55  PE
+       45  SP
+
+== value_counts uf_upag ==
+     3744  DF
+     1206  TO
+      887  PB
+      497  RR
+      471  SC
+      400  AP
+      384  RJ
+      333  BA
+      330  AM
+      317  RN
+      270  PA
+      245  RS
+      219  MS
+      198  AL
+      148  MA
+      147  SE
+      146  PR
+      132  CE
+      130  PI
+      129  MT
+      124  GO
+      100  AC
+       99  ES
+       58  RO
+       55  MG
+       48  PE
+       42  SP
+
+== value_counts grupo ==
+     2878  UNIV
+     2565  (fora do núcleo)
+     2009  INSS
+     1687  IF
+     1368  RFB
+      352  IBGE
+
+== value_counts anomes_inicio ==
+      948  2016
+      924  2026
+      917  2017
+      916  2015
+      914  2019
+      911  2023
+      902  2025
+      902  2024
+      892  2022
+      889  2021
+      886  2018
+      858  2020
+

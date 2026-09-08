@@ -1,0 +1,43 @@
+# Núcleo de serviços federais — grupos identificados por regex sobre os nomes
+# normalizados (sem acento, maiúsculas). Em F1 aplica-se a ORG_EXERCICIO,
+# ORGSUP_EXERCICIO e UORG_EXERCICIO (UORG só para grupos com uorg: true);
+# em F2, ao órgão de atuação e à unidade organizacional.
+grupos:
+  - id: INSS
+    nome: INSS
+    descricao: Instituto Nacional do Seguro Social
+    padroes:
+      - "INSTITUTO NACIONAL DO SEGURO SOCIAL"
+      - "^INSS$"
+  - id: RFB
+    nome: Receita Federal
+    descricao: Secretaria Especial da Receita Federal do Brasil (dentro do Ministério da Fazenda)
+    uorg: true
+    padroes:
+      - "RECEITA FEDERAL"
+      - "DELEGACIA DA RECEITA"
+      - "ALFANDEGA"
+      - "INSPETORIA DA RECEITA"
+      - '\bRFB\b'
+  - id: IF
+    nome: Institutos Federais
+    descricao: Institutos Federais, CEFETs e Colégio Pedro II
+    padroes:
+      - "INSTITUTO FEDERAL DE"
+      - "INSTITUTO FEDERAL DO"
+      - "CENTRO FEDERAL DE EDUCACAO TECNOLOGICA"
+      - "COLEGIO PEDRO II"
+  - id: UNIV
+    nome: Universidades
+    descricao: Universidades federais
+    padroes:
+      - "UNIVERSIDADE FEDERAL"
+      - "FUNDACAO UNIVERSIDADE FEDERAL"
+      - "UNIVERSIDADE DA INTEGRACAO"
+      - "UNIVERSIDADE TECNOLOGICA FEDERAL"
+  - id: IBGE
+    nome: IBGE
+    descricao: Instituto Brasileiro de Geografia e Estatística
+    padroes:
+      - "INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATISTICA"
+      - "^IBGE$"

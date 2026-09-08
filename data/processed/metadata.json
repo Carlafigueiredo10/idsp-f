@@ -1,0 +1,147 @@
+{
+ "produto": "IDSP-F — Índice de Deserto de Serviço Público Federal",
+ "versao": "1.0.0",
+ "recorte": "UF",
+ "ficticio": true,
+ "gerado_em": "2026-09-08T20:12:22+00:00",
+ "mes_ref_f1": "2026-04",
+ "mes_ref_f2": "2026-04",
+ "ano_pop": 2026,
+ "fontes": {
+  "f1": {
+   "nome": "Cadastro de Servidores — Portal da Transparência (CGU), fonte SIAPE",
+   "arquivo": "202604_Cadastro.csv",
+   "sha256": "3274e18696fc54ec72180c88dee16b376b4d1ec324f3b4425c021d49502a74a9",
+   "linhas_lidas": 60584,
+   "ativos": 47807,
+   "territorializacao": {
+    "UF_EXERCICIO": 46847,
+    "UORG_regex": 960
+   }
+  },
+  "f2": {
+   "nome": "Abono de Permanência — Gestão de Pessoas (Executivo Federal), MGI, dados.gov.br",
+   "arquivo": "202604_AbonoPermanencia.csv",
+   "sha256": "b9cb76582409c4be153dc2f9a58e47059bfca62f873c0ed81815d73ee2ac14dc",
+   "abonos": 10859,
+   "preenchimento_uf_residencia": 0.9692
+  },
+  "f3": {
+   "nome": "Estimativas da população residente — IBGE (SIDRA t/6579)",
+   "ano": 2026
+  },
+  "f4": {
+   "nome": "Malha de UFs — IBGE (API de malhas)"
+  }
+ },
+ "cobertura_crosswalk": {
+  "nucleo": 1.0,
+  "total": 1.0,
+  "por_metodo": {
+   "exato": 62
+  }
+ },
+ "divergencia_upag_residencia": 0.1119,
+ "regras_de_filtro": {
+  "f1": {
+   "situacao_incluir": [
+    "^ATIVO",
+    "CEDIDO",
+    "EXERC",
+    "REQUISITADO"
+   ],
+   "situacao_excluir": [
+    "CONT\\.?\\s*TEMP",
+    "NOMEADO CARGO COMIS",
+    "SEM VINCULO",
+    "ESTAGI",
+    "APOSENT",
+    "INSTITUIDOR",
+    "PENSION",
+    "EXCLUIDO"
+   ],
+   "tipo_vinculo_excluir": [
+    "TEMPOR",
+    "ESTAGI",
+    "SEM VINCULO"
+   ],
+   "regime_excluir": [
+    "TEMPOR",
+    "CONTR"
+   ],
+   "cargo_excluir": [
+    "PROFESSOR SUBSTITUTO",
+    "PROF(ESSOR)?\\.? ?SUBST",
+    "PROFESSOR VISITANTE",
+    "PROFESSOR TEMPORARIO"
+   ]
+  },
+  "f2": {
+   "situacao_incluir": [
+    "^ATIVO",
+    "CEDIDO",
+    "EXERC",
+    "REQUISITADO"
+   ]
+  }
+ },
+ "parametros": {
+  "corte": "mediana",
+  "supressao_min": 5,
+  "cortes": {
+   "nucleo": {
+    "corte": "mediana",
+    "A_pct_lim": 50.0,
+    "B_pct_lim": 50.0,
+    "A_raw_lim": 1.97,
+    "B_raw_lim": 0.2258
+   },
+   "total": {
+    "corte": "mediana",
+    "A_pct_lim": 50.0,
+    "B_pct_lim": 50.0,
+    "A_raw_lim": 2.51,
+    "B_raw_lim": 0.225
+   }
+  }
+ },
+ "grupos_nucleo": [
+  {
+   "id": "INSS",
+   "nome": "INSS",
+   "descricao": "Instituto Nacional do Seguro Social"
+  },
+  {
+   "id": "RFB",
+   "nome": "Receita Federal",
+   "descricao": "Secretaria Especial da Receita Federal do Brasil (dentro do Ministério da Fazenda)"
+  },
+  {
+   "id": "IF",
+   "nome": "Institutos Federais",
+   "descricao": "Institutos Federais, CEFETs e Colégio Pedro II"
+  },
+  {
+   "id": "UNIV",
+   "nome": "Universidades",
+   "descricao": "Universidades federais"
+  },
+  {
+   "id": "IBGE",
+   "nome": "IBGE",
+   "descricao": "Instituto Brasileiro de Geografia e Estatística"
+  }
+ ],
+ "fora_do_escopo": [
+  "militares",
+  "Bacen",
+  "Judiciário",
+  "Legislativo",
+  "estatais",
+  "servidores estaduais e municipais"
+ ],
+ "licencas": {
+  "codigo": "MIT",
+  "dados": "CC BY 4.0"
+ }
+}

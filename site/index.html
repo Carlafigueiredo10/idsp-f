@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDSP-F — Índice de Deserto de Serviço Público Federal</title>
+<meta name="description" content="Onde o Estado federal está mais ausente — e mais perto de sumir. Presença de servidores federais por habitante cruzada com a parcela já elegível à aposentadoria, por UF.">
+<meta property="og:title" content="IDSP-F — Índice de Deserto de Serviço Público Federal">
+<meta property="og:description" content="Onde o Estado federal está mais ausente — e mais perto de sumir.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%239b2226'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>F</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="pular" href="#painel">Ir para o painel da UF</a>
+
+<header class="topo">
+  <div class="wrap">
+    <p class="kicker">Índice de Deserto de Serviço Público Federal · v1.0 · recorte por UF</p>
+    <h1>IDSP-F</h1>
+    <p class="tagline">Onde o Estado federal está mais ausente — e mais perto de sumir.</p>
+    <p class="lead">Cruzamos a <strong>presença</strong> de servidores federais por habitante com a <strong>fragilidade</strong> de cada território — a parcela dos ativos que já cumpre os requisitos para se aposentar hoje — para orientar reposição de força de trabalho e continuidade de serviços.</p>
+    <div class="lente" role="group" aria-label="Lente de análise">
+      <button type="button" data-lente="nucleo" class="ativo" aria-pressed="true">Núcleo de serviços</button>
+      <button type="button" data-lente="total" aria-pressed="false">Executivo Federal total</button>
+    </div>
+    <p class="lente-desc" id="lente-desc">INSS, Receita Federal, Institutos Federais, universidades e IBGE — os serviços federais que a população encontra no território.</p>
+    <p class="ref" id="ref"></p>
+  </div>
+  <nav class="menu" aria-label="Seções">
+    <a href="#mapa">Mapa</a><a href="#matriz">Matriz</a><a href="#painel">Minha UF</a><a href="#metodologia">Método</a><a href="#fontes">Fontes</a>
+  </nav>
+</header>
+
+<div id="aviso-ficticio" class="aviso" hidden>
+  <strong>Dados fictícios.</strong> Esta versão foi gerada com bases sintéticas para desenvolvimento. Os números não representam a realidade.
+</div>
+
+<main class="wrap">
+
+<section id="mapa" aria-labelledby="h-mapa">
+  <h2 id="h-mapa">Mapa</h2>
+  <p class="sub">Toque em um estado para abrir o painel. Cada classe tem cor e textura próprias.</p>
+  <div class="mapa-box">
+    <svg id="svg-mapa" role="img" aria-label="Mapa do Brasil com a classe de cada UF"></svg>
+    <div id="tooltip" class="tooltip" role="status" aria-live="polite" hidden></div>
+  </div>
+  <ul class="legenda" id="legenda"></ul>
+</section>
+
+<section id="matriz" aria-labelledby="h-matriz">
+  <h2 id="h-matriz">Matriz presença × fragilidade</h2>
+  <p class="sub">Eixo horizontal: percentil de presença (esquerda = menos servidores por habitante). Eixo vertical: percentil de fragilidade (alto = mais gente já podendo sair). O quadrante superior esquerdo é o <em>deserto crítico</em>.</p>
+  <div class="matriz-box"><svg id="svg-matriz" role="img" aria-label="Dispersão das UFs por percentil de presença e de fragilidade"></svg></div>
+  <details class="tabela-wrap">
+    <summary>Ver como tabela (27 UFs, ordenadas por gravidade)</summary>
+    <div class="scroll"><table id="tabela"><thead><tr><th>#</th><th>UF</th><th>Classe</th><th>Servidores /10 mil hab.</th><th>Já elegíveis</th><th>Gravidade</th></tr></thead><tbody></tbody></table></div>
+  </details>
+</section>
+
+<section id="painel" aria-labelledby="h-painel">
+  <h2 id="h-painel">Painel da UF</h2>
+  <div class="busca">
+    <label for="sel-uf">Escolha o estado</label>
+    <select id="sel-uf"></select>
+    <button type="button" id="btn-print" class="secundario">Imprimir boletim</button>
+    <button type="button" id="btn-share" class="secundario">Copiar link</button>
+  </div>
+  <article id="cartao" class="cartao" aria-live="polite"></article>
+</section>
+
+<section id="metodologia" aria-labelledby="h-met">
+  <h2 id="h-met">Como o índice é calculado</h2>
+  <div class="prosa">
+    <p>Para cada UF <em>t</em> e cada lente (núcleo de serviços ou Executivo Federal total):</p>
+    <ul>
+      <li><strong>Presença A(t)</strong> = servidores civis ativos com cargo efetivo em exercício na UF ÷ população residente × 10.000. Percentil nacional <em>A_pct</em>: 0 = menor presença.</li>
+      <li><strong>Fragilidade B(t)</strong> = servidores recebendo abono de permanência (já cumpriram os requisitos de aposentadoria e seguem na ativa) ÷ ativos. Percentil <em>B_pct</em>: 100 = maior fragilidade.</li>
+      <li><strong>Classe</strong>: corte na mediana nacional de cada eixo. A baixo e B alto = <em>deserto crítico</em>; A baixo e B baixo = <em>deserto estável</em>; A alto e B alto = <em>presença em risco</em>; A alto e B baixo = <em>presença consolidada</em>.</li>
+      <li><strong>Gravidade</strong> = ((100 − A_pct) + B_pct) ÷ 2. Ordena as UFs; é sempre exibida ao lado dos dois números brutos.</li>
+    </ul>
+    <h3>O que o índice não é</h3>
+    <p>Mede presença <strong>federal</strong>, não capacidade estatal total do território. Ficam fora: militares, Banco Central, Judiciário, Legislativo, estatais e servidores estaduais e municipais. O abono de permanência é uma <em>proxy</em> de elegibilidade, não uma previsão de saída.</p>
+    <h3>Privacidade por construção</h3>
+    <p>O pipeline lê apenas as colunas necessárias — nome, CPF e matrícula nunca entram em memória. Não há ligação de registros entre as bases: o cruzamento é por órgão × UF. Nenhuma célula com menos de 5 pessoas é publicada. Nada abaixo de UF é publicado nesta versão.</p>
+    <h3>Decisões e limitações registradas</h3>
+    <ul id="limitacoes"></ul>
+    <p><a id="lnk-metodologia" href="https://github.com/">Metodologia completa (METODOLOGIA.md)</a> · <a id="lnk-privacidade" href="https://github.com/">Regras de privacidade (PRIVACIDADE.md)</a></p>
+  </div>
+</section>
+
+<section id="fontes" aria-labelledby="h-fontes">
+  <h2 id="h-fontes">Fontes e download</h2>
+  <p class="sub">Todas as bases são abertas. Cada número do site é rastreável ao <code>metadata.json</code> (mês, fonte, regra de filtro).</p>
+  <div class="cards" id="cards-fontes"></div>
+  <h3>Baixar os dados derivados</h3>
+  <ul class="downloads">
+    <li><a href="data/idspf_uf.csv" download>idspf_uf.csv</a> — índice por UF e lente</li>
+    <li><a href="data/idspf_uf_grupo.csv" download>idspf_uf_grupo.csv</a> — núcleo por grupo (INSS, RFB, IFs, universidades, IBGE)</li>
+    <li><a href="data/idspf_uf.json" download>idspf_uf.json</a> · <a href="data/idspf_uf_grupo.json" download>idspf_uf_grupo.json</a> · <a href="data/metadata.json" download>metadata.json</a></li>
+  </ul>
+  <p class="licenca">Código: MIT. Dados derivados e textos: CC BY 4.0. Como citar: <span id="citacao"></span></p>
+</section>
+
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <p>IDSP-F <span id="versao"></span> · <a id="lnk-repo" href="https://github.com/">código-fonte</a> · Concurso de Reúso de Dados Abertos — CGU, Edital nº 46/2026.</p>
+    <p class="mini">Produto independente. Não representa posição oficial de nenhum órgão.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Casamentos manuais entre nome do órgão em F1 (SIAPE/Cadastro) e em F2 (Abono).
+# Chave: nome normalizado em F1 (sem acento, maiúsculas). Valor: nome em F2.
+# Preencher após ler data/interim/crosswalk_pendentes.csv.
+overrides: {}
+#  "MINISTERIO DA FAZENDA": "MINISTERIO DA FAZENDA - MF"

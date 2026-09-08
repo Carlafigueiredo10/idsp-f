@@ -1,0 +1,12 @@
+{
+ "total": 1.0,
+ "nucleo": 1.0,
+ "n_orgaos_f1": 62,
+ "n_orgaos_f2": 62,
+ "n_casados": 62,
+ "por_metodo": {
+  "exato": 62
+ },
+ "grupo_inconsistente": 1,
+ "limiar_fuzzy": 92.0
+}

@@ -1,0 +1,33 @@
+F1 — 202604_Cadastro.csv — mes_ref=2026-04
+cabeçalho original (43 colunas): ['Id_SERVIDOR_PORTAL', 'NOME', 'CPF', 'MATRICULA', 'DESCRICAO_CARGO', 'CLASSE_CARGO', 'REFERENCIA_CARGO', 'PADRAO_CARGO', 'NIVEL_CARGO', 'SIGLA_FUNCAO', 'NIVEL_FUNCAO', 'FUNCAO', 'CODIGO_ATIVIDADE', 'ATIVIDADE', 'OPCAO_PARCIAL', 'COD_UORG_LOTACAO', 'UORG_LOTACAO', 'COD_ORG_LOTACAO', 'ORG_LOTACAO', 'COD_ORGSUP_LOTACAO', 'ORGSUP_LOTACAO', 'COD_UORG_EXERCICIO', 'UORG_EXERCICIO', 'COD_ORG_EXERCICIO', 'ORG_EXERCICIO', 'COD_ORGSUP_EXERCICIO', 'ORGSUP_EXERCICIO', 'COD_TIPO_VINCULO', 'TIPO_VINCULO', 'SITUACAO_VINCULO', 'DATA_INICIO_AFASTAMENTO', 'DATA_TERMINO_AFASTAMENTO', 'REGIME_JURIDICO', 'JORNADA_DE_TRABALHO', 'DATA_INGRESSO_CARGOFUNCAO', 'DATA_NOMEACAO_CARGOFUNCAO', 'DATA_INGRESSO_ORGAO', 'DOCUMENTO_INGRESSO_SERVICOPUBLICO', 'DATA_DIPLOMA_INGRESSO_SERVICOPUBLICO', 'DIPLOMA_INGRESSO_CARGOFUNCAO', 'DIPLOMA_INGRESSO_ORGAO', 'DIPLOMA_INGRESSO_SERVICOPUBLICO', 'UF_EXERCICIO']
+colunas carregadas: ['cargo', 'cod_org', 'cod_orgsup', 'cod_uorg', 'id', 'org', 'orgsup', 'regime', 'situacao', 'tipo', 'uf', 'uorg']
+linhas lidas=60584  após filtro=48251  duplicatas removidas=444  ativos finais=47807  sem_uf=0
+
+== value_counts situacao (antes do filtro para situacao/tipo/regime) ==
+    53287  ATIVO PERMANENTE
+     2475  CONT.TEMP.
+     1777  NOMEADO CARGO COMIS.
+     1222  CEDIDO
+     1206  EXERC.DESCENT.CARREI
+      617  REQUISITADO
+
+== value_counts tipo (antes do filtro para situacao/tipo/regime) ==
+    58109  CARGO EFETIVO
+     2475  CONTRATO TEMPORARIO
+
+== value_counts regime (antes do filtro para situacao/tipo/regime) ==
+    58109  REGIME JURIDICO UNICO
+     2475  CONTRATO TEMPORARIO
+
+== value_counts uf_metodo (antes do filtro para situacao/tipo/regime) ==
+    46847  UF_EXERCICIO
+      960  UORG_regex
+
+== value_counts grupo (antes do filtro para situacao/tipo/regime) ==
+    12606  UNIV
+    10989  (fora do núcleo)
+     9060  INSS
+     7578  IF
+     6084  RFB
+     1490  IBGE
+

@@ -1,0 +1,50 @@
+{
+ "arquivo": "202604_Cadastro.csv",
+ "sha256": "3274e18696fc54ec72180c88dee16b376b4d1ec324f3b4425c021d49502a74a9",
+ "mes_ref": "2026-04",
+ "sep": ";",
+ "encoding": "ISO-8859-1",
+ "linhas_lidas": 60584,
+ "linhas_apos_filtro": 48251,
+ "duplicatas": 444,
+ "ativos": 47807,
+ "sem_uf": 0,
+ "uf_metodo": {
+  "UF_EXERCICIO": 46847,
+  "UORG_regex": 960
+ },
+ "regras_de_filtro": {
+  "situacao_incluir": [
+   "^ATIVO",
+   "CEDIDO",
+   "EXERC",
+   "REQUISITADO"
+  ],
+  "situacao_excluir": [
+   "CONT\\.?\\s*TEMP",
+   "NOMEADO CARGO COMIS",
+   "SEM VINCULO",
+   "ESTAGI",
+   "APOSENT",
+   "INSTITUIDOR",
+   "PENSION",
+   "EXCLUIDO"
+  ],
+  "tipo_vinculo_excluir": [
+   "TEMPOR",
+   "ESTAGI",
+   "SEM VINCULO"
+  ],
+  "regime_excluir": [
+   "TEMPOR",
+   "CONTR"
+  ],
+  "cargo_excluir": [
+   "PROFESSOR SUBSTITUTO",
+   "PROF(ESSOR)?\\.? ?SUBST",
+   "PROFESSOR VISITANTE",
+   "PROFESSOR TEMPORARIO"
+  ]
+ },
+ "colunas_faltando": []
+}

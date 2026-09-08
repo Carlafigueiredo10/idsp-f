@@ -1,0 +1,28 @@
+cod_ibge,sigla,nome,regiao,populacao,ano_ref_pop
+11,RO,Rondônia,Norte,1757338,2026
+12,AC,Acre,Norte,887794,2026
+13,AM,Amazonas,Norte,4360926,2026
+14,RR,Roraima,Norte,761012,2026
+15,PA,Pará,Norte,8756324,2026
+16,AP,Amapá,Norte,809953,2026
+17,TO,Tocantins,Norte,1595994,2026
+21,MA,Maranhão,Nordeste,7024557,2026
+22,PI,Piauí,Nordeste,3392617,2026
+23,CE,Ceará,Nordeste,9302211,2026
+24,RN,Rio Grande do Norte,Nordeste,3463737,2026
+25,PB,Paraíba,Nordeste,4182828,2026
+26,PE,Pernambuco,Nordeste,9583176,2026
+27,AL,Alagoas,Nordeste,3221128,2026
+28,SE,Sergipe,Nordeste,2307255,2026
+29,BA,Bahia,Nordeste,14889472,2026
+31,MG,Minas Gerais,Sudeste,21460311,2026
+32,ES,Espírito Santo,Sudeste,4150692,2026
+33,RJ,Rio de Janeiro,Sudeste,17225410,2026
+35,SP,São Paulo,Sudeste,46179008,2026
+41,PR,Paraná,Sul,11952456,2026
+42,SC,Santa Catarina,Sul,8312759,2026
+43,RS,Rio Grande do Sul,Sul,11233317,2026
+50,MS,Mato Grosso do Sul,Centro-Oeste,2946317,2026
+51,MT,Mato Grosso,Centro-Oeste,3950330,2026
+52,GO,Goiás,Centro-Oeste,7495033,2026
+53,DF,Distrito Federal,Centro-Oeste,3009996,2026

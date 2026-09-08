@@ -1,0 +1,52 @@
+# Parâmetros do IDSP-F v1.0 — alterar aqui, nunca nos scripts.
+versao_pipeline: "1.0.0"
+
+# Corte da matriz 2x2: "mediana" (A_pct/B_pct vs 50) ou "tercil"
+# (A baixo = terço inferior de A; B alto = terço superior de B).
+corte: mediana
+
+# Nenhuma célula publicada com n abaixo deste valor (exibida como "<5").
+supressao_min: 5
+
+# Crosswalk de nomes de órgão F1 x F2
+fuzzy_limiar: 92              # token_set_ratio mínimo para casamento automático
+cobertura_minima_nucleo: 0.8  # run_all.sh falha abaixo disto (lente núcleo)
+
+# Universo de F1 (Cadastro de Servidores). Regex case-insensitive sobre valores
+# já normalizados (sem acento, maiúsculas). Ajustar após ler diag_f1.txt (P1).
+# Regex em aspas simples: YAML não interpreta escapes.
+filtro_f1:
+  situacao_incluir:           # ao menos um deve casar
+    - '^ATIVO'
+    - 'CEDIDO'
+    - 'EXERC'
+    - 'REQUISITADO'
+  situacao_excluir:           # nenhum pode casar
+    - 'CONT\.?\s*TEMP'
+    - 'NOMEADO CARGO COMIS'
+    - 'SEM VINCULO'
+    - 'ESTAGI'
+    - 'APOSENT'
+    - 'INSTITUIDOR'
+    - 'PENSION'
+    - 'EXCLUIDO'
+  tipo_vinculo_excluir:
+    - 'TEMPOR'
+    - 'ESTAGI'
+    - 'SEM VINCULO'
+  regime_excluir:
+    - 'TEMPOR'
+    - 'CONTR'
+  cargo_excluir:
+    - 'PROFESSOR SUBSTITUTO'
+    - 'PROF(ESSOR)?\.? ?SUBST'
+    - 'PROFESSOR VISITANTE'
+    - 'PROFESSOR TEMPORARIO'
+
+# Universo de F2 (Abono de Permanência): manter só situações ativas, se a coluna existir.
+filtro_f2:
+  situacao_incluir:
+    - '^ATIVO'
+    - 'CEDIDO'
+    - 'EXERC'
+    - 'REQUISITADO'

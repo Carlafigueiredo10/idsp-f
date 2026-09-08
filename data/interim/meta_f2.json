@@ -1,0 +1,24 @@
+{
+ "arquivo": "202604_AbonoPermanencia.csv",
+ "sha256": "b9cb76582409c4be153dc2f9a58e47059bfca62f873c0ed81815d73ee2ac14dc",
+ "mes_ref": "2026-04",
+ "sep": ";",
+ "encoding": "utf-8-sig",
+ "mapa_colunas": {
+  "Descrição do cargo": "cargo",
+  "Nível de escolaridade": "escolaridade",
+  "Denominação do órgão de atuação": "org_atuacao",
+  "UF da UPAG de vinculação": "uf_upag",
+  "Denominação da unidade organizacional": "uorg",
+  "UF da residência": "uf_residencia",
+  "Cidade da residência": "cidade_residencia",
+  "Situação do servidor": "situacao",
+  "Anos de serviço público": "tempo_servico",
+  "Ano/mês inicial do abono": "anomes_inicio"
+ },
+ "linhas_lidas": 10859,
+ "linhas_mantidas": 10859,
+ "abonos": 10859,
+ "preenchimento_uf_residencia": 0.9692,
+ "divergencia_upag_residencia": 0.1119
+}

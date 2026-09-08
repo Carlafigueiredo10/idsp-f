@@ -1,0 +1,32 @@
+# Licença dos dados derivados e dos textos
+
+Os dados derivados publicados por este projeto (`data/processed/*`, `site/data/*`) e os
+textos do site e da documentação estão licenciados sob
+
+    Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)
+    https://creativecommons.org/licenses/by/4.0/deed.pt-br
+
+Você pode copiar, redistribuir, adaptar e usar para qualquer finalidade, inclusive
+comercial, desde que dê o crédito apropriado.
+
+## Atribuição sugerida
+
+    IDSP-F — Índice de Deserto de Serviço Público Federal, v1.0.
+    Disponível em https://<usuario>.github.io/idsp-f/. Licença CC BY 4.0.
+
+## Bases de origem
+
+Os dados derivados são calculados a partir de bases públicas de terceiros, que mantêm as
+licenças e condições de uso de seus órgãos publicadores:
+
+- Cadastro de Servidores do Executivo Federal — Controladoria-Geral da União,
+  Portal da Transparência (origem: SIAPE).
+- Abono de Permanência — Ministério da Gestão e da Inovação em Serviços Públicos,
+  publicado no Portal Brasileiro de Dados Abertos (dados.gov.br).
+- Estimativas da população residente e malhas territoriais — Instituto Brasileiro de
+  Geografia e Estatística.
+
+Este projeto não redistribui os arquivos brutos dessas bases. Consulte
+`data/raw/MANIFEST.md` para as URLs de origem e as somas de verificação.
+
+O código-fonte é licenciado separadamente sob a licença MIT (ver LICENSE).
