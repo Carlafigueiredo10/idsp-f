@@ -16,7 +16,7 @@ Onde o Estado federal está mais ausente — e mais perto de sumir.
 
 ## URL do reúso
 
-`https://<usuario>.github.io/idsp-f/`
+https://idsp-f.vercel.app/
 
 Esta é a URL definitiva. O produto continua evoluindo na mesma URL até o julgamento.
 

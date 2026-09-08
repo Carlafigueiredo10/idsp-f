@@ -72,8 +72,10 @@ Concurso de Reúso de Dados Abertos — CGU, Edital nº 46/2026.
 
 ## Antes de submeter
 
-- [ ] Substituir `<usuario>` pela conta real do GitHub em `README.md`, `LICENSE-DATA`,
-      `docs/textos-cadastro.md` e na constante `REPO` de `site/app.js`
+- [x] URLs reais no lugar dos placeholders: o site está em https://idsp-f.vercel.app/
+- [ ] **Tornar o repositório público** antes de submeter. Ele está privado, e os links de
+      "Metodologia completa" e "código-fonte" no site apontam para ele — para um julgador
+      de fora, hoje eles dão 404. Replicabilidade é critério de julgamento com peso 1
 - [ ] Testar no celular de verdade: abrir a URL, achar o próprio estado, imprimir o boletim
 - [ ] Reler as decisões metodológicas em `METODOLOGIA.md` e confirmar que concorda com elas,
       em especial: grupo da Receita como Ministério da Fazenda inteiro, exclusão dos

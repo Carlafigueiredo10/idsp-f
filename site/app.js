@@ -2,6 +2,8 @@
 (function () {
   "use strict";
 
+  // repositório do projeto; enquanto ele estiver privado, estes links só abrem
+  // para quem tem acesso — ver docs/checklist-edital.md
   const REPO = "https://github.com/Carlafigueiredo10/idsp-f";
   const CLASSES = {
     deserto_critico:      { nome: "Deserto crítico",      cor: "#9b2226", pat: "critico", desc: "pouca presença e muita gente já podendo sair" },
@@ -101,7 +103,7 @@
     $("#lnk-metodologia").href = REPO + "/blob/main/METODOLOGIA.md";
     $("#lnk-privacidade").href = REPO + "/blob/main/PRIVACIDADE.md";
     $("#aviso-ficticio").hidden = !m.ficticio;
-    $("#citacao").textContent = `IDSP-F — Índice de Deserto de Serviço Público Federal, v${m.versao} (${(m.gerado_em || "").slice(0, 7)}). ${REPO}`;
+    $("#citacao").textContent = `IDSP-F — Índice de Deserto de Serviço Público Federal, v${m.versao}, referência ${mesBR(m.mes_ref_f1)}. Disponível em ${location.origin}/`;
     document.querySelectorAll(".lente button").forEach((b) => {
       const on = b.dataset.lente === st.lente;
       b.classList.toggle("ativo", on);

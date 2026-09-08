@@ -15,7 +15,7 @@ correm o maior risco de descontinuidade. É insumo direto para **planejamento e
 dimensionamento da força de trabalho** — a política pública que o próprio conjunto
 "Abono de Permanência" declara como finalidade no dados.gov.br.
 
-Site: `https://<usuario>.github.io/idsp-f/` · Versão v1.0, recorte por UF.
+Site: <https://idsp-f.vercel.app/> · Versão v1.0, recorte por UF, referência dezembro de 2025.
 
 ---
 
@@ -144,7 +144,7 @@ rodar o pipeline e commitar os JSONs gerados.
 ## Como citar
 
 > IDSP-F — Índice de Deserto de Serviço Público Federal, v1.0.
-> Disponível em `https://<usuario>.github.io/idsp-f/`.
+> Disponível em https://idsp-f.vercel.app/
 
 ## Limitações
 
