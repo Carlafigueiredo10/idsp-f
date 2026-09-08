@@ -41,8 +41,12 @@ def test_uf_de_uorg(v, esp):
 def test_nucleo_regex():
     n = Nucleo()
     assert n.classificar("INSTITUTO NACIONAL DO SEGURO SOCIAL") == "INSS"
-    assert n.classificar("MINISTERIO DA FAZENDA", "", "DELEGACIA DA RECEITA FEDERAL EM CURITIBA") == "RFB"
-    assert n.classificar("MINISTERIO DA FAZENDA", "", "PROCURADORIA DA FAZENDA NACIONAL") == ""
+    # a Receita não é separável no cadastro: o grupo é o guarda-chuva do ministério,
+    # e precisa casar do mesmo jeito nas duas bases (ver config/nucleo.yaml)
+    assert n.classificar("MINISTERIO DA FAZENDA") == "FAZ"
+    assert n.classificar("COMISSAO DE VALORES MOBILIARIOS") == ""
+    # o cadastro escreve "DO SEGURO", o abono escreve "DE SEGURO"
+    assert n.classificar("INSTITUTO NACIONAL DE SEGURO SOCIAL") == "INSS"
     assert n.classificar("FUNDAÇÃO UNIVERSIDADE FEDERAL DO PIAUÍ") == "UNIV"
     assert n.classificar("INSTITUTO FEDERAL DE EDUCACAO, CIENCIA E TECNOLOGIA DO ACRE") == "IF"
     assert n.classificar("MINISTERIO DA SAUDE") == ""
@@ -54,7 +58,9 @@ needs_out = pytest.mark.skipif(not (PROCESSED / "idspf_uf.csv").exists(), reason
 
 @pytest.fixture(scope="module")
 def uf():
-    return pd.read_csv(PROCESSED / "idspf_uf.csv", dtype={"n_ativos": str, "n_abono": str})
+    # as contagens são texto porque podem vir como "<5" (supressão)
+    return pd.read_csv(PROCESSED / "idspf_uf.csv",
+                       dtype={"n_ativos": str, "n_ativos_base_b": str, "n_abono": str})
 
 
 @pytest.fixture(scope="module")
@@ -95,7 +101,7 @@ def test_soma_agregados_igual_total_filtrado(uf, meta):
 @needs_out
 def test_supressao_menor_que_5(uf):
     smin = 5
-    for col in ("n_ativos", "n_abono"):
+    for col in ("n_ativos", "n_ativos_base_b", "n_abono"):
         vals = uf[col][~uf[col].str.startswith("<")].astype(int)
         assert ((vals == 0) | (vals >= smin)).all(), col
     gr = pd.read_csv(PROCESSED / "idspf_uf_grupo.csv", dtype=str)
@@ -144,3 +150,51 @@ def test_malha_orientada_para_d3():
             for buraco in pol[1:]:
                 assert area(buraco) > 0, f['properties']['sigla']  # buracos anti-horários
     assert len(siglas) == 27
+
+
+@needs_out
+def test_fragilidade_entre_0_e_1(uf):
+    """B é uma parcela dos ativos: acima de 1 significa numerador e denominador
+    vindos de universos diferentes — foi o que os ex-territórios produziram."""
+    ruins = uf[uf.B_raw.notna() & ((uf.B_raw < 0) | (uf.B_raw > 1))]
+    assert ruins.empty, ruins[["uf", "lente", "n_ativos_base_b", "n_abono", "B_raw"]].to_string()
+
+
+@needs_out
+def test_denominador_de_b_nao_excede_ativos(uf):
+    """O denominador do eixo B é um subconjunto dos ativos da lente."""
+    d = uf[~uf.n_ativos.str.startswith("<") & ~uf.n_ativos_base_b.str.startswith("<")]
+    assert (d.n_ativos_base_b.astype(int) <= d.n_ativos.astype(int)).all()
+
+
+@needs_out
+def test_abono_nao_excede_denominador(uf):
+    d = uf[~uf.n_abono.str.startswith("<") & ~uf.n_ativos_base_b.str.startswith("<")]
+    assert (d.n_abono.astype(int) <= d.n_ativos_base_b.astype(int)).all()
+
+
+def test_encontrar_arquivo_ignora_ficticios(tmp_path, monkeypatch):
+    """Os arquivos sintéticos têm nome no mesmo formato dos reais e chegaram a ser
+    escolhidos no lugar deles. A busca automática precisa ignorá-los."""
+    import common
+
+    raw = tmp_path / "raw"
+    (raw / "ficticio").mkdir(parents=True)
+    real = raw / "202512_Cadastro.csv"
+    real.write_text("x", encoding="utf-8")
+    (raw / "ficticio" / "202604_Cadastro.csv").write_text("x", encoding="utf-8")
+    monkeypatch.setattr(common, "RAW", raw)
+    assert common.encontrar_arquivo(["*Cadastro*.csv"]) == real
+
+
+def test_encontrar_arquivo_ordena_por_mes_de_referencia(tmp_path, monkeypatch):
+    """ABONOP_012026 é mais recente que ABONOP_122025, embora ordene antes por nome."""
+    import common
+
+    raw = tmp_path / "raw"
+    raw.mkdir(parents=True)
+    (raw / "ABONOP_122025.csv").write_text("x", encoding="utf-8")
+    novo = raw / "ABONOP_012026.csv"
+    novo.write_text("x", encoding="utf-8")
+    monkeypatch.setattr(common, "RAW", raw)
+    assert common.encontrar_arquivo(["*BONOP*.csv"]) == novo

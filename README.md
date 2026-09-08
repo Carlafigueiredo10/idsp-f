@@ -23,15 +23,18 @@ Site: `https://<usuario>.github.io/idsp-f/` · Versão v1.0, recorte por UF.
 
 ```bash
 pip install -r requirements.txt
-# baixe os dois arquivos brutos para data/raw/ (ver "Fontes" abaixo)
-bash scripts/run_all.sh
+bash scripts/00_baixar_fontes.sh 202512 122025   # cadastro e abono, mesmo mês
+ANO_POP=2025 bash scripts/run_all.sh
 python -m pytest -q tests
 python -m http.server 8000 --directory site
 ```
 
-O pipeline não baixa F1 e F2 automaticamente: os portais exigem navegação. Coloque os
-arquivos em `data/raw/` e o `run_all.sh` encontra o mês mais recente pelo nome. População
-e malha territorial são baixadas da API do IBGE (com cache local).
+O script de download aceita os dois meses como argumento e, sem argumentos, procura para
+trás o mais recente de cada base — avisando quando eles não coincidem. População, malha
+territorial e lista de municípios vêm das APIs do IBGE, com cache local.
+
+A versão publicada usa **dezembro de 2025 nas duas bases**, porque é o mês mais recente do
+abono. Veja a seção Fontes.
 
 Para ver o produto funcionando **sem** as bases reais, gere dados sintéticos:
 
@@ -46,6 +49,7 @@ O site passa a exibir uma tarja de aviso e `metadata.json` marca `"ficticio": tr
 | Variável | Efeito |
 |---|---|
 | `FICTICIO=1` | gera e usa bases sintéticas (`scripts/00_dados_ficticios.py`) |
+| `ANO_POP=2025` | ano da estimativa de população (case com o mês das bases) |
 | `F1=caminho.csv` `F2=caminho.csv` | aponta arquivos brutos específicos |
 | `SEM_REDE=1` | não chama a API do IBGE; usa `data/raw/pop_uf.csv` e a malha em cache |
 | `PYTHON=python3` | interpretador a usar |
@@ -55,22 +59,33 @@ O site passa a exibir uma tarja de aviso e `metadata.json` marca `"ficticio": tr
 | | Base | Origem | Onde baixar |
 |---|---|---|---|
 | **F1** | Cadastro de Servidores (`AAAAMM_Cadastro.csv`, fonte SIAPE) | CGU — Portal da Transparência; espelho MGI | [portaldatransparencia.gov.br](https://portaldatransparencia.gov.br/download-de-dados/servidores) · [dados.gov.br](https://dados.gov.br/dados/conjuntos-dados/servidores-do-executivo-federal) |
-| **F2** | Abono de Permanência (recurso mensal) | MGI — Gestão de Pessoas (Executivo Federal) | [dados.gov.br](https://dados.gov.br/dados/conjuntos-dados/gastos-pessoal-abono-permanencia) |
+| **F2** | Abono de Permanência (`ABONOP_MMAAAA.csv`) | MGI — Gestão de Pessoas (Executivo Federal) | [conjunto no dados.gov.br](https://dados.gov.br/dados/conjuntos-dados/gestao-de-pessoas-executivo-federal---abono-permanencia) · arquivos em [repositorio.dados.gov.br/segrt](https://repositorio.dados.gov.br/segrt/) |
 | **F3** | Estimativas da população residente por UF | IBGE | API SIDRA, tabela 6579 (automático) |
 | **F4** | Malha territorial das UFs | IBGE | API de malhas v3 (automático) |
 
 Registre cada download em [`data/raw/MANIFEST.md`](data/raw/MANIFEST.md) com URL, data e
 SHA-256. Os arquivos brutos não vão para o repositório.
 
+Duas armadilhas que custam caro se passarem despercebidas:
+
+- **O mês vem invertido nos dois portais.** O cadastro é `202512_Cadastro.csv` (ano, mês);
+  o abono é `ABONOP_122025.csv` (mês, ano).
+- **O conjunto de abono está desatualizado** e é ele que fixa o mês de todo o índice.
+  Rode as duas bases no mesmo mês de referência: a fragilidade é uma razão entre elas.
+
 ## Pipeline
 
 | Script | O que faz | Saída |
 |---|---|---|
-| `01_ingest_cadastro.py` | lê F1 com `usecols` e em blocos, filtra o universo, deduplica, agrega por UF × órgão | `presenca_uf_org.csv`, `diag_f1.txt` |
+| `01_ingest_cadastro.py` | lê F1 com `usecols` e em blocos, filtra o universo, deduplica, resolve a UF por cadeia de regras e agrega por UF × órgão | `presenca_uf_org.csv`, `diag_f1.txt` |
 | `02_ingest_abono.py` | lê F2, reconhece cabeçalhos por regex, agrega por UF de residência × órgão | `abono_uf_org.csv`, `diag_f2.txt` |
-| `03_populacao.py` | população do SIDRA; malha do IBGE reorientada para o d3 | `pop_uf.csv`, `data/geo/uf.geojson` |
+| `03_populacao.py` | população do SIDRA, gazetteer de municípios e malha do IBGE reorientada para o d3 | `pop_uf.csv`, `municipios.csv`, `uf.geojson` |
 | `04_crosswalk.py` | casa nomes de órgão entre F1 e F2 (exato → fuzzy → manual) e publica a cobertura | `crosswalk.csv`, `cobertura.json` |
 | `05_indice.py` | calcula A, B, percentis, quadrantes, gravidade; aplica supressão | `idspf_uf.{csv,json}`, `metadata.json` |
+
+`03` roda **antes** de `01`: a ingestão do cadastro usa o gazetteer de municípios para
+recuperar a UF dos vínculos em que o campo vem preenchido com `-1` — o que acontece em
+cerca de 30 % das linhas do arquivo bruto.
 
 `run_all.sh` **falha** se a cobertura do crosswalk na lente núcleo ficar abaixo de
 `cobertura_minima_nucleo` (`config/parametros.yaml`). Quando isso acontecer, veja

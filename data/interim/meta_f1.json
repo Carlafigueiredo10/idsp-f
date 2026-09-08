@@ -1,18 +1,26 @@
 {
- "arquivo": "202604_Cadastro.csv",
- "sha256": "3274e18696fc54ec72180c88dee16b376b4d1ec324f3b4425c021d49502a74a9",
- "mes_ref": "2026-04",
+ "arquivo": "202512_Cadastro.csv",
+ "sha256": "f98c7483a0437b04cb1ede0ac419945245ef3c138660387e3517ac22b9e05fb1",
+ "mes_ref": "2025-12",
  "sep": ";",
  "encoding": "ISO-8859-1",
- "linhas_lidas": 60584,
- "linhas_apos_filtro": 48251,
- "duplicatas": 444,
- "ativos": 47807,
- "sem_uf": 0,
+ "linhas_lidas": 774299,
+ "linhas_apos_filtro": 528150,
+ "duplicatas": 96886,
+ "ativos": 431264,
+ "sem_uf": 38827,
  "uf_metodo": {
-  "UF_EXERCICIO": 46847,
-  "UORG_regex": 960
+  "UF_EXERCICIO": 364132,
+  "sem_uf": 38827,
+  "estado_no_ORG": 18281,
+  "UF_na_UORG": 2499,
+  "municipio_na_UORG": 2436,
+  "municipio_no_ORG": 5089
  },
+ "cobertura_uf": 0.91,
+ "orgaos_excluidos": [
+  "EX[- ]?TERRITORIO"
+ ],
  "regras_de_filtro": {
   "situacao_incluir": [
    "^ATIVO",

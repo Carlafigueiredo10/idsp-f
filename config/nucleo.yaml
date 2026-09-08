@@ -1,43 +1,51 @@
 # Núcleo de serviços federais — grupos identificados por regex sobre os nomes
-# normalizados (sem acento, maiúsculas). Em F1 aplica-se a ORG_EXERCICIO,
-# ORGSUP_EXERCICIO e UORG_EXERCICIO (UORG só para grupos com uorg: true);
-# em F2, ao órgão de atuação e à unidade organizacional.
+# normalizados (sem acento, maiúsculas) do órgão de exercício e do órgão superior.
+#
+# REGRA DE OURO: o padrão precisa casar do mesmo jeito nas DUAS bases (cadastro e
+# abono), que grafam os mesmos órgãos de formas diferentes. Classificar por unidade
+# organizacional foi abandonado justamente por isso: no abono as unidades da Receita
+# se identificam, no cadastro não, e a razão do eixo B ficava inflada.
 grupos:
   - id: INSS
     nome: INSS
     descricao: Instituto Nacional do Seguro Social
     padroes:
-      - "INSTITUTO NACIONAL DO SEGURO SOCIAL"
-      - "^INSS$"
-  - id: RFB
-    nome: Receita Federal
-    descricao: Secretaria Especial da Receita Federal do Brasil (dentro do Ministério da Fazenda)
-    uorg: true
+      # o cadastro escreve "DO SEGURO", o abono escreve "DE SEGURO"
+      - 'INSTITUTO NACIONAL D[EO] SEGURO SOCIAL'
+      - '^INSS$'
+  - id: FAZ
+    nome: Fazenda (Receita Federal)
+    descricao: >-
+      Ministério da Fazenda. A Receita Federal não é um órgão próprio no cadastro
+      de servidores e suas unidades não se identificam pelo nome, então o grupo é
+      o guarda-chuva do ministério, do qual a Receita é a maior parte. Inclui
+      Tesouro, PGFN e demais unidades fazendárias.
     padroes:
-      - "RECEITA FEDERAL"
-      - "DELEGACIA DA RECEITA"
-      - "ALFANDEGA"
-      - "INSPETORIA DA RECEITA"
-      - '\bRFB\b'
+      - '^MINISTERIO DA FAZENDA$'
+      - '^MIN\.? DA FAZENDA$'
   - id: IF
     nome: Institutos Federais
     descricao: Institutos Federais, CEFETs e Colégio Pedro II
     padroes:
-      - "INSTITUTO FEDERAL DE"
-      - "INSTITUTO FEDERAL DO"
-      - "CENTRO FEDERAL DE EDUCACAO TECNOLOGICA"
-      - "COLEGIO PEDRO II"
+      - 'INSTITUTO FEDERAL DE'
+      - 'INSTITUTO FEDERAL DO'
+      - 'INST\.? FEDERAL D[EO]'
+      - 'CENTRO FEDERAL DE EDUCACAO TECNOLOGICA'
+      - 'COLEGIO PEDRO II'
   - id: UNIV
     nome: Universidades
     descricao: Universidades federais
     padroes:
-      - "UNIVERSIDADE FEDERAL"
-      - "FUNDACAO UNIVERSIDADE FEDERAL"
-      - "UNIVERSIDADE DA INTEGRACAO"
-      - "UNIVERSIDADE TECNOLOGICA FEDERAL"
+      - 'UNIVERSIDADE FEDERAL'
+      - 'FUNDACAO UNIVERSIDADE'
+      - 'UNIVERSIDADE DA INTEGRACAO'
+      - 'UNIVERSIDADE TECNOLOGICA FEDERAL'
+      - 'UNIV\.? FEDERAL'
   - id: IBGE
     nome: IBGE
     descricao: Instituto Brasileiro de Geografia e Estatística
     padroes:
-      - "INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATISTICA"
-      - "^IBGE$"
+      - 'INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATISTICA'
+      - 'FUNDACAO INSTITUTO BRASILEIRO DE GEOGRAFIA'
+      - '^IBGE$'
+      - '\bIBGE\b'

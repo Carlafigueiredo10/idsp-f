@@ -27,7 +27,7 @@ Esta é a URL definitiva. O produto continua evoluindo na mesma URL até o julga
 > população do IBGE para classificar cada UF em uma matriz de presença × fragilidade.
 > Presença: servidores federais por 10 mil habitantes. Fragilidade: parcela dos ativos que
 > já cumpre requisitos de aposentadoria. O quadrante "deserto crítico" indica onde serviços
-> como INSS, Institutos Federais, universidades, Receita e IBGE correm maior risco de
+> como INSS, Institutos Federais, universidades, Receita Federal e IBGE correm maior risco de
 > descontinuidade — insumo direto para planejamento e dimensionamento da força de trabalho.
 > Código e dados abertos; agregação por órgão e UF, sem dados individuais.
 
@@ -40,17 +40,18 @@ Esta é a URL definitiva. O produto continua evoluindo na mesma URL até o julga
 ## Datasets a citar
 
 1. **Gestão de Pessoas (Executivo Federal) — Abono Permanência** — MGI — dados.gov.br
-   `https://dados.gov.br/dados/conjuntos-dados/gastos-pessoal-abono-permanencia`
+   `https://dados.gov.br/dados/conjuntos-dados/gestao-de-pessoas-executivo-federal---abono-permanencia`
+   (arquivos em `https://repositorio.dados.gov.br/segrt/ABONOP_MMAAAA.csv`)
 2. **Servidores do Executivo Federal / Portal da Transparência — Cadastro** — CGU e MGI
    `https://dados.gov.br/dados/conjuntos-dados/servidores-do-executivo-federal`
    e `https://portaldatransparencia.gov.br/download-de-dados/servidores`
-3. **Estimativas da população residente 2026** — IBGE — `https://sidra.ibge.gov.br/tabela/6579`
+3. **Estimativas da população residente 2025** — IBGE — `https://sidra.ibge.gov.br/tabela/6579`
    (e a entrada correspondente no dados.gov.br, se houver)
 
 ## Versão declarada
 
-v1.0 — recorte por UF. Recorte municipal para o núcleo de serviços em desenvolvimento na
-mesma URL.
+v1.0 — recorte por UF, referência dezembro de 2025 nas duas bases. Recorte municipal para o
+núcleo de serviços em desenvolvimento na mesma URL.
 
 ---
 
@@ -77,10 +78,13 @@ bidimensional. Para cada UF, cruza:
 - **Fragilidade** — parcela desses servidores que já cumpre os requisitos de aposentadoria
   e permanece na ativa recebendo abono de permanência.
 
+Na versão publicada são 431 mil servidores civis ativos e 63 mil abonos de permanência,
+ambos em dezembro de 2025.
+
 O cruzamento produz quatro classes. A que interessa é o **deserto crítico**: pouca presença
 hoje e muita gente que pode sair amanhã. O produto tem ainda uma lente de "núcleo de
-serviços" — INSS, Receita Federal, Institutos Federais, universidades federais e IBGE — que
-isola os serviços que a população encontra fisicamente no território.
+serviços" — INSS, Fazenda/Receita Federal, Institutos Federais, universidades federais e
+IBGE — que isola os serviços que a população encontra fisicamente no território.
 
 ### Por que este reúso devolve o dado à sua finalidade
 

@@ -13,9 +13,9 @@ from collections import Counter
 
 import pandas as pd
 
-from common import (INTERIM, Nucleo, any_match, compile_list, detectar_sep_encoding,
-                    encontrar_arquivo, log, mes_ref_de_nome, norm, norm_uf, parametros,
-                    sha256_file, uf_de_uorg, write_json)
+from common import (INTERIM, Nucleo, Territorializador, any_match, cabecalho_alinhado,
+                    compile_list, detectar_sep_encoding, encontrar_arquivo, log,
+                    mes_ref_de_nome, norm, parametros, sha256_file, write_json)
 
 CAMPOS = {
     "ID_SERVIDOR_PORTAL": "id",
@@ -30,7 +30,7 @@ PROIBIDOS = {"NOME", "CPF", "MATRICULA"}
 
 
 def mapear_cabecalho(path, sep, enc):
-    header = pd.read_csv(path, sep=sep, encoding=enc, nrows=0).columns
+    header, extras = cabecalho_alinhado(path, sep, enc)
     mapa = {}
     for col in header:
         n = norm(col).replace(" ", "_")
@@ -39,7 +39,7 @@ def mapear_cabecalho(path, sep, enc):
         if n in CAMPOS:
             mapa[col] = CAMPOS[n]
     faltando = set(CAMPOS.values()) - set(mapa.values())
-    return mapa, faltando, list(header)
+    return mapa, faltando, list(header), extras
 
 
 def main():
@@ -50,7 +50,7 @@ def main():
 
     path = encontrar_arquivo(["*Cadastro*.csv", "*cadastro*.csv"], args.arquivo)
     sep, enc = detectar_sep_encoding(path)
-    mapa, faltando, header = mapear_cabecalho(path, sep, enc)
+    mapa, faltando, header, extras = mapear_cabecalho(path, sep, enc)
     log(f"F1: {path.name} sep={sep!r} enc={enc} colunas lidas={len(mapa)} faltando={sorted(faltando)}")
     if "uf" in faltando and "uorg" in faltando:
         raise SystemExit("Sem UF_EXERCICIO nem UORG_EXERCICIO: impossível territorializar.")
@@ -64,14 +64,19 @@ def main():
     tipo_out = compile_list(f.get("tipo_vinculo_excluir"))
     reg_out = compile_list(f.get("regime_excluir"))
     cargo_out = compile_list(f.get("cargo_excluir"))
+    org_out = compile_list(p.get("orgaos_excluir"))
     nucleo = Nucleo()
+    terr = Territorializador()
+    if not terr.gaz:
+        log("AVISO: gazetteer de municípios ausente; rode 03_populacao.py antes para melhor cobertura")
 
     vistos: set = set()
     diag = {k: Counter() for k in ("situacao", "tipo", "regime", "uf_metodo", "grupo")}
     tot_lidos = tot_filtro = tot_dup = 0
     agg = Counter()
 
-    reader = pd.read_csv(path, sep=sep, encoding=enc, usecols=list(mapa), dtype=str,
+    reader = pd.read_csv(path, sep=sep, encoding=enc, header=0, names=header,
+                         index_col=False, usecols=list(mapa), dtype=str,
                          chunksize=args.chunksize, na_filter=False)
     for chunk in reader:
         chunk = chunk.rename(columns=mapa)
@@ -90,6 +95,9 @@ def main():
         keep &= ~chunk["tipo"].map(lambda s: any_match(tipo_out, s))
         keep &= ~chunk["regime"].map(lambda s: any_match(reg_out, s))
         keep &= ~chunk["cargo"].map(lambda s: any_match(cargo_out, s))
+        if org_out:
+            keep &= ~chunk["org"].map(lambda s: any_match(org_out, norm(s)))
+            keep &= ~chunk["orgsup"].map(lambda s: any_match(org_out, norm(s)))
         chunk = chunk[keep]
         tot_filtro += len(chunk)
 
@@ -104,14 +112,10 @@ def main():
             tot_dup += len(novo) - sum(novo)
             chunk = chunk[novo]
 
-        ufs = chunk["uf"].map(norm_uf)
-        metodo = ufs.map(lambda u: "UF_EXERCICIO" if u else "")
-        vazio = ufs == ""
-        if vazio.any():
-            fb = chunk.loc[vazio, "uorg"].map(uf_de_uorg)
-            ufs.loc[vazio] = fb
-            metodo.loc[vazio] = fb.map(lambda u: "UORG_regex" if u else "sem_uf")
-        diag["uf_metodo"].update(metodo.value_counts().to_dict())
+        resolvido = [terr.resolver(u, uo, o) for u, uo, o in
+                     zip(chunk["uf"], chunk["uorg"], chunk["org"])]
+        ufs = [r[0] for r in resolvido]
+        diag["uf_metodo"].update(r[1] for r in resolvido)
         grupo = [nucleo.classificar(o, s, u) for o, s, u in
                  zip(chunk["org"], chunk["orgsup"], chunk["uorg"])]
         diag["grupo"].update(Counter(g or "(fora do núcleo)" for g in grupo))
@@ -130,6 +134,7 @@ def main():
     df.to_csv(INTERIM / "presenca_uf_org.csv", index=False, encoding="utf-8")
 
     sem_uf = int(df.loc[df.uf == "", "n_ativos"].sum())
+    cobertura_uf = 1 - sem_uf / max(int(df.n_ativos.sum()), 1)
     with open(INTERIM / "diag_f1.txt", "w", encoding="utf-8") as fh:
         fh.write(f"F1 — {path.name} — mes_ref={mes_ref}\n")
         fh.write(f"cabeçalho original ({len(header)} colunas): {header}\n")
@@ -145,9 +150,12 @@ def main():
         arquivo=path.name, sha256=sha256_file(path), mes_ref=mes_ref, sep=sep, encoding=enc,
         linhas_lidas=tot_lidos, linhas_apos_filtro=tot_filtro, duplicatas=tot_dup,
         ativos=int(df.n_ativos.sum()), sem_uf=sem_uf,
-        uf_metodo=dict(diag["uf_metodo"]), regras_de_filtro=f,
+        uf_metodo=dict(diag["uf_metodo"]), cobertura_uf=round(cobertura_uf, 4),
+        orgaos_excluidos=p.get("orgaos_excluir"),
+        regras_de_filtro=f,
         colunas_faltando=sorted(faltando)))
-    log(f"F1 ok: {len(df)} linhas agregadas, {int(df.n_ativos.sum()):,} ativos, sem_uf={sem_uf}")
+    log(f"F1 ok: {len(df)} linhas agregadas, {int(df.n_ativos.sum()):,} ativos, "
+        f"sem_uf={sem_uf} (cobertura territorial {cobertura_uf:.1%})")
 
 
 if __name__ == "__main__":

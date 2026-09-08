@@ -35,15 +35,34 @@ Legislativo, estatais, servidores estaduais e municipais.
 
 | Lente | Universo |
 |---|---|
-| **Núcleo de serviços** | INSS, Receita Federal, Institutos Federais (e CEFETs e Colégio Pedro II), universidades federais e IBGE |
+| **Núcleo de serviços** | INSS, Fazenda (Receita Federal), Institutos Federais (e CEFETs e Colégio Pedro II), universidades federais e IBGE |
 | **Executivo Federal total** | todos os órgãos do universo acima |
 
 O núcleo reúne os serviços federais que a população encontra fisicamente no território:
 a agência do INSS, o campus do instituto federal, o hospital universitário, a unidade da
 Receita, a agência de coleta do IBGE. A classificação é por expressão regular sobre o nome
-do órgão de exercício, do órgão superior e — só para a Receita, que não é um órgão próprio
-no SIAPE e sim uma secretaria dentro do Ministério da Fazenda — da unidade organizacional.
-As regras estão em `config/nucleo.yaml`.
+do órgão de exercício e do órgão superior, em `config/nucleo.yaml`.
+
+> **Decisão registrada — a Receita Federal não é separável.** A Receita não é um órgão
+> próprio no cadastro de servidores: seu pessoal aparece sob `MINISTERIO DA FAZENDA`, e as
+> unidades organizacionais têm nomes funcionais (`EQUIPE DE FISCALIZACAO`,
+> `EQUIPE DE ATENDIMENTO AO CONTRIBUINTE`, `SECAO DE ADMINISTRACAO ADUANEIRA`) que não
+> mencionam a Receita. Buscar "Receita Federal" no cadastro encontra menos de 2 mil
+> vínculos, contra mais de 24 mil no guarda-chuva do ministério.
+>
+> Pior: na base de abono **as unidades da Receita se identificam pelo nome**. Definir o
+> grupo pela unidade organizacional produziria um numerador que reconhece a Receita e um
+> denominador que não a reconhece — uma fragilidade acima de 100 %.
+>
+> Por isso o grupo é o **Ministério da Fazenda inteiro**, rotulado "Fazenda (Receita
+> Federal)", do qual a Receita é a maior parte. Inclui Tesouro, PGFN e demais unidades
+> fazendárias. Comissão de Valores Mobiliários e Susep são órgãos distintos e ficam fora.
+
+> **Decisão registrada — grafias divergentes entre as bases.** O cadastro escreve
+> `INSTITUTO NACIONAL DO SEGURO SOCIAL` e o abono escreve `INSTITUTO NACIONAL DE SEGURO
+> SOCIAL`. Com o padrão colado a uma das grafias, o INSS desaparecia inteiro do eixo B.
+> Todo padrão do núcleo precisa casar nas duas bases; é o que a regra de ouro no topo de
+> `config/nucleo.yaml` exige.
 
 ## 3. Fontes
 
@@ -56,6 +75,25 @@ As regras estão em `config/nucleo.yaml`.
 
 Mês de referência, SHA-256 e contagens de cada arquivo usado ficam registrados em
 `data/processed/metadata.json` e são exibidos na tela "Fontes" do site.
+
+> **Decisão registrada — os dois meses são iguais, e é o abono que manda.** A fragilidade
+> é uma razão entre F1 e F2; comparar um numerador de um mês com um denominador de outro
+> mede a passagem do tempo, não a fragilidade. Por isso as duas bases são lidas no mesmo
+> mês de referência.
+>
+> O mês possível é o do abono. O cadastro de servidores é publicado mensalmente e está em
+> dia; o conjunto de Abono de Permanência no dados.gov.br **está desatualizado** — o portal
+> o marca como tal, e o recurso mais recente é de dezembro de 2025. O índice usa dezembro
+> de 2025 nas duas bases e a estimativa de população do IBGE do mesmo ano. Publicar o
+> cadastro mais recente ao lado de um abono nove meses mais velho daria a impressão de
+> atualidade que o dado não tem.
+
+> **Onde o arquivo do abono precisa de cuidado.** O recurso publicado tem 14 nomes no
+> cabeçalho e 15 campos por linha, por causa de um separador sobrando no fim de cada
+> registro. Lido de forma ingênua, o pandas promove a primeira coluna a índice e desloca
+> todos os valores: a UF de residência passa a receber o nome da cidade, sem erro nenhum na
+> tela. O pipeline conta os campos da primeira linha de dados, nomeia os excedentes e
+> registra quantos eram em `metadata`.
 
 ### Por que o abono de permanência
 
@@ -74,11 +112,36 @@ qualquer impedimento legal — e não uma projeção de aposentadorias.
 
 ## 4. Territorialização
 
-**Eixo A (presença)** usa `UF_EXERCICIO` do cadastro, campo disponível para servidores
-civis. Quando ele vem vazio, a UF é derivada do nome da unidade organizacional de exercício
-por expressão regular (sufixos `/UF`, `-UF` e nomes de estado). O método usado em cada
-vínculo é contabilizado e publicado em `metadata.fontes.f1.territorializacao`. Vínculos que
-permanecem sem UF ficam fora do índice e o total é publicado.
+### O problema no eixo A
+
+O campo `UF_EXERCICIO` do cadastro **não vem vazio quando falta: vem preenchido com `-1`**.
+Cerca de 30 % das linhas do arquivo bruto trazem esse valor. Lido sem cuidado, `-1` é um
+valor como outro qualquer e o vínculo simplesmente desaparece do mapa.
+
+Por isso a UF é resolvida por uma cadeia de regras, da mais forte para a mais fraca, e o
+método usado em cada vínculo é contado e publicado em
+`metadata.fontes.f1.territorializacao`:
+
+| Ordem | Regra | Exemplo |
+|---|---|---|
+| 1 | `UF_EXERCICIO`, quando diferente de `-1` | `SP` |
+| 2 | sigla de UF no nome da unidade organizacional | `DELEGACIA EM MANAUS/AM` → AM |
+| 3 | **nome do estado no nome do órgão** | `UNIVERSIDADE FEDERAL DO CEARA` → CE |
+| 4 | nome de município no nome da unidade | `APS A TAUBATE` → SP |
+| 5 | nome de município no nome do órgão | `FUNDACAO UNIVERSIDADE DE BRASILIA` → DF |
+
+A regra 3 é a que mais recupera vínculos, porque universidades e institutos federais
+carregam o estado no próprio nome e são justamente os órgãos com mais `-1`.
+
+As regras 4 e 5 usam a lista de municípios do IBGE restrita aos **nomes inequívocos** —
+os que existem em uma única unidade da federação — e com pelo menos seis caracteres, para
+não casar por acidente dentro de nomes de unidade. A busca é por n-gramas de palavras, do
+maior para o menor, de modo que `PRESIDENTE PRUDENTE` vence `PRUDENTE`.
+
+O que sobra sem UF são, em sua maioria, unidades da administração central de ministérios,
+que não têm território definido no dado. Esses vínculos **ficam fora do índice** e o total
+é publicado no site e em `metadata.fontes.f1.cobertura_uf`. Nenhum deles é atribuído ao
+Distrito Federal por conveniência.
 
 **Eixo B (fragilidade)** usa a **UF da residência**, não a UF da UPAG de vinculação.
 
@@ -102,6 +165,34 @@ lente núcleo cair abaixo de 80 %.
 
 > Não há *record linkage* entre as bases. Nenhum registro individual de F1 é associado a
 > nenhum registro individual de F2. A ligação é agregada, por órgão × UF.
+
+### O eixo B é restrito; o eixo A não
+
+O eixo A mede presença e usa **todos** os servidores do universo. O eixo B é uma razão
+entre duas bases diferentes e só é honesto onde as duas bases falam da mesma população.
+Dois filtros garantem isso, e ambos nasceram de resultados impossíveis nos dados reais:
+
+1. **Só órgãos presentes nas duas bases.** A base de abono traz órgãos que o cadastro de
+   servidores civis não tem — comandos militares, por exemplo. Sem o filtro, o numerador
+   cobre gente que o denominador não conta.
+2. **Só órgãos bem territorializados no cadastro** (cobertura de UF igual ou superior ao
+   parâmetro `cobertura_uf_minima_org`, hoje 80 %). O abono tem UF de residência preenchida
+   em 99,9 % dos registros; o cadastro tem buracos concentrados na administração central.
+   Sem o filtro, o numerador é completo e o denominador não, e a fragilidade estoura.
+
+Sem essas duas restrições, Rondônia aparecia com **110 % dos servidores já elegíveis** e o
+Amapá com 141 % — o tipo de resultado que denuncia um erro de construção, não um achado.
+O denominador efetivo do eixo B é publicado ao lado de cada percentual, na coluna
+`n_ativos_base_b`, e o teste `test_fragilidade_entre_0_e_1` impede que o índice volte a ser
+publicado com razões impossíveis.
+
+> **Decisão registrada — governos de ex-territórios fora do universo.** Amapá, Roraima e
+> Rondônia têm quadros de ex-território: pessoal pago pela União que serve funções
+> estaduais. Eles aparecem na base de abono (mais de 6 mil registros) e praticamente não
+> aparecem no cadastro de servidores civis, porque seu vínculo não é cargo efetivo do
+> Executivo Federal. São excluídos das **duas** bases, por `orgaos_excluir` em
+> `config/parametros.yaml`. Incluí-los faria os três estados parecerem ter presença federal
+> muito acima da real.
 
 ## 6. Cálculo
 

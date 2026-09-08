@@ -8,6 +8,18 @@ corte: mediana
 # Nenhuma célula publicada com n abaixo deste valor (exibida como "<5").
 supressao_min: 5
 
+# Órgãos fora do universo do índice, aplicados às DUAS bases (regex sobre o nome
+# normalizado do órgão). Os governos de ex-territórios (AP, RR, RO) são pessoal pago
+# pela União que serve funções estaduais: aparecem no abono e praticamente não
+# aparecem no cadastro de servidores civis, o que produzia fragilidade acima de 100%.
+orgaos_excluir:
+  - 'EX[- ]?TERRITORIO'
+
+# Cobertura territorial mínima de um órgão no cadastro para ele entrar no eixo B.
+# Abaixo disso o numerador (abono, territorializado por residência em 99,9% dos casos)
+# cobre mais gente que o denominador, e a fragilidade fica superestimada.
+cobertura_uf_minima_org: 0.8
+
 # Crosswalk de nomes de órgão F1 x F2
 fuzzy_limiar: 92              # token_set_ratio mínimo para casamento automático
 cobertura_minima_nucleo: 0.8  # run_all.sh falha abaixo disto (lente núcleo)

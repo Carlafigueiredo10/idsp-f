@@ -2,1216 +2,1216 @@
  {
   "uf": "RO",
   "grupo_nucleo": "INSS",
-  "n_ativos": "183",
-  "n_abono": "9",
+  "n_ativos": "120",
+  "n_abono": "37",
   "nome_grupo": "INSS",
   "suprimido": false,
-  "B_raw": 0.0492
+  "B_raw": 0.3083
  },
  {
   "uf": "RO",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "124",
-  "n_abono": "11",
-  "nome_grupo": "Receita Federal",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "142",
+  "n_abono": "73",
+  "nome_grupo": "Fazenda (Receita Federal)",
   "suprimido": false,
-  "B_raw": 0.0887
+  "B_raw": 0.5141
  },
  {
   "uf": "RO",
   "grupo_nucleo": "IF",
-  "n_ativos": "143",
-  "n_abono": "12",
+  "n_ativos": "162",
+  "n_abono": "17",
   "nome_grupo": "Institutos Federais",
   "suprimido": false,
-  "B_raw": 0.0839
+  "B_raw": 0.1049
  },
  {
   "uf": "RO",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "246",
-  "n_abono": "19",
+  "n_ativos": "1337",
+  "n_abono": "125",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.0772
+  "B_raw": 0.0935
  },
  {
   "uf": "RO",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "30",
+  "n_ativos": "<5",
   "n_abono": "0",
   "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "AC",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "59",
+  "n_abono": "23",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.3898
+ },
+ {
+  "uf": "AC",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "50",
+  "n_abono": "24",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.48
+ },
+ {
+  "uf": "AC",
+  "grupo_nucleo": "IF",
+  "n_ativos": "796",
+  "n_abono": "5",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0063
+ },
+ {
+  "uf": "AC",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "1378",
+  "n_abono": "125",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.0907
+ },
+ {
+  "uf": "AC",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "AM",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "199",
+  "n_abono": "53",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.2663
+ },
+ {
+  "uf": "AM",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "277",
+  "n_abono": "69",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.2491
+ },
+ {
+  "uf": "AM",
+  "grupo_nucleo": "IF",
+  "n_ativos": "1800",
+  "n_abono": "131",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0728
+ },
+ {
+  "uf": "AM",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "3140",
+  "n_abono": "361",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.115
+ },
+ {
+  "uf": "AM",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "RR",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "59",
+  "n_abono": "19",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.322
+ },
+ {
+  "uf": "RR",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "87",
+  "n_abono": "55",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.6322
+ },
+ {
+  "uf": "RR",
+  "grupo_nucleo": "IF",
+  "n_ativos": "763",
+  "n_abono": "41",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0537
+ },
+ {
+  "uf": "RR",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "994",
+  "n_abono": "62",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.0624
+ },
+ {
+  "uf": "RR",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "PA",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "450",
+  "n_abono": "112",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.2489
+ },
+ {
+  "uf": "PA",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "471",
+  "n_abono": "126",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.2675
+ },
+ {
+  "uf": "PA",
+  "grupo_nucleo": "IF",
+  "n_ativos": "2392",
+  "n_abono": "123",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0514
+ },
+ {
+  "uf": "PA",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "7927",
+  "n_abono": "945",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.1192
+ },
+ {
+  "uf": "PA",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "AP",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "56",
+  "n_abono": "9",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.1607
+ },
+ {
+  "uf": "AP",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "67",
+  "n_abono": "70",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 1.0448
+ },
+ {
+  "uf": "AP",
+  "grupo_nucleo": "IF",
+  "n_ativos": "685",
+  "n_abono": "7",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0102
+ },
+ {
+  "uf": "AP",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "1105",
+  "n_abono": "0",
+  "nome_grupo": "Universidades",
   "suprimido": false,
   "B_raw": 0.0
  },
  {
-  "uf": "AC",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "73",
-  "n_abono": "22",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.3014
- },
- {
-  "uf": "AC",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "51",
-  "n_abono": "19",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.3725
- },
- {
-  "uf": "AC",
-  "grupo_nucleo": "IF",
-  "n_ativos": "49",
-  "n_abono": "16",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.3265
- },
- {
-  "uf": "AC",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "99",
-  "n_abono": "27",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.2727
- },
- {
-  "uf": "AC",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "11",
-  "n_abono": "7",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.6364
- },
- {
-  "uf": "AM",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "287",
-  "n_abono": "67",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.2334
- },
- {
-  "uf": "AM",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "222",
-  "n_abono": "58",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.2613
- },
- {
-  "uf": "AM",
-  "grupo_nucleo": "IF",
-  "n_ativos": "257",
-  "n_abono": "56",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.2179
- },
- {
-  "uf": "AM",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "402",
-  "n_abono": "100",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.2488
- },
- {
-  "uf": "AM",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "49",
-  "n_abono": "13",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.2653
- },
- {
-  "uf": "RR",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "333",
-  "n_abono": "87",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.2613
- },
- {
-  "uf": "RR",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "227",
-  "n_abono": "67",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.2952
- },
- {
-  "uf": "RR",
-  "grupo_nucleo": "IF",
-  "n_ativos": "263",
-  "n_abono": "88",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.3346
- },
- {
-  "uf": "RR",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "486",
-  "n_abono": "169",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.3477
- },
- {
-  "uf": "RR",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "52",
-  "n_abono": "15",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.2885
- },
- {
-  "uf": "PA",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "202",
-  "n_abono": "46",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.2277
- },
- {
-  "uf": "PA",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "155",
-  "n_abono": "43",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.2774
- },
- {
-  "uf": "PA",
-  "grupo_nucleo": "IF",
-  "n_ativos": "187",
-  "n_abono": "58",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.3102
- },
- {
-  "uf": "PA",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "268",
-  "n_abono": "71",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.2649
- },
- {
-  "uf": "PA",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "28",
-  "n_abono": "8",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.2857
- },
- {
-  "uf": "AP",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "402",
-  "n_abono": "88",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.2189
- },
- {
-  "uf": "AP",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "247",
-  "n_abono": "59",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.2389
- },
- {
-  "uf": "AP",
-  "grupo_nucleo": "IF",
-  "n_ativos": "309",
-  "n_abono": "61",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.1974
- },
- {
-  "uf": "AP",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "512",
-  "n_abono": "125",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.2441
- },
- {
   "uf": "AP",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "80",
-  "n_abono": "17",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.2125
- },
- {
-  "uf": "TO",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "685",
-  "n_abono": "255",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.3723
- },
- {
-  "uf": "TO",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "460",
-  "n_abono": "149",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.3239
- },
- {
-  "uf": "TO",
-  "grupo_nucleo": "IF",
-  "n_ativos": "619",
-  "n_abono": "227",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.3667
- },
- {
-  "uf": "TO",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "993",
-  "n_abono": "361",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.3635
- },
- {
-  "uf": "TO",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "98",
-  "n_abono": "45",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.4592
- },
- {
-  "uf": "MA",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "207",
-  "n_abono": "35",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.1691
- },
- {
-  "uf": "MA",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "133",
-  "n_abono": "21",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.1579
- },
- {
-  "uf": "MA",
-  "grupo_nucleo": "IF",
-  "n_ativos": "179",
-  "n_abono": "24",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.1341
- },
- {
-  "uf": "MA",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "292",
-  "n_abono": "44",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.1507
- },
- {
-  "uf": "MA",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "35",
-  "n_abono": "5",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.1429
- },
- {
-  "uf": "PI",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "110",
-  "n_abono": "23",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.2091
- },
- {
-  "uf": "PI",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "87",
-  "n_abono": "18",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.2069
- },
- {
-  "uf": "PI",
-  "grupo_nucleo": "IF",
-  "n_ativos": "80",
-  "n_abono": "18",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.225
- },
- {
-  "uf": "PI",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "193",
-  "n_abono": "53",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.2746
- },
- {
-  "uf": "PI",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "22",
-  "n_abono": "<5",
+  "n_ativos": "<5",
+  "n_abono": "0",
   "nome_grupo": "IBGE",
   "suprimido": true,
   "B_raw": null
  },
  {
-  "uf": "CE",
+  "uf": "TO",
   "grupo_nucleo": "INSS",
-  "n_ativos": "87",
-  "n_abono": "26",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.2989
- },
- {
-  "uf": "CE",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "44",
-  "n_abono": "13",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.2955
- },
- {
-  "uf": "CE",
-  "grupo_nucleo": "IF",
-  "n_ativos": "75",
-  "n_abono": "21",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.28
- },
- {
-  "uf": "CE",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "119",
-  "n_abono": "41",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.3445
- },
- {
-  "uf": "CE",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "16",
-  "n_abono": "6",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.375
- },
- {
-  "uf": "RN",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "259",
-  "n_abono": "73",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.2819
- },
- {
-  "uf": "RN",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "183",
-  "n_abono": "43",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.235
- },
- {
-  "uf": "RN",
-  "grupo_nucleo": "IF",
-  "n_ativos": "236",
-  "n_abono": "60",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.2542
- },
- {
-  "uf": "RN",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "354",
-  "n_abono": "100",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.2825
- },
- {
-  "uf": "RN",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "38",
+  "n_ativos": "104",
   "n_abono": "7",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.1842
- },
- {
-  "uf": "PB",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "650",
-  "n_abono": "205",
   "nome_grupo": "INSS",
   "suprimido": false,
-  "B_raw": 0.3154
+  "B_raw": 0.0673
  },
  {
-  "uf": "PB",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "400",
-  "n_abono": "133",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.3325
- },
- {
-  "uf": "PB",
-  "grupo_nucleo": "IF",
-  "n_ativos": "493",
-  "n_abono": "163",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.3306
- },
- {
-  "uf": "PB",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "817",
-  "n_abono": "258",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.3158
- },
- {
-  "uf": "PB",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "93",
-  "n_abono": "32",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.3441
- },
- {
-  "uf": "PE",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "46",
+  "uf": "TO",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "42",
   "n_abono": "11",
-  "nome_grupo": "INSS",
+  "nome_grupo": "Fazenda (Receita Federal)",
   "suprimido": false,
-  "B_raw": 0.2391
+  "B_raw": 0.2619
  },
  {
-  "uf": "PE",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "22",
-  "n_abono": "8",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.3636
- },
- {
-  "uf": "PE",
+  "uf": "TO",
   "grupo_nucleo": "IF",
-  "n_ativos": "35",
-  "n_abono": "9",
+  "n_ativos": "1231",
+  "n_abono": "32",
   "nome_grupo": "Institutos Federais",
   "suprimido": false,
-  "B_raw": 0.2571
+  "B_raw": 0.026
  },
  {
-  "uf": "PE",
+  "uf": "TO",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "52",
-  "n_abono": "10",
+  "n_ativos": "1968",
+  "n_abono": "11",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1923
+  "B_raw": 0.0056
  },
  {
-  "uf": "PE",
+  "uf": "TO",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "9",
-  "n_abono": "<5",
+  "n_ativos": "<5",
+  "n_abono": "0",
   "nome_grupo": "IBGE",
   "suprimido": true,
   "B_raw": null
  },
  {
-  "uf": "AL",
+  "uf": "MA",
   "grupo_nucleo": "INSS",
-  "n_ativos": "141",
-  "n_abono": "35",
+  "n_ativos": "472",
+  "n_abono": "107",
   "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.2482
- },
- {
-  "uf": "AL",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "111",
-  "n_abono": "33",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.2973
- },
- {
-  "uf": "AL",
-  "grupo_nucleo": "IF",
-  "n_ativos": "134",
-  "n_abono": "40",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.2985
- },
- {
-  "uf": "AL",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "223",
-  "n_abono": "61",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.2735
- },
- {
-  "uf": "AL",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "25",
-  "n_abono": "<5",
-  "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
- },
- {
-  "uf": "SE",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "557",
-  "n_abono": "35",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.0628
- },
- {
-  "uf": "SE",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "378",
-  "n_abono": "25",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.0661
- },
- {
-  "uf": "SE",
-  "grupo_nucleo": "IF",
-  "n_ativos": "496",
-  "n_abono": "20",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.0403
- },
- {
-  "uf": "SE",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "761",
-  "n_abono": "40",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.0526
- },
- {
-  "uf": "SE",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "96",
-  "n_abono": "6",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.0625
- },
- {
-  "uf": "BA",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "673",
-  "n_abono": "75",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.1114
- },
- {
-  "uf": "BA",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "448",
-  "n_abono": "46",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.1027
- },
- {
-  "uf": "BA",
-  "grupo_nucleo": "IF",
-  "n_ativos": "523",
-  "n_abono": "51",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.0975
- },
- {
-  "uf": "BA",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "888",
-  "n_abono": "91",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.1025
- },
- {
-  "uf": "BA",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "113",
-  "n_abono": "14",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.1239
- },
- {
-  "uf": "MG",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "73",
-  "n_abono": "10",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.137
- },
- {
-  "uf": "MG",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "70",
-  "n_abono": "15",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.2143
- },
- {
-  "uf": "MG",
-  "grupo_nucleo": "IF",
-  "n_ativos": "57",
-  "n_abono": "8",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.1404
- },
- {
-  "uf": "MG",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "129",
-  "n_abono": "17",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.1318
- },
- {
-  "uf": "MG",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "11",
-  "n_abono": "<5",
-  "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
- },
- {
-  "uf": "ES",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "352",
-  "n_abono": "18",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.0511
- },
- {
-  "uf": "ES",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "240",
-  "n_abono": "18",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.075
- },
- {
-  "uf": "ES",
-  "grupo_nucleo": "IF",
-  "n_ativos": "301",
-  "n_abono": "22",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.0731
- },
- {
-  "uf": "ES",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "475",
-  "n_abono": "25",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.0526
- },
- {
-  "uf": "ES",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "59",
-  "n_abono": "6",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.1017
- },
- {
-  "uf": "RJ",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "671",
-  "n_abono": "68",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.1013
- },
- {
-  "uf": "RJ",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "471",
-  "n_abono": "52",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.1104
- },
- {
-  "uf": "RJ",
-  "grupo_nucleo": "IF",
-  "n_ativos": "533",
-  "n_abono": "72",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.1351
- },
- {
-  "uf": "RJ",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "930",
-  "n_abono": "125",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.1344
- },
- {
-  "uf": "RJ",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "108",
-  "n_abono": "18",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.1667
- },
- {
-  "uf": "SP",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "130",
-  "n_abono": "13",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.1
- },
- {
-  "uf": "SP",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "80",
-  "n_abono": "<5",
-  "nome_grupo": "Receita Federal",
-  "suprimido": true,
-  "B_raw": null
- },
- {
-  "uf": "SP",
-  "grupo_nucleo": "IF",
-  "n_ativos": "109",
-  "n_abono": "6",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.055
- },
- {
-  "uf": "SP",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "152",
-  "n_abono": "10",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.0658
- },
- {
-  "uf": "SP",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "22",
-  "n_abono": "<5",
-  "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
- },
- {
-  "uf": "PR",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "205",
-  "n_abono": "24",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.1171
- },
- {
-  "uf": "PR",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "134",
-  "n_abono": "24",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.1791
- },
- {
-  "uf": "PR",
-  "grupo_nucleo": "IF",
-  "n_ativos": "185",
-  "n_abono": "21",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.1135
- },
- {
-  "uf": "PR",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "328",
-  "n_abono": "41",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.125
- },
- {
-  "uf": "PR",
-  "grupo_nucleo": "IBGE",
-  "n_ativos": "38",
-  "n_abono": "9",
-  "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.2368
- },
- {
-  "uf": "SC",
-  "grupo_nucleo": "INSS",
-  "n_ativos": "383",
-  "n_abono": "92",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.2402
- },
- {
-  "uf": "SC",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "247",
-  "n_abono": "56",
-  "nome_grupo": "Receita Federal",
   "suprimido": false,
   "B_raw": 0.2267
  },
  {
-  "uf": "SC",
+  "uf": "MA",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "94",
+  "n_abono": "47",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.5
+ },
+ {
+  "uf": "MA",
   "grupo_nucleo": "IF",
-  "n_ativos": "339",
-  "n_abono": "93",
+  "n_ativos": "3119",
+  "n_abono": "144",
   "nome_grupo": "Institutos Federais",
   "suprimido": false,
-  "B_raw": 0.2743
+  "B_raw": 0.0462
  },
  {
-  "uf": "SC",
+  "uf": "MA",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "551",
-  "n_abono": "140",
+  "n_ativos": "3373",
+  "n_abono": "361",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.2541
+  "B_raw": 0.107
  },
  {
-  "uf": "SC",
+  "uf": "MA",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "72",
-  "n_abono": "12",
+  "n_ativos": "<5",
+  "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.1667
+  "suprimido": true,
+  "B_raw": null
  },
  {
-  "uf": "RS",
+  "uf": "PI",
   "grupo_nucleo": "INSS",
-  "n_ativos": "307",
-  "n_abono": "49",
+  "n_ativos": "336",
+  "n_abono": "87",
   "nome_grupo": "INSS",
   "suprimido": false,
-  "B_raw": 0.1596
+  "B_raw": 0.2589
  },
  {
-  "uf": "RS",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "225",
-  "n_abono": "41",
-  "nome_grupo": "Receita Federal",
+  "uf": "PI",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "124",
+  "n_abono": "35",
+  "nome_grupo": "Fazenda (Receita Federal)",
   "suprimido": false,
-  "B_raw": 0.1822
+  "B_raw": 0.2823
  },
  {
-  "uf": "RS",
+  "uf": "PI",
   "grupo_nucleo": "IF",
-  "n_ativos": "301",
-  "n_abono": "36",
+  "n_ativos": "2614",
+  "n_abono": "73",
   "nome_grupo": "Institutos Federais",
   "suprimido": false,
-  "B_raw": 0.1196
+  "B_raw": 0.0279
  },
  {
-  "uf": "RS",
+  "uf": "PI",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "497",
-  "n_abono": "74",
+  "n_ativos": "2976",
+  "n_abono": "392",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1489
+  "B_raw": 0.1317
  },
  {
-  "uf": "RS",
+  "uf": "PI",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "52",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "CE",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "780",
+  "n_abono": "176",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.2256
+ },
+ {
+  "uf": "CE",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "614",
+  "n_abono": "151",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.2459
+ },
+ {
+  "uf": "CE",
+  "grupo_nucleo": "IF",
+  "n_ativos": "3625",
+  "n_abono": "157",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0433
+ },
+ {
+  "uf": "CE",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "5285",
+  "n_abono": "894",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.1692
+ },
+ {
+  "uf": "CE",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "RN",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "258",
+  "n_abono": "63",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.2442
+ },
+ {
+  "uf": "RN",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "149",
+  "n_abono": "52",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.349
+ },
+ {
+  "uf": "RN",
+  "grupo_nucleo": "IF",
+  "n_ativos": "2644",
+  "n_abono": "119",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.045
+ },
+ {
+  "uf": "RN",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "6251",
   "n_abono": "7",
-  "nome_grupo": "IBGE",
+  "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1346
+  "B_raw": 0.0011
  },
  {
-  "uf": "MS",
+  "uf": "RN",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "PB",
   "grupo_nucleo": "INSS",
-  "n_ativos": "270",
-  "n_abono": "48",
+  "n_ativos": "308",
+  "n_abono": "104",
   "nome_grupo": "INSS",
   "suprimido": false,
-  "B_raw": 0.1778
+  "B_raw": 0.3377
  },
  {
-  "uf": "MS",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "178",
-  "n_abono": "38",
-  "nome_grupo": "Receita Federal",
+  "uf": "PB",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "165",
+  "n_abono": "63",
+  "nome_grupo": "Fazenda (Receita Federal)",
   "suprimido": false,
-  "B_raw": 0.2135
+  "B_raw": 0.3818
  },
  {
-  "uf": "MS",
+  "uf": "PB",
   "grupo_nucleo": "IF",
-  "n_ativos": "218",
-  "n_abono": "40",
+  "n_ativos": "<5",
+  "n_abono": "5",
   "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.1835
+  "suprimido": true,
+  "B_raw": null
  },
  {
-  "uf": "MS",
+  "uf": "PB",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "391",
-  "n_abono": "60",
+  "n_ativos": "8669",
+  "n_abono": "1331",
   "nome_grupo": "Universidades",
   "suprimido": false,
   "B_raw": 0.1535
  },
  {
-  "uf": "MS",
+  "uf": "PB",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "48",
-  "n_abono": "8",
+  "n_ativos": "<5",
+  "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.1667
+  "suprimido": true,
+  "B_raw": null
  },
  {
-  "uf": "MT",
+  "uf": "PE",
   "grupo_nucleo": "INSS",
-  "n_ativos": "271",
-  "n_abono": "26",
+  "n_ativos": "1275",
+  "n_abono": "160",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.1255
+ },
+ {
+  "uf": "PE",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "668",
+  "n_abono": "162",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.2425
+ },
+ {
+  "uf": "PE",
+  "grupo_nucleo": "IF",
+  "n_ativos": "3024",
+  "n_abono": "263",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.087
+ },
+ {
+  "uf": "PE",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "8310",
+  "n_abono": "1347",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.1621
+ },
+ {
+  "uf": "PE",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "AL",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "263",
+  "n_abono": "90",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.3422
+ },
+ {
+  "uf": "AL",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "90",
+  "n_abono": "40",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.4444
+ },
+ {
+  "uf": "AL",
+  "grupo_nucleo": "IF",
+  "n_ativos": "724",
+  "n_abono": "130",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.1796
+ },
+ {
+  "uf": "AL",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "3188",
+  "n_abono": "373",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.117
+ },
+ {
+  "uf": "AL",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "SE",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "178",
+  "n_abono": "48",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.2697
+ },
+ {
+  "uf": "SE",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "116",
+  "n_abono": "21",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.181
+ },
+ {
+  "uf": "SE",
+  "grupo_nucleo": "IF",
+  "n_ativos": "1339",
+  "n_abono": "72",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0538
+ },
+ {
+  "uf": "SE",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "2949",
+  "n_abono": "235",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.0797
+ },
+ {
+  "uf": "SE",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "BA",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "1188",
+  "n_abono": "160",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.1347
+ },
+ {
+  "uf": "BA",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "750",
+  "n_abono": "168",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.224
+ },
+ {
+  "uf": "BA",
+  "grupo_nucleo": "IF",
+  "n_ativos": "<5",
+  "n_abono": "6",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "BA",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "8211",
+  "n_abono": "849",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.1034
+ },
+ {
+  "uf": "BA",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "MG",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "1726",
+  "n_abono": "224",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.1298
+ },
+ {
+  "uf": "MG",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "1469",
+  "n_abono": "338",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.2301
+ },
+ {
+  "uf": "MG",
+  "grupo_nucleo": "IF",
+  "n_ativos": "6679",
+  "n_abono": "177",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0265
+ },
+ {
+  "uf": "MG",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "16184",
+  "n_abono": "1749",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.1081
+ },
+ {
+  "uf": "MG",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "ES",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "250",
+  "n_abono": "46",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.184
+ },
+ {
+  "uf": "ES",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "225",
+  "n_abono": "71",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.3156
+ },
+ {
+  "uf": "ES",
+  "grupo_nucleo": "IF",
+  "n_ativos": "2929",
+  "n_abono": "153",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0522
+ },
+ {
+  "uf": "ES",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "3549",
+  "n_abono": "324",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.0913
+ },
+ {
+  "uf": "ES",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "RJ",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "1320",
+  "n_abono": "460",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.3485
+ },
+ {
+  "uf": "RJ",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "2133",
+  "n_abono": "493",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.2311
+ },
+ {
+  "uf": "RJ",
+  "grupo_nucleo": "IF",
+  "n_ativos": "3872",
+  "n_abono": "304",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0785
+ },
+ {
+  "uf": "RJ",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "22442",
+  "n_abono": "3430",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.1528
+ },
+ {
+  "uf": "RJ",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "SP",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "3260",
+  "n_abono": "547",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.1678
+ },
+ {
+  "uf": "SP",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "4138",
+  "n_abono": "716",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.173
+ },
+ {
+  "uf": "SP",
+  "grupo_nucleo": "IF",
+  "n_ativos": "4572",
+  "n_abono": "114",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0249
+ },
+ {
+  "uf": "SP",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "8320",
+  "n_abono": "763",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.0917
+ },
+ {
+  "uf": "SP",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "PR",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "780",
+  "n_abono": "90",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.1154
+ },
+ {
+  "uf": "PR",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "1392",
+  "n_abono": "291",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.2091
+ },
+ {
+  "uf": "PR",
+  "grupo_nucleo": "IF",
+  "n_ativos": "2546",
+  "n_abono": "46",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0181
+ },
+ {
+  "uf": "PR",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "9478",
+  "n_abono": "549",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.0579
+ },
+ {
+  "uf": "PR",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "SC",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "970",
+  "n_abono": "93",
   "nome_grupo": "INSS",
   "suprimido": false,
   "B_raw": 0.0959
  },
  {
-  "uf": "MT",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "172",
-  "n_abono": "23",
-  "nome_grupo": "Receita Federal",
+  "uf": "SC",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "604",
+  "n_abono": "124",
+  "nome_grupo": "Fazenda (Receita Federal)",
   "suprimido": false,
-  "B_raw": 0.1337
+  "B_raw": 0.2053
  },
  {
-  "uf": "MT",
+  "uf": "SC",
   "grupo_nucleo": "IF",
-  "n_ativos": "204",
-  "n_abono": "17",
+  "n_ativos": "2660",
+  "n_abono": "84",
   "nome_grupo": "Institutos Federais",
   "suprimido": false,
-  "B_raw": 0.0833
+  "B_raw": 0.0316
  },
  {
-  "uf": "MT",
+  "uf": "SC",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "347",
-  "n_abono": "45",
+  "n_ativos": "5835",
+  "n_abono": "607",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1297
+  "B_raw": 0.104
  },
  {
-  "uf": "MT",
+  "uf": "SC",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "44",
-  "n_abono": "8",
+  "n_ativos": "<5",
+  "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.1818
+  "suprimido": true,
+  "B_raw": null
  },
  {
-  "uf": "GO",
+  "uf": "RS",
   "grupo_nucleo": "INSS",
-  "n_ativos": "214",
-  "n_abono": "24",
+  "n_ativos": "1097",
+  "n_abono": "147",
   "nome_grupo": "INSS",
   "suprimido": false,
-  "B_raw": 0.1121
+  "B_raw": 0.134
  },
  {
-  "uf": "GO",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "137",
-  "n_abono": "17",
-  "nome_grupo": "Receita Federal",
+  "uf": "RS",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "1362",
+  "n_abono": "247",
+  "nome_grupo": "Fazenda (Receita Federal)",
   "suprimido": false,
-  "B_raw": 0.1241
+  "B_raw": 0.1814
  },
  {
-  "uf": "GO",
+  "uf": "RS",
   "grupo_nucleo": "IF",
-  "n_ativos": "185",
-  "n_abono": "20",
+  "n_ativos": "2304",
+  "n_abono": "47",
   "nome_grupo": "Institutos Federais",
   "suprimido": false,
-  "B_raw": 0.1081
+  "B_raw": 0.0204
  },
  {
-  "uf": "GO",
+  "uf": "RS",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "313",
-  "n_abono": "44",
+  "n_ativos": "15599",
+  "n_abono": "1167",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1406
+  "B_raw": 0.0748
  },
  {
-  "uf": "GO",
+  "uf": "RS",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "34",
-  "n_abono": "6",
+  "n_ativos": "<5",
+  "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": false,
-  "B_raw": 0.1765
+  "suprimido": true,
+  "B_raw": null
  },
  {
-  "uf": "DF",
+  "uf": "MS",
   "grupo_nucleo": "INSS",
-  "n_ativos": "1289",
-  "n_abono": "482",
-  "nome_grupo": "INSS",
-  "suprimido": false,
-  "B_raw": 0.3739
- },
- {
-  "uf": "DF",
-  "grupo_nucleo": "RFB",
-  "n_ativos": "838",
-  "n_abono": "291",
-  "nome_grupo": "Receita Federal",
-  "suprimido": false,
-  "B_raw": 0.3473
- },
- {
-  "uf": "DF",
-  "grupo_nucleo": "IF",
-  "n_ativos": "1068",
-  "n_abono": "375",
-  "nome_grupo": "Institutos Federais",
-  "suprimido": false,
-  "B_raw": 0.3511
- },
- {
-  "uf": "DF",
-  "grupo_nucleo": "UNIV",
-  "n_ativos": "1788",
-  "n_abono": "642",
-  "nome_grupo": "Universidades",
-  "suprimido": false,
-  "B_raw": 0.3591
- },
- {
-  "uf": "DF",
-  "grupo_nucleo": "IBGE",
   "n_ativos": "207",
-  "n_abono": "82",
-  "nome_grupo": "IBGE",
+  "n_abono": "55",
+  "nome_grupo": "INSS",
   "suprimido": false,
-  "B_raw": 0.3961
+  "B_raw": 0.2657
+ },
+ {
+  "uf": "MS",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "240",
+  "n_abono": "56",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.2333
+ },
+ {
+  "uf": "MS",
+  "grupo_nucleo": "IF",
+  "n_ativos": "1176",
+  "n_abono": "<5",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "MS",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "3113",
+  "n_abono": "<5",
+  "nome_grupo": "Universidades",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "MS",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "MT",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "230",
+  "n_abono": "42",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.1826
+ },
+ {
+  "uf": "MT",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "118",
+  "n_abono": "36",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.3051
+ },
+ {
+  "uf": "MT",
+  "grupo_nucleo": "IF",
+  "n_ativos": "1961",
+  "n_abono": "64",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0326
+ },
+ {
+  "uf": "MT",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "3289",
+  "n_abono": "321",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.0976
+ },
+ {
+  "uf": "MT",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "GO",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "391",
+  "n_abono": "108",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.2762
+ },
+ {
+  "uf": "GO",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "278",
+  "n_abono": "79",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.2842
+ },
+ {
+  "uf": "GO",
+  "grupo_nucleo": "IF",
+  "n_ativos": "2000",
+  "n_abono": "98",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.049
+ },
+ {
+  "uf": "GO",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "4620",
+  "n_abono": "483",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.1045
+ },
+ {
+  "uf": "GO",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
+ },
+ {
+  "uf": "DF",
+  "grupo_nucleo": "INSS",
+  "n_ativos": "795",
+  "n_abono": "204",
+  "nome_grupo": "INSS",
+  "suprimido": false,
+  "B_raw": 0.2566
+ },
+ {
+  "uf": "DF",
+  "grupo_nucleo": "FAZ",
+  "n_ativos": "3615",
+  "n_abono": "422",
+  "nome_grupo": "Fazenda (Receita Federal)",
+  "suprimido": false,
+  "B_raw": 0.1167
+ },
+ {
+  "uf": "DF",
+  "grupo_nucleo": "IF",
+  "n_ativos": "3679",
+  "n_abono": "19",
+  "nome_grupo": "Institutos Federais",
+  "suprimido": false,
+  "B_raw": 0.0052
+ },
+ {
+  "uf": "DF",
+  "grupo_nucleo": "UNIV",
+  "n_ativos": "5487",
+  "n_abono": "489",
+  "nome_grupo": "Universidades",
+  "suprimido": false,
+  "B_raw": 0.0891
+ },
+ {
+  "uf": "DF",
+  "grupo_nucleo": "IBGE",
+  "n_ativos": "<5",
+  "n_abono": "0",
+  "nome_grupo": "IBGE",
+  "suprimido": true,
+  "B_raw": null
  }
 ]

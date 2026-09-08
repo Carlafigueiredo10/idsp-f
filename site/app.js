@@ -70,8 +70,10 @@
   function lerHash() {
     const h = new URLSearchParams(location.hash.replace(/^#/, ""));
     const lente = h.get("lente");
+    // sem lente no link, volta ao padrão: um link compartilhado precisa mostrar
+    // sempre a mesma coisa, e não herdar a lente que o visitante usou antes
+    st.lente = lente && st.dados[lente] ? lente : "nucleo";
     const uf = (h.get("uf") || "").toUpperCase();
-    if (lente && st.dados[lente]) st.lente = lente;
     if (uf && porUF(uf)) st.uf = uf;
   }
   function gravarHash(scroll) {
@@ -271,9 +273,9 @@
       <p class="sintese">${sint}</p>
       <div class="kpis">
         <div class="kpi"><div class="v">${A}</div><div class="l">servidores por 10 mil hab.</div><div class="p">percentil ${fmtNum(r.A_pct, 0)} · corte ${fmtNum(cortes.A_raw_lim, 1)}</div></div>
-        <div class="kpi"><div class="v">${B}%</div><div class="l">já elegíveis à aposentadoria</div><div class="p">percentil ${fmtNum(r.B_pct, 0)} · corte ${fmtNum(cortes.B_raw_lim * 100, 1)}%</div></div>
+        <div class="kpi"><div class="v">${B}%</div><div class="l">já elegíveis à aposentadoria</div><div class="p">${fmtInt(isNaN(+r.n_abono) ? r.n_abono : +r.n_abono)} de ${fmtInt(isNaN(+r.n_ativos_base_b) ? r.n_ativos_base_b : +r.n_ativos_base_b)} em órgãos comparáveis · percentil ${fmtNum(r.B_pct, 0)}</div></div>
         <div class="kpi"><div class="v">${r.posicao}º</div><div class="l">de 27 em gravidade</div><div class="p">gravidade ${fmtNum(r.gravidade, 1)} / 100</div></div>
-        <div class="kpi"><div class="v">${fmtInt(isNaN(+r.n_ativos) ? r.n_ativos : +r.n_ativos)}</div><div class="l">servidores ativos</div><div class="p">${fmtInt(isNaN(+r.n_abono) ? r.n_abono : +r.n_abono)} com abono · pop. ${fmtInt(r.populacao)}</div></div>
+        <div class="kpi"><div class="v">${fmtInt(isNaN(+r.n_ativos) ? r.n_ativos : +r.n_ativos)}</div><div class="l">servidores ativos</div><div class="p">população ${fmtInt(r.populacao)}</div></div>
       </div>
       ${barras}
       ${flags.length ? `<p class="flags">Observações: ${flags.join("; ")}.</p>` : ""}
@@ -284,13 +286,20 @@
   function renderMeta() {
     const m = st.meta;
     const cob = m.cobertura_crosswalk || {};
+    const terr = m.fontes?.f1?.territorializacao || {};
+    const totTerr = Object.values(terr).reduce((a, b) => a + b, 0) || 1;
+    const porMetodo = Object.entries(terr).filter(([k]) => k !== "sem_uf")
+      .sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k.replace(/_/g, " ")} ${fmtPct(v / totTerr)}`).join(", ");
     const lim = [
-      `Corte da matriz: <strong>${m.parametros.corte}</strong> nacional (A: ${fmtNum(m.parametros.cortes.nucleo.A_raw_lim, 2)} serv./10 mil no núcleo; B: ${fmtPct(m.parametros.cortes.nucleo.B_raw_lim)}).`,
-      `Territorialização do Eixo B pela <strong>UF de residência</strong>, não pela UPAG (unidade pagadora concentra-se em sedes). Divergência UPAG × residência: ${m.divergencia_upag_residencia == null ? "—" : fmtPct(m.divergencia_upag_residencia)}.`,
-      `Casamento de nomes de órgão entre as bases: cobertura ${fmtPct(cob.nucleo)} no núcleo e ${fmtPct(cob.total)} no total (${Object.entries(cob.por_metodo || {}).map(([k, v]) => `${v} ${k}`).join(", ")}).`,
-      `Universo de F1: ${(m.regras_de_filtro?.f1?.situacao_incluir || []).join(", ")} — excluídos ${(m.regras_de_filtro?.f1?.situacao_excluir || []).length + (m.regras_de_filtro?.f1?.cargo_excluir || []).length} padrões (temporários, comissionados sem vínculo, professores substitutos).`,
-      `Preenchimento da UF de residência no Abono: ${fmtPct(m.fontes?.f2?.preenchimento_uf_residencia)}.`,
-      `Fora do escopo: ${(m.fora_do_escopo || []).join(", ")}.`,
+      `<strong>Meses de referência:</strong> cadastro de servidores de ${mesBR(m.mes_ref_f1)} e abono de permanência de ${mesBR(m.mes_ref_f2)}. Os dois meses são deliberadamente iguais: a fragilidade é uma razão entre as duas bases e só faz sentido no mesmo instante. O conjunto de abono no dados.gov.br está desatualizado, o que fixa o mês de todo o índice.`,
+      `<strong>Territorialização:</strong> o campo de UF do cadastro traz <code>-1</code> quando não informado. A UF é recuperada por uma cadeia de regras (${porMetodo}); ${fmtPct((terr.sem_uf || 0) / totTerr)} dos vínculos permanecem sem UF, em sua maioria administração central de ministérios, e ficam fora do índice. Nenhum é atribuído ao Distrito Federal por conveniência.`,
+      `<strong>Eixo B restrito:</strong> a fragilidade só usa órgãos presentes nas duas bases e bem territorializados no cadastro. Sem isso, o numerador cobre um universo maior que o denominador e aparecem estados com "mais de 100% dos servidores já elegíveis". Por isso o painel mostra o denominador efetivo ao lado do percentual.`,
+      `<strong>Fora do universo:</strong> governos de ex-territórios (Amapá, Roraima e Rondônia). São pessoal pago pela União que serve funções estaduais: aparecem no abono e praticamente não aparecem no cadastro de servidores civis.`,
+      `<strong>Receita Federal:</strong> não é um órgão próprio no cadastro e suas unidades não se identificam pelo nome. O grupo é o Ministério da Fazenda inteiro, do qual a Receita é a maior parte.`,
+      `<strong>Eixo B pela UF de residência</strong>, não pela UPAG, que é unidade pagadora e se concentra em sedes. Divergência entre as duas: ${m.divergencia_upag_residencia == null ? "—" : fmtPct(m.divergencia_upag_residencia)}. Preenchimento da residência no abono: ${fmtPct(m.fontes?.f2?.preenchimento_uf_residencia)}.`,
+      `<strong>Casamento de nomes de órgão:</strong> cobertura ${fmtPct(cob.nucleo)} no núcleo e ${fmtPct(cob.total)} no total (${Object.entries(cob.por_metodo || {}).map(([k, v]) => `${v} ${k}`).join(", ")}).`,
+      `<strong>Corte da matriz:</strong> ${m.parametros.corte} nacional (A: ${fmtNum(m.parametros.cortes.nucleo.A_raw_lim, 2)} servidores por 10 mil no núcleo; B: ${fmtPct(m.parametros.cortes.nucleo.B_raw_lim)}).`,
+      `<strong>Fora do escopo:</strong> ${(m.fora_do_escopo || []).join(", ")}.`,
     ];
     $("#limitacoes").innerHTML = lim.map((l) => `<li>${l}</li>`).join("");
 

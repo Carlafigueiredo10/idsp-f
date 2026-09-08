@@ -18,17 +18,49 @@ import requests
 
 from common import COD_TO_SIGLA, GEO, INTERIM, RAW, SITE_DATA, UFS, log, norm_uf, write_json
 
-SIDRA = "https://apisidra.ibge.gov.br/values/t/6579/n3/all/v/all/p/last"
+SIDRA = "https://apisidra.ibge.gov.br/values/t/6579/n3/all/v/all/p/{periodo}"
 MALHA = ("https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR"
          "?formato=application/vnd.geo+json&qualidade=minima&intrarregiao=UF")
+MUNICIPIOS = "https://servicodados.ibge.gov.br/api/v1/localidades/municipios"
 
 
-def populacao_sidra() -> pd.DataFrame:
-    r = requests.get(SIDRA, timeout=60)
+def populacao_sidra(periodo: str = "last") -> pd.DataFrame:
+    r = requests.get(SIDRA.format(periodo=periodo), timeout=60)
     r.raise_for_status()
     dados = r.json()[1:]
     rows = [dict(cod_ibge=d["D1C"], populacao=int(d["V"]), ano_ref_pop=int(d["D3C"])) for d in dados]
     return pd.DataFrame(rows)
+
+
+def _uf_do_municipio(m: dict) -> str | None:
+    """A sigla da UF vive em dois caminhos diferentes na API de localidades:
+    municípios novos podem ter microrregiao nula e só trazer regiao-imediata."""
+    via = ((m.get("microrregiao") or {}).get("mesorregiao") or {}).get("UF")
+    if not via:
+        via = ((m.get("regiao-imediata") or {}).get("regiao-intermediaria") or {}).get("UF")
+    return via["sigla"] if via else None
+
+
+def gazetteer_municipios() -> pd.DataFrame:
+    """Municípios do IBGE, restritos aos nomes inequívocos (uma única UF) e com
+    pelo menos 6 caracteres — base da inferência de UF por nome de cidade."""
+    from collections import Counter
+
+    from common import norm as _norm
+
+    r = requests.get(MUNICIPIOS, timeout=120)
+    r.raise_for_status()
+    muns = r.json()
+    freq = Counter(_norm(m["nome"]) for m in muns)
+    linhas = []
+    for m in muns:
+        nome = _norm(m["nome"])
+        uf = _uf_do_municipio(m)
+        if uf and freq[nome] == 1 and len(nome) >= 6:
+            linhas.append(dict(cod_ibge_mun=m["id"], nome_norm=nome, uf=uf))
+    df = pd.DataFrame(linhas).drop_duplicates("nome_norm").sort_values("nome_norm")
+    log(f"Gazetteer: {len(df)} nomes inequívocos de {len(muns)} municípios")
+    return df
 
 
 def populacao_fallback() -> pd.DataFrame:
@@ -110,13 +142,15 @@ def baixar_malha() -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sem-rede", action="store_true", help="usa só fallbacks locais")
+    ap.add_argument("--ano", default="last",
+                    help="ano da estimativa de população (ex.: 2025); 'last' = mais recente")
     args = ap.parse_args()
 
     dim = pd.DataFrame(UFS, columns=["cod_ibge", "sigla", "nome", "regiao"])
     pop = None
     if not args.sem_rede:
         try:
-            pop = populacao_sidra()
+            pop = populacao_sidra(args.ano)
             log(f"População: SIDRA t/6579, ano {pop.ano_ref_pop.iloc[0]}")
         except Exception as e:  # noqa: BLE001
             log(f"SIDRA falhou ({e}); usando fallback local")
@@ -129,6 +163,15 @@ def main():
     df.to_csv(INTERIM / "pop_uf.csv", index=False, encoding="utf-8")
     write_json(INTERIM / "meta_f3.json", dict(fonte="IBGE SIDRA t/6579 n3" if not args.sem_rede else "fallback",
                                               url=SIDRA, ano_ref_pop=int(df.ano_ref_pop.iloc[0])))
+
+    gaz = GEO / "municipios.csv"
+    if not gaz.exists() and not args.sem_rede:
+        try:
+            gazetteer_municipios().to_csv(gaz, index=False, encoding="utf-8")
+        except Exception as e:  # noqa: BLE001
+            log(f"Gazetteer indisponível ({e}); a inferência de UF por município fica desligada")
+    elif gaz.exists():
+        log(f"Gazetteer em cache: {gaz}")
 
     # o download bruto fica em cache; uf.geojson é sempre reconstruído a partir dele
     geo, bruto = GEO / "uf.geojson", GEO / "uf_raw.geojson"

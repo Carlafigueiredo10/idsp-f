@@ -1,24 +1,25 @@
 {
- "arquivo": "202604_AbonoPermanencia.csv",
- "sha256": "b9cb76582409c4be153dc2f9a58e47059bfca62f873c0ed81815d73ee2ac14dc",
- "mes_ref": "2026-04",
+ "arquivo": "ABONOP_122025.csv",
+ "sha256": "f8da9059c071a53b5d65fd10da63f9b98e60e4613b6358d826ee7c2372b8a069",
+ "mes_ref": "2025-12",
  "sep": ";",
- "encoding": "utf-8-sig",
+ "encoding": "ISO-8859-1",
  "mapa_colunas": {
-  "Descrição do cargo": "cargo",
-  "Nível de escolaridade": "escolaridade",
+  "Descrição do cargo emprego": "cargo",
+  "Nível de Escolaridade": "escolaridade",
   "Denominação do órgão de atuação": "org_atuacao",
   "UF da UPAG de vinculação": "uf_upag",
-  "Denominação da unidade organizacional": "uorg",
-  "UF da residência": "uf_residencia",
+  "Denominação unidade organizacional": "uorg",
+  "UF da Residência": "uf_residencia",
   "Cidade da residência": "cidade_residencia",
-  "Situação do servidor": "situacao",
-  "Anos de serviço público": "tempo_servico",
-  "Ano/mês inicial do abono": "anomes_inicio"
+  "Situação servidor": "situacao",
+  "Quantidade de anos no Serviço público": "tempo_servico",
+  "Ano/Mês inicial do abono de permanência": "anomes_inicio"
  },
- "linhas_lidas": 10859,
- "linhas_mantidas": 10859,
- "abonos": 10859,
- "preenchimento_uf_residencia": 0.9692,
- "divergencia_upag_residencia": 0.1119
+ "colunas_extras": 1,
+ "linhas_lidas": 70491,
+ "linhas_mantidas": 62909,
+ "abonos": 62909,
+ "preenchimento_uf_residencia": 0.9994,
+ "divergencia_upag_residencia": 0.1515
 }

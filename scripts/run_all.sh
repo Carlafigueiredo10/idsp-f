@@ -7,19 +7,19 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 PY=${PYTHON:-python}
 
+# 03 vem primeiro: baixa o gazetteer de municípios, que a ingestão do cadastro usa
+# para recuperar a UF dos vínculos em que o campo vem como -1.
+$PY scripts/03_populacao.py ${SEM_REDE:+--sem-rede} ${ANO_POP:+--ano "$ANO_POP"}
+
 FLAG=""
 if [[ "${FICTICIO:-0}" == "1" ]]; then
   $PY scripts/00_dados_ficticios.py
   F1=$(ls data/raw/ficticio/*_Cadastro.csv | tail -1)
   F2=$(ls data/raw/ficticio/*bono*.csv | tail -1)
-  $PY scripts/01_ingest_cadastro.py --arquivo "$F1"
-  $PY scripts/02_ingest_abono.py --arquivo "$F2"
   FLAG="--ficticio"
-else
-  $PY scripts/01_ingest_cadastro.py ${F1:+--arquivo "$F1"}
-  $PY scripts/02_ingest_abono.py ${F2:+--arquivo "$F2"}
 fi
-$PY scripts/03_populacao.py ${SEM_REDE:+--sem-rede}
+$PY scripts/01_ingest_cadastro.py ${F1:+--arquivo "$F1"}
+$PY scripts/02_ingest_abono.py ${F2:+--arquivo "$F2"}
 $PY scripts/04_crosswalk.py
 $PY scripts/05_indice.py $FLAG
 

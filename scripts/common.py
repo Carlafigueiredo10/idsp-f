@@ -69,6 +69,8 @@ _UF_UORG_PATTERNS = [
     re.compile(r"\bEM\s+[A-Z .]+?[/\-]\s*([A-Z]{2})\b"),
     re.compile(r"\b([A-Z]{2})\s*$"),
 ]
+# nomes de estado, do mais longo para o mais curto (evita "PARA" casar dentro de "PARAIBA")
+_NOMES_UF_ORD = sorted(NOME_TO_SIGLA.items(), key=lambda kv: -len(kv[0]))
 
 
 def uf_de_uorg(nome_uorg) -> str:
@@ -78,10 +80,98 @@ def uf_de_uorg(nome_uorg) -> str:
         m = pat.search(s)
         if m and m.group(1) in SIGLAS:
             return m.group(1)
-    for nome, sigla in NOME_TO_SIGLA.items():
+    return uf_de_nome_estado(s)
+
+
+def uf_de_nome_estado(texto) -> str:
+    """UF a partir do nome do estado escrito por extenso no texto.
+
+    Vale sobretudo para o nome do órgão: "UNIVERSIDADE FEDERAL DO CEARA",
+    "INSTITUTO FEDERAL DE SAO PAULO". É a regra que mais recupera vínculos cuja
+    UF de exercício vem como "-1" no cadastro.
+    """
+    s = norm(texto)
+    for nome, sigla in _NOMES_UF_ORD:
         if re.search(rf"\b{re.escape(nome)}\b", s):
             return sigla
     return ""
+
+
+class Gazetteer:
+    """Municípios do IBGE para inferir UF a partir de nomes de cidade em textos.
+
+    Só entram nomes **inequívocos** (que existem em uma única UF) e com pelo menos
+    6 caracteres, para não casar por acidente dentro de nomes de unidade. A busca
+    é por n-gramas de palavras, do maior para o menor, então "PRESIDENTE PRUDENTE"
+    vence "PRUDENTE" quando ambos existem.
+    """
+
+    def __init__(self, caminho: Path | None = None):
+        self.mapa: dict[str, str] = {}
+        self.max_palavras = 1
+        caminho = caminho or (GEO / "municipios.csv")
+        if not caminho.exists():
+            return
+        import csv as _csv
+
+        with open(caminho, encoding="utf-8", newline="") as f:
+            for linha in _csv.DictReader(f):
+                self.mapa[linha["nome_norm"]] = linha["uf"]
+        if self.mapa:
+            self.max_palavras = max(len(k.split()) for k in self.mapa)
+
+    def __bool__(self) -> bool:
+        return bool(self.mapa)
+
+    def uf(self, texto) -> str:
+        if not self.mapa:
+            return ""
+        tokens = re.findall(r"[A-Z]+", norm(texto))
+        for n in range(min(self.max_palavras, len(tokens)), 0, -1):
+            for i in range(len(tokens) - n + 1):
+                sigla = self.mapa.get(" ".join(tokens[i:i + n]))
+                if sigla:
+                    return sigla
+        return ""
+
+
+# valores do cadastro que significam "não informado" no campo de UF
+UF_NAO_INFORMADA = {"", "-1", "NAO INFORMADO", "NAO SE APLICA", "N/A", "0"}
+
+
+class Territorializador:
+    """Resolve a UF de um vínculo por uma cadeia de regras, da mais forte à mais fraca.
+
+    Devolve (sigla, método). O método é publicado em metadata.json para que o leitor
+    saiba qual parcela do índice vem do campo oficial e qual vem de inferência.
+    """
+
+    ORDEM = ("UF_EXERCICIO", "UF_na_UORG", "estado_no_ORG", "municipio_na_UORG",
+             "municipio_no_ORG", "sem_uf")
+
+    def __init__(self, gazetteer: "Gazetteer | None" = None):
+        self.gaz = gazetteer if gazetteer is not None else Gazetteer()
+
+    def resolver(self, uf_campo="", uorg="", org="") -> tuple[str, str]:
+        s = norm(uf_campo)
+        if s not in UF_NAO_INFORMADA:
+            sigla = norm_uf(s)
+            if sigla:
+                return sigla, "UF_EXERCICIO"
+        sigla = uf_de_uorg(uorg)
+        if sigla:
+            return sigla, "UF_na_UORG"
+        sigla = uf_de_nome_estado(org)
+        if sigla:
+            return sigla, "estado_no_ORG"
+        if self.gaz:
+            sigla = self.gaz.uf(uorg)
+            if sigla:
+                return sigla, "municipio_na_UORG"
+            sigla = self.gaz.uf(org)
+            if sigla:
+                return sigla, "municipio_no_ORG"
+        return "", "sem_uf"
 
 
 # ---------------------------------------------------------------- config
@@ -134,9 +224,44 @@ def sha256_file(path: Path) -> str:
 
 
 def mes_ref_de_nome(nome: str) -> str:
-    """Extrai AAAAMM do nome de arquivo (ex.: 202604_Cadastro.csv -> 2026-04)."""
-    m = re.search(r"(20\d{2})[-_]?(\d{2})", nome)
-    return f"{m.group(1)}-{m.group(2)}" if m else ""
+    """Extrai o mês de referência do nome do arquivo.
+
+    Aceita AAAAMM (202512_Cadastro.csv) e MMAAAA (ABONOP_122025.csv), que é o
+    padrão do recurso de Abono no repositório do dados.gov.br.
+    """
+    m = re.search(r"(20\d{2})[-_]?(0[1-9]|1[0-2])(?!\d)", nome)
+    if m:
+        return f"{m.group(1)}-{m.group(2)}"
+    m = re.search(r"(?<!\d)(0[1-9]|1[0-2])[-_]?(20\d{2})(?!\d)", nome)
+    return f"{m.group(2)}-{m.group(1)}" if m else ""
+
+
+def cabecalho_alinhado(path: Path, sep: str, enc: str) -> tuple[list[str], int]:
+    """Nomes de coluna alinhados ao número real de campos das linhas de dados.
+
+    O recurso de Abono publicado no dados.gov.br termina cada linha de dados com
+    um separador sobrando: 14 nomes no cabeçalho e 15 campos por linha. Lido de
+    forma ingênua, o pandas promove a primeira coluna a índice e desloca todos os
+    valores — a UF de residência passa a receber o nome da cidade, silenciosamente.
+    Aqui os campos excedentes ganham nomes sintéticos e nada se desloca.
+
+    Devolve (nomes, quantidade de colunas extras).
+    """
+    import csv as _csv
+
+    with open(path, encoding=enc, newline="") as f:
+        leitor = _csv.reader(f, delimiter=sep)
+        try:
+            nomes = next(leitor)
+        except StopIteration:
+            return [], 0
+        try:
+            n_dados = len(next(leitor))
+        except StopIteration:
+            n_dados = len(nomes)
+    extras = max(0, n_dados - len(nomes))
+    nomes = list(nomes) + [f"_extra_{i}" for i in range(extras)]
+    return nomes, extras
 
 
 def detectar_sep_encoding(path: Path) -> tuple[str, str]:
@@ -162,15 +287,25 @@ def log(msg: str) -> None:
 
 
 def encontrar_arquivo(padroes: list[str], arg: str | None = None) -> Path:
+    """Localiza o arquivo bruto mais recente que casa com os padrões.
+
+    Ignora `data/raw/ficticio/` — os arquivos sintéticos têm o mesmo formato de nome
+    dos reais e chegaram a ser escolhidos no lugar deles, publicando números falsos
+    sem qualquer aviso. Para usá-los, passe o caminho em --arquivo.
+    """
     if arg:
         p = Path(arg)
         if not p.exists():
             raise SystemExit(f"Arquivo não encontrado: {p}")
         return p
-    cands = []
+    cands: list[Path] = []
     for pat in padroes:
         cands += list(RAW.rglob(pat))
-    cands = sorted({c for c in cands if c.is_file()}, key=lambda c: c.name)
+    cands = [c for c in cands if c.is_file() and "ficticio" not in {p.name for p in c.parents}]
+    cands = sorted(set(cands), key=lambda c: (mes_ref_de_nome(c.name), c.name))
     if not cands:
         raise SystemExit(f"Nenhum arquivo em data/raw casando {padroes}. Use --arquivo.")
-    return cands[-1]  # nome mais recente (AAAAMM ordena lexicograficamente)
+    escolhido = cands[-1]
+    if len(cands) > 1:
+        log(f"  {len(cands)} candidatos; usando o mês mais recente: {escolhido.name}")
+    return escolhido  # ordenado pelo mês de referência, não pelo nome cru

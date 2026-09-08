@@ -51,24 +51,32 @@ Concurso de Reúso de Dados Abertos — CGU, Edital nº 46/2026.
 - [x] Impressão do painel gera boletim de uma página
 - [x] README com fontes, mês de referência, como reproduzir e como citar
 - [x] Licenças no repositório (MIT para código, CC BY 4.0 para dados e textos)
-- [ ] **Rodar o pipeline com as bases reais** (hoje o site está publicado com dados fictícios)
+- [x] **Pipeline rodado com as bases reais** — cadastro de servidores e abono de
+      permanência, ambos de dezembro de 2025, com população IBGE do mesmo ano
 - [ ] Repositório público no GitHub com Pages ativo na pasta `/site`
 - [ ] Caso de reúso enviado para homologação e formulário submetido, com comprovantes
 
-## Antes de publicar com dados reais
+## Verificações já feitas sobre os dados reais
 
-- [ ] Ler `data/interim/diag_f1.txt` e conferir os `value_counts` de situação, tipo de
-      vínculo e regime; ajustar `config/parametros.yaml → filtro_f1` se algum valor
-      relevante estiver sendo indevidamente incluído ou excluído
-- [ ] Ler `data/interim/diag_f2.txt` e confirmar que a UF de residência está preenchida em
-      mais de 90 % dos registros; se não estiver, avaliar o uso da UPAG com nota explícita
-- [ ] Conferir a cobertura do crosswalk e preencher `config/crosswalk_overrides.yaml` a
-      partir de `data/interim/crosswalk_pendentes.csv`
-- [ ] Inspecionar as distribuições de A e B; se a mediana separar mal os grupos, trocar
-      `corte` para `tercil` e registrar a decisão em `METODOLOGIA.md` §6
-- [ ] Preencher `data/raw/MANIFEST.md` com URL, data de download e SHA-256
-- [ ] Conferir que `metadata.json` **não** está marcado como `"ficticio": true` e que a
-      tarja de aviso sumiu do site
+- [x] `diag_f1.txt` lido: 51 valores distintos de situação de vínculo, universo fechado em
+      cargo efetivo em exercício. Celetistas, temporários, substitutos, comissionados sem
+      vínculo e sigilosos (Polícia Federal e PRF) ficaram fora
+- [x] `diag_f2.txt` lido: UF de residência preenchida em 99,9 % dos registros, bem acima
+      dos 90 % exigidos. Divergência entre UPAG e residência: 15.2%
+- [x] Cobertura do crosswalk: 92.1% no núcleo e 85.5% no total, acima do mínimo de 80 %
+- [x] Distribuições de A e B inspecionadas; a mediana separa bem os quatro quadrantes
+      (9 a 10 UFs nas classes extremas), então o corte segue na mediana
+- [x] `MANIFEST.md` preenchido com URL, data e SHA-256 dos dois arquivos
+- [x] `metadata.json` com `"ficticio": false` e sem tarja no site
+- [x] Testado a 360 px de largura: sem transbordo, 27 estados no mapa, boletim em uma página
+
+## Antes de submeter
+
 - [ ] Substituir `<usuario>` pela conta real do GitHub em `README.md`, `LICENSE-DATA`,
       `docs/textos-cadastro.md` e na constante `REPO` de `site/app.js`
 - [ ] Testar no celular de verdade: abrir a URL, achar o próprio estado, imprimir o boletim
+- [ ] Reler as decisões metodológicas em `METODOLOGIA.md` e confirmar que concorda com elas,
+      em especial: grupo da Receita como Ministério da Fazenda inteiro, exclusão dos
+      governos de ex-territórios e restrição do eixo B a órgãos comparáveis
+- [ ] Conferir se o conjunto de Abono foi atualizado no dados.gov.br; se sim, rodar de novo
+      com o mês mais recente nas duas bases

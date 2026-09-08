@@ -1,5 +1,5 @@
 {
  "fonte": "IBGE SIDRA t/6579 n3",
- "url": "https://apisidra.ibge.gov.br/values/t/6579/n3/all/v/all/p/last",
- "ano_ref_pop": 2026
+ "url": "https://apisidra.ibge.gov.br/values/t/6579/n3/all/v/all/p/{periodo}",
+ "ano_ref_pop": 2025
 }
