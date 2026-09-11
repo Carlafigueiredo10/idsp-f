@@ -319,8 +319,50 @@ percentis estão no intervalo válido, que as 27 unidades estão presentes nas d
 nenhuma célula publicada viola a supressão, que nenhuma coluna de identificação aparece em
 qualquer saída intermediária e que a malha está orientada como o d3 exige.
 
-## 10. Roteiro
+## 10. Série histórica (2014–2025)
 
-**v1.1** — recorte municipal para a lente núcleo (com supressão), calibração da conversão
+O cadastro de servidores está publicado desde julho de 2014, quando o campo de UF passou
+a existir para civis. `scripts/07_serie_historica.py` reprocessa dezembro de cada ano com
+**as mesmas regras do índice** — mesmos filtros, mesmos grupos, mesma cadeia de
+territorialização, todos lidos de `config/`. Mudar qualquer uma delas obriga a regerar a
+série inteira, ou a tendência vira artefato de método.
+
+**Resultado nacional:** de 25,30 servidores civis federais por 10 mil habitantes em 2014
+para 20,21 em 2025 — **queda de 20,1%**. Em números absolutos, de 512.942 para 431.264
+(−15,9%). O fundo da série é 2024; 2025 é o primeiro ano que não cai.
+
+### Duas descontinuidades, publicadas e não escondidas
+
+**1. A cobertura do campo de UF salta em 2023.** Ela fica entre 60% e 63% de 2014 a 2022 e
+pula para 86% em 2023, 89% em 2024 e 91% em 2025. O que mudou foi o preenchimento do
+campo, não a presença do Estado no território. Comparar as pontas da série **por UF**
+mediria o cadastro, não o país.
+
+Por isso a série por UF é publicada com a janela de comparabilidade em cada ponto, e o
+pipeline as detecta sozinho: qualquer salto de mais de 10 pontos de cobertura entre anos
+consecutivos abre janela nova. Hoje são duas, 2014–2022 e 2023–2025.
+
+A **série nacional** usa o total de ativos, com e sem UF, e por isso é imune a esse
+problema — é ela que atravessa a década inteira e sustenta o número de −20,1%.
+
+**2. Não há estimativa de população para 2022 e 2023**, anos de Censo: o IBGE interrompe a
+série da tabela 6579. Esses dois anos têm contagem absoluta e não têm taxa por habitante.
+Ficam no dado como `null`, nunca interpolados.
+
+### O que a janela comparável mostra
+
+Entre 2014 e 2021, a presença federal por habitante caiu em quase toda unidade da
+federação. As maiores quedas: Rio de Janeiro −33%, Roraima −31%, Amapá −24%, São Paulo
+−23%, Sergipe −21%. Só Piauí e Maranhão subiram.
+
+### Por que só o eixo A
+
+O conjunto de abono está publicado a partir de 2017 e com lacunas. Uma série de
+fragilidade com buracos seria lida como queda real de fragilidade, que é o oposto do que
+o buraco significa.
+
+## 11. Roteiro
+
+**v1.2** — recorte municipal para a lente núcleo (com supressão), calibração da conversão
 entre elegibilidade e aposentadoria efetiva, terceirizados como camada de contexto,
 boletins por UF em PDF e atualização mensal automatizada.

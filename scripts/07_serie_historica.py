@@ -141,7 +141,10 @@ def main():
     partes = []
     parcial = INTERIM / "serie_parcial.csv"
     if parcial.exists():                     # retomar de onde parou
-        partes.append(pd.read_csv(parcial, dtype={"uf": str, "grupo_nucleo": str}))
+        # keep_default_na=False: sem isto, UF vazia vira NaN e "não territorializado"
+        # passa a contar como territorializado, zerando o diagnóstico de cobertura
+        partes.append(pd.read_csv(parcial, dtype={"uf": str, "grupo_nucleo": str},
+                                  keep_default_na=False))
         feitos = set(partes[0].ano.unique())
         log(f"Retomando; anos já processados: {sorted(feitos)}")
     else:
@@ -167,46 +170,94 @@ def main():
     if not partes:
         raise SystemExit("nenhum ano processado")
     serie = pd.concat(partes, ignore_index=True)
-    serie = serie[serie.uf != ""]
+
+    # ---------------------------------------------------------------- comparabilidade
+    # Duas descontinuidades que, escondidas, transformariam a série em mentira:
+    #
+    # 1. A cobertura de UF no cadastro salta de 63% (2022) para 86% (2023) e chega a 91%
+    #    em 2025 — o campo passou a ser preenchido, não o Estado a chegar no território.
+    #    Comparar as pontas por UF mediria o preenchimento do campo. Por isso a série por
+    #    UF só é comparável DENTRO de cada janela de cobertura estável.
+    # 2. O IBGE não publica estimativa de população para 2022 e 2023 (anos de Censo),
+    #    então esses anos têm contagem absoluta mas não têm taxa por habitante.
+    #
+    # A série NACIONAL usa o total de ativos, com e sem UF, e por isso é imune à primeira.
+    cob = {int(a): float(g[g.uf != ""].n_ativos.sum() / max(g.n_ativos.sum(), 1))
+           for a, g in serie.groupby("ano")}
+    anos = sorted(cob)
+    janelas, ini_j = [], anos[0]
+    for a, b in zip(anos, anos[1:]):
+        if abs(cob[b] - cob[a]) > 0.10:      # salto de mais de 10 pontos quebra a janela
+            janelas.append((ini_j, a))
+            ini_j = b
+    janelas.append((ini_j, anos[-1]))
 
     pop = populacao()
     from common import COD_TO_SIGLA
     pop["uf"] = pop.cod_ibge.map(COD_TO_SIGLA)
+    pop_br = pop.groupby("ano", as_index=False).populacao.sum()
+    sem_pop = [a for a in anos if a not in set(pop_br.ano)]
+
+    nac = serie.groupby("ano", as_index=False).n_ativos.sum().merge(pop_br, on="ano", how="left")
+    nac["por10k"] = (nac.n_ativos / nac.populacao * 10_000).round(2)
+    nacional = [dict(ano=int(r.ano), n=int(r.n_ativos),
+                     por10k=None if pd.isna(r.por10k) else float(r.por10k),
+                     cobertura_uf=round(cob[int(r.ano)], 3)) for r in nac.itertuples()]
+
+    serie = serie[serie.uf != ""]
     tot = serie.groupby(["ano", "uf"], as_index=False).n_ativos.sum()
-    tot = tot.merge(pop[["ano", "uf", "populacao"]], on=["ano", "uf"], how="left")
-    tot["A_raw"] = (tot.n_ativos / tot.populacao * 10_000).round(2)
     tot["lente"] = "total"
-
     nuc = serie[serie.grupo_nucleo != ""].groupby(["ano", "uf"], as_index=False).n_ativos.sum()
-    nuc = nuc.merge(pop[["ano", "uf", "populacao"]], on=["ano", "uf"], how="left")
-    nuc["A_raw"] = (nuc.n_ativos / nuc.populacao * 10_000).round(2)
     nuc["lente"] = "nucleo"
-
-    out = pd.concat([tot, nuc], ignore_index=True).sort_values(["lente", "uf", "ano"])
+    out = pd.concat([tot, nuc], ignore_index=True).merge(
+        pop[["ano", "uf", "populacao"]], on=["ano", "uf"], how="left")
+    out["A_raw"] = (out.n_ativos / out.populacao * 10_000).round(2)
+    out["janela"] = out.ano.map(lambda a: next(f"{x}-{y}" for x, y in janelas if x <= a <= y))
+    out = out.sort_values(["lente", "uf", "ano"])
     out.to_csv(PROCESSED / "serie_uf.csv", index=False, encoding="utf-8")
 
     por_lente: dict = {}
     for lente, g in out.groupby("lente"):
-        por_lente[lente] = {uf: [dict(ano=int(r.ano), a=None if pd.isna(r.A_raw) else float(r.A_raw),
-                                      n=int(r.n_ativos)) for r in gg.itertuples()]
+        por_lente[lente] = {uf: [dict(ano=int(r.ano), n=int(r.n_ativos),
+                                      a=None if pd.isna(r.A_raw) else float(r.A_raw),
+                                      janela=r.janela) for r in gg.itertuples()]
                             for uf, gg in g.groupby("uf")}
-    meta = dict(anos=sorted(out.ano.unique().tolist()), mes_referencia=args.mes,
-                versao_pipeline=p.get("versao_pipeline"),
-                nota=("Série do eixo A (presença). As regras de filtro, os grupos e a "
-                      "territorialização são as mesmas do índice publicado; mudá-las exige "
-                      "regerar a série inteira, sob pena de a tendência virar artefato."))
-    write_json(PROCESSED / "serie_uf.json", dict(meta=meta, series=por_lente))
-    write_json(SITE_DATA / "serie_uf.json", dict(meta=meta, series=por_lente))
+    meta = dict(
+        anos=anos, mes_referencia=args.mes, versao_pipeline=p.get("versao_pipeline"),
+        cobertura_uf_por_ano={str(a): round(c, 3) for a, c in cob.items()},
+        janelas_comparaveis=[f"{x}-{y}" for x, y in janelas],
+        anos_sem_populacao=sem_pop,
+        nota=("A série nacional usa o total de ativos e não depende da UF, então atravessa "
+              "toda a década. A série por UF só é comparável dentro de cada janela: a "
+              "cobertura do campo de UF no cadastro salta de 63% em 2022 para 86% em 2023, "
+              "e comparar as pontas mediria o preenchimento do campo, não a presença do "
+              "Estado. O IBGE não estima população em 2022 e 2023, anos de Censo, então "
+              "esses anos têm contagem absoluta e não têm taxa por habitante."))
+    write_json(PROCESSED / "serie_uf.json", dict(meta=meta, nacional=nacional, series=por_lente))
+    write_json(SITE_DATA / "serie_uf.json", dict(meta=meta, nacional=nacional, series=por_lente))
 
-    log(f"Série pronta: {out.ano.min()}–{out.ano.max()}, {out.uf.nunique()} UFs")
-    for lente in por_lente:
-        g = out[out.lente == lente]
-        a0, a1 = g.ano.min(), g.ano.max()
-        ini = g[g.ano == a0].set_index("uf").A_raw
-        fim = g[g.ano == a1].set_index("uf").A_raw
-        var = ((fim - ini) / ini * 100).dropna().sort_values()
-        log(f"  [{lente}] {a0}->{a1} maiores quedas: " +
-            ", ".join(f"{u} {v:+.0f}%" for u, v in var.head(5).items()))
+    log(f"Série: {anos[0]}–{anos[-1]} | janelas comparáveis: "
+        + ", ".join(f"{x}-{y}" for x, y in janelas))
+    log("  cobertura de UF: " + ", ".join(f"{a}:{cob[a]:.0%}" for a in anos))
+    v = [r for r in nacional if r["por10k"]]
+    log(f"  nacional {v[0]['ano']}->{v[-1]['ano']}: {v[0]['por10k']} -> {v[-1]['por10k']} "
+        f"por 10 mil hab. ({(v[-1]['por10k']/v[0]['por10k']-1)*100:+.1f}%)")
+    for x, y in janelas:
+        if y - x < 2:
+            continue
+        # extremos da janela que têm taxa: 2022 e 2023 não têm população publicada
+        comtaxa = sorted(out.loc[(out.lente == "total") & out.A_raw.notna()
+                                 & out.ano.between(x, y), "ano"].unique())
+        if len(comtaxa) < 2:
+            continue
+        x, y = comtaxa[0], comtaxa[-1]
+        g = out[(out.lente == "total") & (out.ano.isin([x, y]))]
+        a0 = g[g.ano == x].set_index("uf").A_raw
+        a1 = g[g.ano == y].set_index("uf").A_raw
+        var = ((a1 - a0) / a0 * 100).dropna().sort_values()
+        if len(var):
+            log(f"  [{x}-{y}] maiores quedas por UF: "
+                + ", ".join(f"{u} {q:+.0f}%" for u, q in var.head(5).items()))
 
 
 if __name__ == "__main__":

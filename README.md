@@ -29,6 +29,12 @@ federal — São Paulo tem rede estadual própria (USP, Unicamp, Unesp) — e, n
 a União é a única entrega possível, o estado está acima da mediana nacional. Ver
 [METODOLOGIA.md](METODOLOGIA.md) §2.
 
+**Série histórica:** de 25,30 servidores civis federais por 10 mil habitantes em 2014 para
+20,21 em 2025 — queda de 20,1% em onze anos, com fundo em 2024. Ver
+[METODOLOGIA.md](METODOLOGIA.md) §10, que registra as duas descontinuidades da série: o
+salto de cobertura do campo de UF em 2023 e a ausência de estimativa de população em 2022
+e 2023.
+
 Site: <https://idsp-f.vercel.app/> · Versão v1.0, recorte por UF, referência dezembro de 2025.
 
 ---
@@ -97,6 +103,7 @@ Duas armadilhas que custam caro se passarem despercebidas:
 | `04_crosswalk.py` | casa nomes de órgão entre F1 e F2 (exato → fuzzy → manual) e publica a cobertura | `crosswalk.csv`, `cobertura.json` |
 | `05_indice.py` | calcula A, B, percentis, quadrantes, gravidade; aplica supressão | `idspf_uf.{csv,json}`, `metadata.json` |
 | `06_instrumentos.py` | valida e publica os instrumentos conferidos | `instrumentos.json` |
+| `07_serie_historica.py` | série do eixo A, 2014–2025, com janelas de comparabilidade | `serie_uf.{csv,json}` |
 
 `03` roda **antes** de `01`: a ingestão do cadastro usa o gazetteer de municípios para
 recuperar a UF dos vínculos em que o campo vem preenchido com `-1` — o que acontece em
