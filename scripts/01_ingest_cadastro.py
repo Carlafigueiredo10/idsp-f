@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 
+import numpy as np
 import pandas as pd
 
 from common import (INTERIM, Nucleo, Territorializador, any_match, cabecalho_alinhado,
@@ -110,7 +111,9 @@ def main():
                     vistos.add(i)
                     novo.append(True)
             tot_dup += len(novo) - sum(novo)
-            chunk = chunk[novo]
+            # máscara como array booleano, não lista: `df[[]]` seleciona zero COLUNAS,
+            # e um bloco inteiramente filtrado deixaria o DataFrame sem coluna alguma
+            chunk = chunk[np.asarray(novo, dtype=bool)]
 
         resolvido = [terr.resolver(u, uo, o) for u, uo, o in
                      zip(chunk["uf"], chunk["uorg"], chunk["org"])]

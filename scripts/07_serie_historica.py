@@ -27,6 +27,7 @@ import zipfile
 from collections import Counter
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import requests
 
@@ -110,7 +111,8 @@ def agregar(path: Path, p: dict, nucleo: Nucleo, terr: Territorializador) -> pd.
             for i in ch["id"].tolist():
                 novo.append(i not in vistos)
                 vistos.add(i)
-            ch = ch[novo]
+            # array booleano, não lista: `df[[]]` seleciona zero COLUNAS
+            ch = ch[np.asarray(novo, dtype=bool)]
         for u, uo, o, s in zip(ch["uf"], ch["uorg"], ch["org"], ch["orgsup"]):
             sigla, _ = terr.resolver(u, uo, o)
             agg[(sigla, nucleo.classificar(o, s, uo))] += 1

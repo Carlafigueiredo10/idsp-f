@@ -259,3 +259,21 @@ def test_instrumento_so_vai_ao_ar_conferido():
             assert "PREENCHER" not in b.get("titulo", ""), f"{i['id']}: título placeholder"
         assert "PREENCHER" not in i["descricao"], f"{i['id']}: descrição placeholder"
         assert "PREENCHER" not in i["quem_decide"], f"{i['id']}: competência placeholder"
+
+
+def test_mascara_de_bloco_vazio_preserva_colunas():
+    """Um bloco inteiramente descartado pelo filtro não pode levar as colunas junto.
+    `df[[]]` seleciona zero COLUNAS; a máscara precisa ser array booleano."""
+    import numpy as np
+
+    df = pd.DataFrame({"uf": ["SP"], "org": ["X"]}).iloc[0:0]
+    assert list(df[[]].columns) == []                       # o comportamento que mordeu
+    assert list(df[np.asarray([], dtype=bool)].columns) == ["uf", "org"]
+
+
+def test_scripts_nao_usam_lista_como_mascara():
+    """Guarda a correção em 01 e 07: máscara de deduplicação sempre como array."""
+    for nome in ("01_ingest_cadastro.py", "07_serie_historica.py"):
+        src = (ROOT / "scripts" / nome).read_text(encoding="utf-8")
+        assert "[np.asarray(novo, dtype=bool)]" in src, nome
+        assert "chunk[novo]" not in src and "ch[novo]" not in src, nome
