@@ -96,6 +96,7 @@ Duas armadilhas que custam caro se passarem despercebidas:
 | `03_populacao.py` | população do SIDRA, gazetteer de municípios e malha do IBGE reorientada para o d3 | `pop_uf.csv`, `municipios.csv`, `uf.geojson` |
 | `04_crosswalk.py` | casa nomes de órgão entre F1 e F2 (exato → fuzzy → manual) e publica a cobertura | `crosswalk.csv`, `cobertura.json` |
 | `05_indice.py` | calcula A, B, percentis, quadrantes, gravidade; aplica supressão | `idspf_uf.{csv,json}`, `metadata.json` |
+| `06_instrumentos.py` | valida e publica os instrumentos conferidos | `instrumentos.json` |
 
 `03` roda **antes** de `01`: a ingestão do cadastro usa o gazetteer de municípios para
 recuperar a UF dos vínculos em que o campo vem preenchido com `-1` — o que acontece em
@@ -118,10 +119,29 @@ Todo parâmetro de julgamento está em `config/`, não no código:
 - `nucleo.yaml` — quais órgãos compõem cada grupo, por expressão regular.
 - `lentes.yaml` — quais grupos formam cada lente e qual delas abre o site.
 - `crosswalk_overrides.yaml` — casamentos manuais de nomes de órgão.
+- `instrumentos.yaml` — instrumentos disponíveis por situação diagnosticada.
 
 Um estado ou município que queira replicar o índice sobre o seu próprio RPPS troca F1 e F2
 pelas bases locais de servidores ativos e de abono/elegibilidade, ajusta `nucleo.yaml` para
 os seus serviços finalísticos e roda o mesmo pipeline.
+
+## Instrumentos disponíveis
+
+O índice diz **onde**. A camada de instrumentos diz **com que instrumento** aquilo se
+trata e **em que mesa** a decisão é tomada — nada além disso.
+
+Cada cartão em `config/instrumentos.yaml` traz o instrumento, a norma que o cria e a
+instância com competência para acioná-lo, e aparece no painel das UFs cujo quadrante e
+grupo de serviço ele atende. **Não são recomendações**: o IDSP-F não decide lotação,
+concurso ou cooperação, e não fala por nenhum órgão. Descrever instrumento e competência
+é informação pública verificável; dizer a um órgão quantas vagas abrir seria opinião
+sobre decisão alheia.
+
+Um cartão só vai ao ar com `conferido: true`, e o teste
+`test_instrumento_so_vai_ao_ar_conferido` recusa qualquer publicação sem base normativa
+com URL. `python scripts/06_instrumentos.py --conferir-links` testa se as URLs
+respondem — mas não lê o conteúdo, e norma revogada responde 200 igual. A conferência de
+mérito é humana e é ela que autoriza marcar o campo.
 
 ## Privacidade
 

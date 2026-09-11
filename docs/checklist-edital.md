@@ -82,3 +82,14 @@ Concurso de Reúso de Dados Abertos — CGU, Edital nº 46/2026.
       governos de ex-territórios e restrição do eixo B a órgãos comparáveis
 - [ ] Conferir se o conjunto de Abono foi atualizado no dados.gov.br; se sim, rodar de novo
       com o mês mais recente nas duas bases
+
+## Evolução até o julgamento (09/12)
+
+- [ ] **Camada de instrumentos disponíveis** — o esqueleto está em
+      `config/instrumentos.yaml` com três cartões por preencher. É o que leva o produto de
+      diagnóstico a prescrição, atinge os dois critérios de peso 2 e é a parte que nenhum
+      concorrente consegue copiar. Para cada cartão: instrumento, base normativa com link
+      em planalto.gov.br ou gov.br, e quem tem competência para acionar. Marcar
+      `conferido: true` só depois de abrir cada link e confirmar a vigência — o script
+      testa se a URL responde, não se a norma está em vigor.
+- [ ] Recorte municipal para as lentes de serviço (v1.1)

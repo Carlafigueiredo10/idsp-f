@@ -2,6 +2,8 @@
 # Executa o pipeline completo 01–05 e os testes.
 # Uso:  bash scripts/run_all.sh                 (dados reais em data/raw/)
 #       FICTICIO=1 bash scripts/run_all.sh      (gera e usa dados fictícios)
+# A camada de instrumentos (06) publica só os cartões conferidos; se não houver
+# nenhum, ela grava uma lista vazia e o site simplesmente não mostra a seção.
 # Falha se a cobertura do crosswalk na lente núcleo ficar abaixo de config/parametros.yaml.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -22,6 +24,7 @@ $PY scripts/01_ingest_cadastro.py ${F1:+--arquivo "$F1"}
 $PY scripts/02_ingest_abono.py ${F2:+--arquivo "$F2"}
 $PY scripts/04_crosswalk.py
 $PY scripts/05_indice.py $FLAG
+$PY scripts/06_instrumentos.py
 
 $PY - <<'PYEOF'
 import json, yaml

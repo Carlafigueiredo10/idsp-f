@@ -147,3 +147,12 @@ button.secundario:hover { background: #f3efe8; }
   a { color: #000; text-decoration: none; }
   @page { size: A4; margin: 15mm; }
 }
+
+/* instrumentos disponíveis (camada opcional; some quando não há cartão conferido) */
+.instrumentos { margin-top: 1rem; border-top: 1px solid var(--line); padding-top: .8rem; }
+.instrumentos h4 { margin: 0 0 .2rem; font-size: 1rem; }
+.aviso-inst { font-size: .8rem; color: var(--ink-3); margin: 0 0 .6rem; max-width: 62ch; }
+.instrumento { background: #f7f4ee; border-radius: 10px; padding: .7rem .8rem; margin-bottom: .5rem; }
+.instrumento strong { display: block; }
+.instrumento p { margin: .3rem 0 0; font-size: .9rem; }
+.instrumento .norma { font-size: .82rem; color: var(--ink-2); }

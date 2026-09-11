@@ -1,0 +1,78 @@
+# Instrumentos disponíveis por situação diagnosticada.
+#
+# ISTO NÃO É UMA LISTA DE RECOMENDAÇÕES. Cada cartão descreve um instrumento que já
+# existe no ordenamento, a norma que o cria e **quem tem competência para acioná-lo**.
+# O índice diz onde; esta camada diz com que instrumento se trata aquilo e em que mesa
+# a decisão é tomada. Quem decide nunca é o IDSP-F, e nunca é quem escreve o cartão.
+#
+# A diferença não é de estilo, é de competência: descrever instrumento e competência é
+# informação pública verificável; dizer a um órgão quantas vagas abrir seria opinião
+# sobre decisão alheia.
+#
+# REGRA DE PUBLICAÇÃO: um cartão só vai ao ar com `conferido: true`, e esse campo só
+# deve ser marcado depois de abrir cada link e confirmar que a norma está vigente e diz
+# o que o cartão afirma. `scripts/06_instrumentos.py --conferir-links` testa se as URLs
+# respondem, mas **não lê o conteúdo** — norma revogada responde 200 igual. A conferência
+# de mérito é humana e não tem substituto.
+#
+# Um instrumento errado custa mais do que a camada inteira rende.
+#
+# ---------------------------------------------------------------------------------
+# CAMPOS
+#
+#   id             identificador curto, em kebab-case, único
+#   titulo         nome do instrumento como o gestor o conhece
+#   quadrantes     em que situações aparece: deserto_critico, deserto_estavel,
+#                  presenca_em_risco, presenca_consolidada — ou `todos`
+#   grupos         a que serviços se aplica: INSS, FAZ, IBGE, UNIV, IF — ou `todos`
+#   descricao      o que o instrumento permite fazer, em uma ou duas frases, no
+#                  indicativo descritivo ("permite", "autoriza"), nunca no imperativo
+#   base_normativa lista de { titulo, url } — preferir planalto.gov.br para leis e
+#                  decretos, gov.br para portarias e instruções normativas
+#   quem_decide    o órgão ou a instância com competência para acionar
+#   conferido      false até que os links tenham sido abertos e a vigência confirmada
+# ---------------------------------------------------------------------------------
+#
+# Os três cartões abaixo são ESQUELETOS, com base normativa em branco e
+# `conferido: false`. Nenhum deles aparece no site enquanto estiver assim.
+
+instrumentos:
+  - id: recomposicao-forca-trabalho
+    titulo: Recomposição de força de trabalho
+    quadrantes: [deserto_critico, presenca_em_risco]
+    grupos: [INSS, FAZ, IBGE]
+    descricao: >-
+      PREENCHER — o que o instrumento permite: autorização de concurso, provimento de
+      vagas já autorizadas, redistribuição entre unidades.
+    base_normativa:
+      - titulo: PREENCHER — nome da norma
+        url: ""
+    quem_decide: PREENCHER — órgão central de gestão de pessoas e o órgão demandante
+    conferido: false
+
+  - id: atendimento-remoto
+    titulo: Atendimento remoto e desconcentração
+    quadrantes: [deserto_critico, deserto_estavel]
+    grupos: [INSS, FAZ]
+    descricao: >-
+      PREENCHER — o que o instrumento permite quando a presença física é inviável:
+      atendimento a distância, central nacional, mutirão, programa de gestão.
+    base_normativa:
+      - titulo: PREENCHER — nome da norma
+        url: ""
+    quem_decide: PREENCHER
+    conferido: false
+
+  - id: cooperacao-tecnica
+    titulo: Acordo de cooperação técnica entre entes
+    quadrantes: [deserto_critico, deserto_estavel]
+    grupos: [UNIV, IF]
+    descricao: >-
+      PREENCHER — quando o serviço tem rede estadual ou municipal que já entrega, o
+      acordo de cooperação técnica é o instrumento que articula as duas redes sem
+      transferir a competência.
+    base_normativa:
+      - titulo: PREENCHER — nome da norma
+        url: ""
+    quem_decide: PREENCHER — os entes signatários
+    conferido: false

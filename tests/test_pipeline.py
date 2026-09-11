@@ -214,3 +214,48 @@ def test_encontrar_arquivo_ordena_por_mes_de_referencia(tmp_path, monkeypatch):
     novo.write_text("x", encoding="utf-8")
     monkeypatch.setattr(common, "RAW", raw)
     assert common.encontrar_arquivo(["*BONOP*.csv"]) == novo
+
+
+# ---------------------------------------------------------------- instrumentos
+INSTR = ROOT / "site" / "data" / "instrumentos.json"
+
+
+def test_instrumentos_config_bem_formado():
+    """O arquivo pode estar vazio de conteúdo conferido, mas nunca malformado."""
+    import sys as _s
+    _s.path.insert(0, str(ROOT / "scripts"))
+    import importlib.util
+
+    from common import Nucleo, load_yaml
+
+    spec = importlib.util.spec_from_file_location("m6", ROOT / "scripts" / "06_instrumentos.py")
+    m6 = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m6)
+    itens = load_yaml("instrumentos.yaml").get("instrumentos") or []
+    campos = {"id", "titulo", "quadrantes", "grupos", "descricao", "base_normativa",
+              "quem_decide", "conferido"}
+    for it in itens:
+        assert campos <= set(it), f"{it.get('id')}: faltam {campos - set(it)}"
+    # quadrantes e grupos citados precisam existir
+    assert not [e for e in m6.validar(itens, set(Nucleo().ids)) if "sem URL" not in e]
+
+
+@pytest.mark.skipif(not INSTR.exists(), reason="camada de instrumentos ainda não gerada")
+def test_instrumento_so_vai_ao_ar_conferido():
+    """A regra que protege a credibilidade da camada: nada é publicado sem base
+    normativa com URL, e nada é publicado com conferido: false."""
+    import sys as _s
+    _s.path.insert(0, str(ROOT / "scripts"))
+    from common import load_yaml
+
+    pub = json.load(open(INSTR, encoding="utf-8"))["instrumentos"]
+    conferidos = {it["id"] for it in (load_yaml("instrumentos.yaml").get("instrumentos") or [])
+                  if it.get("conferido")}
+    for i in pub:
+        assert i["id"] in conferidos, f"{i['id']} publicado sem conferido: true"
+        assert i["base_normativa"], f"{i['id']} publicado sem base normativa"
+        for b in i["base_normativa"]:
+            assert b.get("url", "").startswith("http"), f"{i['id']}: URL ausente ou inválida"
+            assert "PREENCHER" not in b.get("titulo", ""), f"{i['id']}: título placeholder"
+        assert "PREENCHER" not in i["descricao"], f"{i['id']}: descrição placeholder"
+        assert "PREENCHER" not in i["quem_decide"], f"{i['id']}: competência placeholder"

@@ -63,7 +63,25 @@
         fetch(u).then((r) => { if (!r.ok) throw new Error(u + ": " + r.status); return r.json(); })
       )
     );
-    Object.assign(st, { dados, grupos, meta, geo });
+    // camada opcional: se o arquivo não existir ou vier vazio, o painel segue igual
+    const inst = await fetch("data/instrumentos.json")
+      .then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    Object.assign(st, { dados, grupos, meta, geo, inst });
+  }
+
+  // Instrumentos que se aplicam à situação da UF na lente ativa. A correspondência é
+  // por quadrante e por grupo de serviço — nunca por UF: o cartão descreve um
+  // instrumento do ordenamento, não uma medida para aquele estado.
+  function instrumentosDe(r) {
+    const lista = (st.inst && st.inst.instrumentos) || [];
+    if (!lista.length) return [];
+    const gl = lenteAtual().grupos;
+    const gruposDaLente = Array.isArray(gl) ? gl : null;   // null = todos
+    const casa = (campo, valor) => campo === "todos" || !Array.isArray(campo) || campo.includes(valor);
+    return lista.filter((i) =>
+      casa(i.quadrantes, r.quadrante) &&
+      (i.grupos === "todos" || !Array.isArray(i.grupos) || !gruposDaLente ||
+       i.grupos.some((g) => gruposDaLente.includes(g))));
   }
 
   // ---------------------------------------------------------------- hash
@@ -297,6 +315,21 @@
         <div class="kpi"><div class="v">${fmtInt(isNaN(+r.n_ativos) ? r.n_ativos : +r.n_ativos)}</div><div class="l">servidores ativos</div><div class="p">população ${fmtInt(r.populacao)}</div></div>
       </div>
       ${barras}
+      ${(() => {
+        const ins = instrumentosDe(r);
+        if (!ins.length) return "";
+        return `<div class="instrumentos">
+          <h4>Instrumentos disponíveis</h4>
+          <p class="aviso-inst">${(st.inst && st.inst.aviso) || ""}</p>
+          ${ins.map((i) => `<div class="instrumento">
+            <strong>${i.titulo}</strong>
+            <p>${i.descricao}</p>
+            <p class="norma">Base normativa: ${(i.base_normativa || []).map((b) =>
+              `<a href="${b.url}" target="_blank" rel="noopener">${b.titulo}</a>`).join(" · ")}</p>
+            <p class="norma">Competência para acionar: ${i.quem_decide}</p>
+          </div>`).join("")}
+        </div>`;
+      })()}
       ${flags.length ? `<p class="flags">Observações: ${flags.join("; ")}.</p>` : ""}
       <p class="rastro">Lente: ${lenteAtual().nome} · Cadastro SIAPE ${mesBR(st.meta.mes_ref_f1)} · Abono ${mesBR(st.meta.mes_ref_f2)} · População IBGE ${st.meta.ano_pop} · corte: ${st.meta.parametros.corte} · supressão n &lt; ${st.meta.parametros.supressao_min} · <a href="data/metadata.json">metadata.json</a> · link: <a href="#uf=${r.uf}${st.lente !== "nucleo" ? "&lente=" + st.lente : ""}">#uf=${r.uf}</a></p>`;
   }
