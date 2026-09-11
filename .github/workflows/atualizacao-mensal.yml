@@ -1,0 +1,117 @@
+name: Atualização mensal
+
+# Verifica todo dia 10 se há mês novo nas duas bases e, havendo, roda o pipeline e
+# abre um Pull Request com os dados novos. Nunca faz commit direto em main: os números
+# publicados passam por revisão humana, como manda a própria metodologia.
+#
+# O mês do índice é ditado pelo abono, que costuma estar meses atrás do cadastro. Por
+# isso o gatilho é a publicação de um abono novo — sem ele, não há o que atualizar.
+
+on:
+  schedule:
+    - cron: "0 9 10 * *"
+  workflow_dispatch:
+    inputs:
+      mes_abono:
+        description: "Mês do abono no formato MMAAAA (ex.: 012026). Vazio = procurar o mais recente"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Procurar o mês mais recente do abono
+        id: procurar
+        run: |
+          set -euo pipefail
+          atual=$(python -c "import json;print(json.load(open('data/processed/metadata.json'))['mes_ref_f2'])")
+          echo "publicado=$atual" >> "$GITHUB_OUTPUT"
+          alvo="${{ inputs.mes_abono }}"
+          if [ -z "$alvo" ]; then
+            for i in $(seq 0 18); do
+              m=$(date -d "-$i month" +%m%Y)
+              if curl -sIL -m 30 -A "Mozilla/5.0" \
+                   "https://repositorio.dados.gov.br/segrt/ABONOP_${m}.csv" \
+                   | grep -qE "^HTTP/[0-9.]+ 200"; then alvo="$m"; break; fi
+            done
+          fi
+          echo "alvo=$alvo" >> "$GITHUB_OUTPUT"
+          # ABONOP_MMAAAA -> AAAA-MM, para comparar com o que está publicado
+          novo="${alvo:2:4}-${alvo:0:2}"
+          echo "novo=$novo" >> "$GITHUB_OUTPUT"
+          if [ "$novo" = "$atual" ]; then
+            echo "ha_novidade=false" >> "$GITHUB_OUTPUT"
+            echo "Abono mais recente ($novo) é o já publicado. Nada a fazer."
+          else
+            echo "ha_novidade=true" >> "$GITHUB_OUTPUT"
+            echo "Abono novo: $novo (publicado: $atual)"
+          fi
+
+      - name: Baixar as bases no mesmo mês
+        if: steps.procurar.outputs.ha_novidade == 'true'
+        run: |
+          set -euo pipefail
+          alvo="${{ steps.procurar.outputs.alvo }}"
+          cadastro="${alvo:2:4}${alvo:0:2}"     # MMAAAA -> AAAAMM
+          bash scripts/00_baixar_fontes.sh "$cadastro" "$alvo"
+
+      - name: Rodar o pipeline
+        if: steps.procurar.outputs.ha_novidade == 'true'
+        env:
+          ANO_POP: ${{ steps.procurar.outputs.novo }}
+        run: |
+          set -euo pipefail
+          ANO_POP="${ANO_POP%%-*}" bash scripts/run_all.sh
+
+      - name: Conferir os links dos instrumentos
+        if: steps.procurar.outputs.ha_novidade == 'true'
+        continue-on-error: true
+        run: python scripts/06_instrumentos.py --conferir-links
+
+      - name: Abrir Pull Request
+        if: steps.procurar.outputs.ha_novidade == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: dados/${{ steps.procurar.outputs.novo }}
+          title: "Dados de ${{ steps.procurar.outputs.novo }}"
+          commit-message: "Atualiza o indice para ${{ steps.procurar.outputs.novo }}"
+          add-paths: |
+            data/interim
+            data/processed
+            site/data
+            data/raw/MANIFEST.md
+          body: |
+            Atualização automática: o conjunto de Abono de Permanência publicou
+            **${{ steps.procurar.outputs.novo }}**, e o índice estava em
+            ${{ steps.procurar.outputs.publicado }}.
+
+            As duas bases foram lidas no mesmo mês, como manda a metodologia — a
+            fragilidade é uma razão entre elas.
+
+            **Antes de mesclar, conferir:**
+
+            - [ ] `data/interim/diag_f1.txt` — a distribuição de situação de vínculo
+                  não mudou de forma a exigir revisão de `config/parametros.yaml`
+            - [ ] `data/interim/diag_f2.txt` — UF de residência acima de 90%
+            - [ ] cobertura do crosswalk no núcleo acima do mínimo; se caiu, ver
+                  `data/interim/crosswalk_pendentes.csv`
+            - [ ] `data/raw/MANIFEST.md` atualizado com as novas somas de verificação
+            - [ ] os instrumentos continuam com base normativa vigente (o passo de
+                  conferência de links roda acima, mas não lê o conteúdo da norma)
+
+            Os testes rodaram no pipeline. Nada aqui foi revisado por humano ainda.
