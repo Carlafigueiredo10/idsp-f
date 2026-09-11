@@ -33,8 +33,6 @@
 #   conferido      false até que os links tenham sido abertos e a vigência confirmada
 # ---------------------------------------------------------------------------------
 #
-# Os três cartões abaixo são ESQUELETOS, com base normativa em branco e
-# `conferido: false`. Nenhum deles aparece no site enquanto estiver assim.
 
 instrumentos:
   - id: recomposicao-forca-trabalho
@@ -42,12 +40,23 @@ instrumentos:
     quadrantes: [deserto_critico, presenca_em_risco]
     grupos: [INSS, FAZ, IBGE]
     descricao: >-
-      PREENCHER — o que o instrumento permite: autorização de concurso, provimento de
-      vagas já autorizadas, redistribuição entre unidades.
+      O órgão que presta o serviço dimensiona a necessidade e pede concurso,
+      provimento de vagas ou redistribuição de cargos para a unidade da
+      federação onde falta gente. A redistribuição desloca o cargo, ocupado ou
+      vago, de um órgão a outro no interesse da administração. Desde 2023, o
+      Concurso Público Nacional Unificado reúne vagas de vários órgãos numa
+      mesma seleção, com provas aplicadas em todo o país.
     base_normativa:
-      - titulo: PREENCHER — nome da norma
-        url: ""
-    quem_decide: PREENCHER — órgão central de gestão de pessoas e o órgão demandante
+      - titulo: Decreto nº 9.739/2019 — normas sobre concursos públicos e provimento
+        url: https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/D9739.htm
+      - titulo: Lei nº 8.112/1990, arts. 36 e 37 — remoção e redistribuição
+        url: https://www.planalto.gov.br/ccivil_03/leis/l8112cons.htm
+      - titulo: Decreto nº 11.722/2023 — Concurso Público Nacional Unificado
+        url: https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/decreto/D11722.htm
+    quem_decide: >-
+      O órgão demandante formula e justifica o pedido; o Ministério da Gestão e
+      da Inovação em Serviços Públicos, órgão central do SIPEC, autoriza os
+      concursos e aprecia previamente as redistribuições.
     conferido: false
 
   - id: atendimento-remoto
@@ -55,24 +64,65 @@ instrumentos:
     quadrantes: [deserto_critico, deserto_estavel]
     grupos: [INSS, FAZ]
     descricao: >-
-      PREENCHER — o que o instrumento permite quando a presença física é inviável:
-      atendimento a distância, central nacional, mutirão, programa de gestão.
+      Sustenta o serviço onde a rede física é rarefeita: canal digital com
+      validade jurídica plena, análise de requerimentos em fila nacional por
+      equipes em programa de gestão, pagamento extraordinário por redução da
+      fila (Perf-INSS e Perf-PMF) e perícia médica por telemedicina nos
+      municípios com difícil provimento de médicos peritos.
     base_normativa:
-      - titulo: PREENCHER — nome da norma
-        url: ""
-    quem_decide: PREENCHER
+      - titulo: Lei nº 14.129/2021 — governo digital e eficiência pública
+        url: https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/L14129.htm
+      - titulo: Decreto nº 11.072/2022 — Programa de Gestão e Desempenho
+        url: https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/decreto/D11072.htm
+      - titulo: Lei nº 14.724/2023 — Programa de Enfrentamento à Fila da Previdência Social (PEFPS)
+        url: https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/L14724.htm
+    quem_decide: >-
+      A direção de cada órgão define os serviços ofertados a distância e adere
+      ao programa de gestão; mutirões e telemedicina pericial são ativados por
+      ato do Ministério da Previdência Social e do INSS.
     conferido: false
 
   - id: cooperacao-tecnica
     titulo: Acordo de cooperação técnica entre entes
     quadrantes: [deserto_critico, deserto_estavel]
+    grupos: [INSS, UNIV, IF]
+    descricao: >-
+      Soma estruturas para levar o serviço aonde o quadro próprio alcança
+      pouco: o INSS firma acordos com prefeituras e entidades para receber
+      requerimentos e orientar segurados em municípios sem agência;
+      universidades e institutos federais articulam a oferta com as redes
+      estaduais e municipais que já atuam no território. A parceria dispensa
+      transferência de recursos e se formaliza em acordo com plano de trabalho.
+    base_normativa:
+      - titulo: Constituição Federal, arts. 211 e 241 — colaboração e cooperação entre entes
+        url: https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm
+      - titulo: Lei nº 14.133/2021, art. 184 — acordos e instrumentos congêneres
+        url: https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/L14133.htm
+    quem_decide: >-
+      Os signatários — o órgão federal titular do serviço e o estado ou
+      município parceiro. No INSS, a celebração corre pelas gerências
+      executivas e superintendências regionais.
+    conferido: false
+
+  - id: banco-professor-equivalente
+    titulo: Banco de professor-equivalente
+    quadrantes: [deserto_critico, presenca_em_risco]
     grupos: [UNIV, IF]
     descricao: >-
-      PREENCHER — quando o serviço tem rede estadual ou municipal que já entrega, o
-      acordo de cooperação técnica é o instrumento que articula as duas redes sem
-      transferir a competência.
+      Dentro dos limites do banco, a universidade realiza concurso e provê os
+      cargos docentes vagos por decisão própria, com autorização já dada em
+      decreto: a vaga aberta por aposentadoria volta a ser provida pela própria
+      instituição. Os institutos federais operam instrumento equivalente, com
+      quadro atualizado para docentes e técnicos-administrativos em 2024.
     base_normativa:
-      - titulo: PREENCHER — nome da norma
-        url: ""
-    quem_decide: PREENCHER — os entes signatários
+      - titulo: Decreto nº 7.485/2011, art. 7º — concurso e provimento pelas universidades
+        url: https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/decreto/d7485.htm
+      - titulo: Decreto nº 7.312/2010 — banco de professor-equivalente dos Institutos Federais
+        url: https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/decreto/d7312.htm
+      - titulo: Decreto nº 12.281/2024 — atualização dos bancos da rede federal
+        url: https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/decreto/D12281.htm
+    quem_decide: >-
+      O dirigente máximo de cada universidade ou instituto, dentro dos limites
+      do banco; o Ministério da Educação acompanha os quantitativos e pode
+      redistribuir entre instituições os cargos que ficarem sem uso.
     conferido: false

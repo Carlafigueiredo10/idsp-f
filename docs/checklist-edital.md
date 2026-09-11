@@ -85,8 +85,28 @@ Concurso de Reúso de Dados Abertos — CGU, Edital nº 46/2026.
 
 ## Evolução até o julgamento (09/12)
 
-- [ ] **Camada de instrumentos disponíveis** — o esqueleto está em
-      `config/instrumentos.yaml` com três cartões por preencher. É o que leva o produto de
+- [ ] **Camada de instrumentos disponíveis** — os quatro cartões estão escritos em
+      `config/instrumentos.yaml` com base normativa e competência, e todas as 11 URLs
+      foram conferidas contra a ementa que o Planalto publica em 11/09/2026. Falta só
+      **você marcar `conferido: true`** em cada um — a palavra final sobre vigência e
+      mérito é de quem assina o projeto, e nada é publicado antes disso.
+
+      Conferência já feita, ementa por ementa: Decreto 9.739/2019 (normas sobre concursos);
+      Lei 8.112/1990 art. 37, redação vigente, que fala em cargo "ocupado ou vago" e em
+      prévia apreciação do órgão central do SIPEC; Decreto 11.722/2023 ("Dispõe sobre o
+      Concurso Público Nacional Unificado"); Lei 14.129/2021; Decreto 11.072/2022 ("Dispõe
+      sobre o Programa de Gestão e Desempenho - PGD"); Lei 14.724/2023 (institui o PEFPS,
+      e o art. 12 autoriza telemedicina na perícia em municípios com difícil provimento de
+      peritos); Lei 14.133/2021 art. 184 (convênios, acordos e instrumentos congêneres);
+      Decreto 7.485/2011 art. 7º (faculta às universidades concurso e provimento dentro do
+      banco); Decreto 7.312/2010 (banco dos Institutos Federais); Decreto 12.281/2024
+      (altera os bancos da rede federal).
+
+      Dois termos foram corrigidos para o vocabulário da própria lei: "mutirões" e
+      "pagamento por produtividade" não aparecem na Lei 14.724 — o que existe é o
+      Pagamento Extraordinário por Redução da Fila (Perf-INSS e Perf-PMF).
+
+      Esqueleto original com três cartões por preencher, já superado. É o que leva o produto de
       diagnóstico a prescrição, atinge os dois critérios de peso 2 e é a parte que nenhum
       concorrente consegue copiar. Para cada cartão: instrumento, base normativa com link
       em planalto.gov.br ou gov.br, e quem tem competência para acionar. Marcar

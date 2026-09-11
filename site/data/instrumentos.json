@@ -1,10 +1,11 @@
 {
  "aviso": "Instrumentos já existentes no ordenamento, com a norma que os cria e a instância com competência para acioná-los. Não são recomendações: o IDSP-F não decide lotação, concurso ou cooperação, e não fala por nenhum órgão.",
  "instrumentos": [],
- "total_no_config": 3,
+ "total_no_config": 4,
  "nao_conferidos": [
   "recomposicao-forca-trabalho",
   "atendimento-remoto",
-  "cooperacao-tecnica"
+  "cooperacao-tecnica",
+  "banco-professor-equivalente"
  ]
 }
