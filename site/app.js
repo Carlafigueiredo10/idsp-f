@@ -101,7 +101,12 @@
     $("#lnk-metodologia").href = REPO + "/blob/main/METODOLOGIA.md";
     $("#lnk-privacidade").href = REPO + "/blob/main/PRIVACIDADE.md";
     $("#aviso-ficticio").hidden = !m.ficticio;
-    $("#citacao").textContent = `IDSP-F — Índice de Deserto de Serviço Público Federal, v${m.versao}, referência ${mesBR(m.mes_ref_f1)}. Disponível em ${location.origin}/`;
+    const cit = { "cit-versao": m.versao, "cit-ref": mesBR(m.mes_ref_f1),
+                  "cit-ano": (m.gerado_em || "").slice(0, 4), "cit-url": location.origin + "/" };
+    for (const [id, v] of Object.entries(cit)) {
+      const el = document.getElementById(id);
+      if (el && v) el.textContent = v;
+    }
     const cx = $("#lentes");
     if (cx.childElementCount !== lentes().length) {
       cx.innerHTML = "";
@@ -317,23 +322,23 @@
     ];
     $("#limitacoes").innerHTML = lim.map((l) => `<li>${l}</li>`).join("");
 
+    // Os cards das fontes são estáticos no HTML — precisam existir sem JavaScript,
+    // porque é neles que a homologação do reúso confere os conjuntos usados. Aqui só
+    // acrescentamos o rastro de cada arquivo: nome, SHA-256 e contagens.
     const f = m.fontes || {};
-    const cards = [
-      { t: "F1 · Cadastro de Servidores", o: "CGU — Portal da Transparência (fonte SIAPE) · espelho MGI no dados.gov.br",
-        u: [["Portal da Transparência — download", "https://portaldatransparencia.gov.br/download-de-dados/servidores"], ["dados.gov.br — Servidores do Executivo Federal", "https://dados.gov.br/dados/conjuntos-dados/servidores-do-executivo-federal"]],
-        meta: `mês ${mesBR(m.mes_ref_f1)} · arquivo <code>${f.f1?.arquivo || "—"}</code><br>SHA-256 <code>${(f.f1?.sha256 || "").slice(0, 16)}…</code> · ${fmtInt(f.f1?.ativos)} ativos após filtro` },
-      { t: "F2 · Abono de Permanência", o: "MGI — Gestão de Pessoas (Executivo Federal) · dados.gov.br",
-        u: [["dados.gov.br — Abono Permanência", "https://dados.gov.br/dados/conjuntos-dados/gastos-pessoal-abono-permanencia"]],
-        meta: `mês ${mesBR(m.mes_ref_f2)} · arquivo <code>${f.f2?.arquivo || "—"}</code><br>SHA-256 <code>${(f.f2?.sha256 || "").slice(0, 16)}…</code> · ${fmtInt(f.f2?.abonos)} abonos` },
-      { t: "F3 · População residente", o: "IBGE — Estimativas da população, por UF",
-        u: [["API SIDRA, tabela 6579", "https://sidra.ibge.gov.br/tabela/6579"], ["ibge.gov.br", "https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html"]],
-        meta: `referência ${m.ano_pop}` },
-      { t: "F4 · Malha territorial", o: "IBGE — API de malhas geográficas", u: [["servicodados.ibge.gov.br", "https://servicodados.ibge.gov.br/api/docs/malhas?versao=3"]], meta: "GeoJSON simplificado, versionado no repositório" },
-    ];
-    $("#cards-fontes").innerHTML = cards.map((c) => `
-      <div class="card"><h4>${c.t}</h4><div>${c.o}</div>
-        <div>${c.u.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join(" · ")}</div>
-        <p class="meta">${c.meta}</p></div>`).join("");
+    const sha = (x) => (x && x.sha256 ? `<br>SHA-256 <code>${x.sha256.slice(0, 16)}…</code>` : "");
+    const rastros = {
+      "card-f1": `Arquivo <code>${f.f1?.arquivo || "—"}</code>, referência ${mesBR(m.mes_ref_f1)} · `
+               + `${fmtInt(f.f1?.ativos)} servidores ativos após filtro${sha(f.f1)}`,
+      "card-f2": `Arquivo <code>${f.f2?.arquivo || "—"}</code>, referência ${mesBR(m.mes_ref_f2)} · `
+               + `${fmtInt(f.f2?.abonos)} abonos${sha(f.f2)}`,
+      "card-f3": `Referência ${m.ano_pop}.`,
+      "card-f4": "GeoJSON das 27 UFs, versionado no repositório.",
+    };
+    for (const [id, html] of Object.entries(rastros)) {
+      const el = document.querySelector(`#${id} [data-rastro]`);
+      if (el) el.innerHTML = html;
+    }
   }
 
   // ---------------------------------------------------------------- eventos

@@ -84,28 +84,55 @@
     <p>O pipeline lê apenas as colunas necessárias — nome, CPF e matrícula nunca entram em memória. Não há ligação de registros entre as bases: o cruzamento é por órgão × UF. Nenhuma célula com menos de 5 pessoas é publicada. Nada abaixo de UF é publicado nesta versão.</p>
     <h3>Decisões e limitações registradas</h3>
     <ul id="limitacoes"></ul>
-    <p><a id="lnk-metodologia" href="https://github.com/">Metodologia completa (METODOLOGIA.md)</a> · <a id="lnk-privacidade" href="https://github.com/">Regras de privacidade (PRIVACIDADE.md)</a></p>
+    <p><a id="lnk-metodologia" href="https://github.com/Carlafigueiredo10/idsp-f/blob/main/METODOLOGIA.md">Metodologia completa (METODOLOGIA.md)</a> · <a id="lnk-privacidade" href="https://github.com/Carlafigueiredo10/idsp-f/blob/main/PRIVACIDADE.md">Regras de privacidade (PRIVACIDADE.md)</a></p>
   </div>
 </section>
 
 <section id="fontes" aria-labelledby="h-fontes">
   <h2 id="h-fontes">Fontes e download</h2>
   <p class="sub">Todas as bases são abertas. Cada número do site é rastreável ao <code>metadata.json</code> (mês, fonte, regra de filtro).</p>
-  <div class="cards" id="cards-fontes"></div>
+  <div class="cards" id="cards-fontes">
+    <div class="card" id="card-f1">
+      <h4>F1 · Cadastro de Servidores</h4>
+      <div>Controladoria-Geral da União — Portal da Transparência (origem: SIAPE)</div>
+      <div><a href="https://dados.gov.br/dados/conjuntos-dados/servidores-do-executivo-federal" target="_blank" rel="noopener">Conjunto no dados.gov.br</a> · <a href="https://portaldatransparencia.gov.br/download-de-dados/servidores" target="_blank" rel="noopener">Download no Portal da Transparência</a></div>
+      <p class="meta" data-rastro>Arquivo <code>202512_Cadastro.csv</code>, referência dezembro de 2025.</p>
+    </div>
+    <div class="card" id="card-f2">
+      <h4>F2 · Abono de Permanência</h4>
+      <div>Ministério da Gestão e da Inovação em Serviços Públicos — Gestão de Pessoas (Executivo Federal)</div>
+      <div><a href="https://dados.gov.br/dados/conjuntos-dados/gestao-de-pessoas-executivo-federal---abono-permanencia" target="_blank" rel="noopener">Conjunto no dados.gov.br</a> · <a href="https://repositorio.dados.gov.br/segrt/ABONOP_122025.csv" target="_blank" rel="noopener">Arquivo usado</a></div>
+      <p class="meta" data-rastro>Arquivo <code>ABONOP_122025.csv</code>, referência dezembro de 2025.</p>
+    </div>
+    <div class="card" id="card-f3">
+      <h4>F3 · População residente</h4>
+      <div>Instituto Brasileiro de Geografia e Estatística — estimativas por UF</div>
+      <div><a href="https://sidra.ibge.gov.br/tabela/6579" target="_blank" rel="noopener">SIDRA, tabela 6579</a> · <a href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html" target="_blank" rel="noopener">ibge.gov.br</a></div>
+      <p class="meta" data-rastro>Referência 2025.</p>
+    </div>
+    <div class="card" id="card-f4">
+      <h4>F4 · Malha territorial</h4>
+      <div>Instituto Brasileiro de Geografia e Estatística — API de malhas</div>
+      <div><a href="https://servicodados.ibge.gov.br/api/docs/malhas?versao=3" target="_blank" rel="noopener">servicodados.ibge.gov.br</a></div>
+      <p class="meta" data-rastro>GeoJSON das 27 UFs, versionado no repositório.</p>
+    </div>
+  </div>
   <h3>Baixar os dados derivados</h3>
   <ul class="downloads">
     <li><a href="data/idspf_uf.csv" download>idspf_uf.csv</a> — índice por UF nas quatro lentes</li>
     <li><a href="data/idspf_uf_grupo.csv" download>idspf_uf_grupo.csv</a> — por grupo (INSS, Fazenda/Receita, IFs, universidades, IBGE)</li>
     <li><a href="data/idspf_uf.json" download>idspf_uf.json</a> · <a href="data/idspf_uf_grupo.json" download>idspf_uf_grupo.json</a> · <a href="data/metadata.json" download>metadata.json</a></li>
   </ul>
-  <p class="licenca">Código: MIT. Dados derivados e textos: CC BY 4.0. Como citar: <span id="citacao"></span></p>
+  <h3>Como citar</h3>
+  <p class="licenca" id="citacao">FIGUEIREDO, Carla. <strong>IDSP-F — Índice de Deserto de Serviço Público Federal</strong>. Versão <span id="cit-versao">1.0</span>, referência <span id="cit-ref">dezembro de 2025</span>. <span id="cit-ano">2026</span>. Disponível em: <span id="cit-url">https://idsp-f.vercel.app/</span>.</p>
+  <p class="licenca">Código sob licença MIT. Dados derivados e textos sob CC BY 4.0.</p>
 </section>
 
 </main>
 
 <footer class="rodape">
   <div class="wrap">
-    <p>IDSP-F <span id="versao"></span> · <a id="lnk-repo" href="https://github.com/">código-fonte</a> · Concurso de Reúso de Dados Abertos — CGU, Edital nº 46/2026.</p>
+    <p>IDSP-F <span id="versao"></span> · <a id="lnk-repo" href="https://github.com/Carlafigueiredo10/idsp-f">código-fonte</a> · Concurso de Reúso de Dados Abertos — CGU, Edital nº 46/2026.</p>
     <p class="mini">Produto independente. Não representa posição oficial de nenhum órgão.</p>
   </div>
 </footer>
