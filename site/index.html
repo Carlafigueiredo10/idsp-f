@@ -19,11 +19,8 @@
     <h1>IDSP-F</h1>
     <p class="tagline">Onde o Estado federal está mais ausente — e mais perto de sumir.</p>
     <p class="lead">Cruzamos a <strong>presença</strong> de servidores federais por habitante com a <strong>fragilidade</strong> de cada território — a parcela dos ativos que já cumpre os requisitos para se aposentar hoje — para orientar reposição de força de trabalho e continuidade de serviços.</p>
-    <div class="lente" role="group" aria-label="Lente de análise">
-      <button type="button" data-lente="nucleo" class="ativo" aria-pressed="true">Núcleo de serviços</button>
-      <button type="button" data-lente="total" aria-pressed="false">Executivo Federal total</button>
-    </div>
-    <p class="lente-desc" id="lente-desc">INSS, Receita Federal, Institutos Federais, universidades e IBGE — os serviços federais que a população encontra no território.</p>
+    <div class="lente" role="group" aria-label="Lente de análise" id="lentes"></div>
+    <p class="lente-desc" id="lente-desc"></p>
     <p class="ref" id="ref"></p>
   </div>
   <nav class="menu" aria-label="Seções">
@@ -71,13 +68,16 @@
 <section id="metodologia" aria-labelledby="h-met">
   <h2 id="h-met">Como o índice é calculado</h2>
   <div class="prosa">
-    <p>Para cada UF <em>t</em> e cada lente (núcleo de serviços ou Executivo Federal total):</p>
+    <p>Para cada UF e cada lente:</p>
     <ul>
       <li><strong>Presença A(t)</strong> = servidores civis ativos com cargo efetivo em exercício na UF ÷ população residente × 10.000. Percentil nacional <em>A_pct</em>: 0 = menor presença.</li>
       <li><strong>Fragilidade B(t)</strong> = servidores recebendo abono de permanência (já cumpriram os requisitos de aposentadoria e seguem na ativa) ÷ ativos. Percentil <em>B_pct</em>: 100 = maior fragilidade.</li>
       <li><strong>Classe</strong>: corte na mediana nacional de cada eixo. A baixo e B alto = <em>deserto crítico</em>; A baixo e B baixo = <em>deserto estável</em>; A alto e B alto = <em>presença em risco</em>; A alto e B baixo = <em>presença consolidada</em>.</li>
       <li><strong>Gravidade</strong> = ((100 − A_pct) + B_pct) ÷ 2. Ordena as UFs; é sempre exibida ao lado dos dois números brutos.</li>
     </ul>
+    <h3>Por que existem quatro lentes</h3>
+    <p>Somar tudo numa lente só produz leitura falsa. São Paulo tinha a menor presença do país e era classificado como <em>deserto crítico</em>; separando as naturezas, aparece que o vazio é inteiramente educação federal — e existe porque São Paulo construiu a própria rede estadual (USP, Unicamp, Unesp, Centro Paula Souza). Nos serviços em que a União é a única entrega possível, São Paulo está acima da mediana nacional.</p>
+    <p>Por isso <strong>serviços exclusivos</strong> (INSS, Receita, IBGE — sem substituto estadual) e <strong>educação federal</strong> (onde estados e municípios também entregam) são lentes separadas. As outras duas somam, para quem quiser o retrato geral.</p>
     <h3>O que o índice não é</h3>
     <p>Mede presença <strong>federal</strong>, não capacidade estatal total do território. Ficam fora: militares, Banco Central, Judiciário, Legislativo, estatais e servidores estaduais e municipais. O abono de permanência é uma <em>proxy</em> de elegibilidade, não uma previsão de saída.</p>
     <h3>Privacidade por construção</h3>
@@ -94,8 +94,8 @@
   <div class="cards" id="cards-fontes"></div>
   <h3>Baixar os dados derivados</h3>
   <ul class="downloads">
-    <li><a href="data/idspf_uf.csv" download>idspf_uf.csv</a> — índice por UF e lente</li>
-    <li><a href="data/idspf_uf_grupo.csv" download>idspf_uf_grupo.csv</a> — núcleo por grupo (INSS, RFB, IFs, universidades, IBGE)</li>
+    <li><a href="data/idspf_uf.csv" download>idspf_uf.csv</a> — índice por UF nas quatro lentes</li>
+    <li><a href="data/idspf_uf_grupo.csv" download>idspf_uf_grupo.csv</a> — por grupo (INSS, Fazenda/Receita, IFs, universidades, IBGE)</li>
     <li><a href="data/idspf_uf.json" download>idspf_uf.json</a> · <a href="data/idspf_uf_grupo.json" download>idspf_uf_grupo.json</a> · <a href="data/metadata.json" download>metadata.json</a></li>
   </ul>
   <p class="licenca">Código: MIT. Dados derivados e textos: CC BY 4.0. Como citar: <span id="citacao"></span></p>

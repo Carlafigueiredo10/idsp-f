@@ -69,6 +69,18 @@ def meta():
 
 
 @needs_out
+def test_lentes_do_config_batem_com_a_saida(uf):
+    """As lentes são definidas em config/lentes.yaml; a saída não pode divergir."""
+    import sys as _s
+    _s.path.insert(0, str(ROOT / "scripts"))
+    from common import Lentes
+
+    L = Lentes()
+    assert set(uf.lente.unique()) == set(L.ids)
+    assert L.padrao in L.ids
+
+
+@needs_out
 def test_27_ufs_por_lente(uf):
     for lente, g in uf.groupby("lente"):
         assert len(g) == 27, lente
@@ -128,7 +140,11 @@ def test_site_recebeu_jsons():
     for f in ("idspf_uf.json", "idspf_uf_grupo.json", "metadata.json"):
         assert (SITE / f).exists(), f
     d = json.load(open(SITE / "idspf_uf.json", encoding="utf-8"))
-    assert set(d) == {"nucleo", "total"} and len(d["nucleo"]) == 27
+    meta = json.load(open(SITE / "metadata.json", encoding="utf-8"))
+    ids = [l["id"] for l in meta["lentes"]]
+    assert set(d) == set(ids), (set(d), set(ids))
+    assert all(len(d[i]) == 27 for i in ids)
+    assert meta["lente_padrao"] in ids
 
 
 @pytest.mark.skipif(not (ROOT / "site" / "data" / "uf.geojson").exists(), reason="malha ausente")

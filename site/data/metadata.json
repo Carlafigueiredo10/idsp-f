@@ -3,7 +3,7 @@
  "versao": "1.0.0",
  "recorte": "UF",
  "ficticio": false,
- "gerado_em": "2026-09-08T20:59:12+00:00",
+ "gerado_em": "2026-09-11T17:45:41+00:00",
  "mes_ref_f1": "2025-12",
  "mes_ref_f2": "2025-12",
  "ano_pop": 2025,
@@ -39,12 +39,12 @@
   }
  },
  "cobertura_crosswalk": {
-  "nucleo": 0.9209,
-  "total": 0.8546,
+  "nucleo": 1.0,
+  "total": 0.9295,
   "por_metodo": {
-   "sem_casamento": 178,
+   "sem_casamento": 152,
    "exato": 129,
-   "fuzzy": 36
+   "fuzzy": 62
   },
   "nota": "O eixo B usa apenas órgãos presentes nas duas bases. n_ativos_base_b é o denominador efetivo da fragilidade."
  },
@@ -96,12 +96,28 @@
   "corte": "mediana",
   "supressao_min": 5,
   "cortes": {
+   "exclusivos": {
+    "corte": "mediana",
+    "A_pct_lim": 50.0,
+    "B_pct_lim": 50.0,
+    "A_raw_lim": 1.55,
+    "B_raw_lim": 0.216,
+    "ufs_sem_dado": 0
+   },
+   "educacao": {
+    "corte": "mediana",
+    "A_pct_lim": 50.0,
+    "B_pct_lim": 50.0,
+    "A_raw_lim": 15.7,
+    "B_raw_lim": 0.0738,
+    "ufs_sem_dado": 0
+   },
    "nucleo": {
     "corte": "mediana",
     "A_pct_lim": 50.0,
     "B_pct_lim": 50.0,
     "A_raw_lim": 16.99,
-    "B_raw_lim": 0.0934,
+    "B_raw_lim": 0.0923,
     "ufs_sem_dado": 0
    },
    "total": {
@@ -109,7 +125,7 @@
     "A_pct_lim": 50.0,
     "B_pct_lim": 50.0,
     "A_raw_lim": 19.25,
-    "B_raw_lim": 0.1423,
+    "B_raw_lim": 0.1451,
     "ufs_sem_dado": 0
    }
   }
@@ -141,6 +157,54 @@
    "descricao": "Instituto Brasileiro de Geografia e Estatística"
   }
  ],
+ "lentes": [
+  {
+   "id": "exclusivos",
+   "nome": "Serviços exclusivos",
+   "frase": "em serviços exclusivos da União",
+   "descricao": "INSS, Receita Federal e IBGE — serviços que só a União entrega. Onde faltam, não há rede estadual ou municipal que substitua: o cidadão fica sem a quem recorrer.",
+   "grupos": [
+    "INSS",
+    "FAZ",
+    "IBGE"
+   ],
+   "padrao": true
+  },
+  {
+   "id": "educacao",
+   "nome": "Educação federal",
+   "frase": "em universidades e institutos federais",
+   "descricao": "Universidades federais e Institutos Federais. Estados e municípios também mantêm redes de ensino, então a ausência federal pode estar substituída — e em São Paulo está. Leia esta lente como investimento federal em educação no território, não como falta de escola.",
+   "grupos": [
+    "UNIV",
+    "IF"
+   ],
+   "padrao": false
+  },
+  {
+   "id": "nucleo",
+   "nome": "Núcleo de serviços",
+   "frase": "do núcleo de serviços",
+   "descricao": "As duas lentes anteriores somadas: tudo o que a população encontra fisicamente no território. Útil para o retrato geral, desde que se olhe a composição antes de concluir — é ela que revela se o número vem de serviço exclusivo ou de educação.",
+   "grupos": [
+    "INSS",
+    "FAZ",
+    "IBGE",
+    "UNIV",
+    "IF"
+   ],
+   "padrao": false
+  },
+  {
+   "id": "total",
+   "nome": "Executivo Federal",
+   "frase": "do Executivo Federal",
+   "descricao": "Todos os servidores civis ativos do Executivo Federal com cargo efetivo (SIAPE), inclusive a administração central dos ministérios.",
+   "grupos": "todos",
+   "padrao": false
+  }
+ ],
+ "lente_padrao": "exclusivos",
  "fora_do_escopo": [
   "militares",
   "Bacen",

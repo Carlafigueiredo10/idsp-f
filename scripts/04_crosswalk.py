@@ -1,7 +1,7 @@
 """04 — Crosswalk de nomes de órgão entre F1 (SIAPE/Cadastro) e F2 (Abono).
 
-Normaliza (unidecode, maiúsculas), casa exato -> fuzzy (token_set_ratio >= limiar)
--> overrides manuais em config/crosswalk_overrides.yaml. Publica cobertura
+Normaliza, expande as abreviações do abono, casa exato -> fuzzy (token_set_ratio >=
+limiar) -> overrides manuais em config/crosswalk_overrides.yaml. Publica cobertura
 (parcela de ativos em órgãos casados) por lente e a lista de pendentes.
 
 Saídas: data/interim/crosswalk.csv, crosswalk_pendentes.csv, cobertura.json
@@ -11,12 +11,14 @@ from __future__ import annotations
 import pandas as pd
 from rapidfuzz import fuzz, process
 
-from common import INTERIM, Nucleo, load_yaml, log, norm, parametros, write_json
+from common import (INTERIM, Nucleo, construir_vocabulario, expandir_abreviacoes,
+                    load_yaml, log, norm, parametros, write_json)
 
 
 def main():
     p = parametros()
     limiar = float(p.get("fuzzy_limiar", 92))
+    limiar_ord = float(p.get("fuzzy_limiar_ordenado", 85))
     overrides = {norm(k): norm(v) for k, v in (load_yaml("crosswalk_overrides.yaml").get("overrides") or {}).items()}
     nucleo = Nucleo()
 
@@ -31,24 +33,45 @@ def main():
     nomes2 = [n for n in orgs2["org_atuacao"].tolist() if n]
     set2 = set(nomes2)
 
+    # O abono trunca os nomes em 40 caracteres e abrevia: "FUND. INST. BRASIL. GEOG. E
+    # ESTATISTICA". Contra o nome inteiro isso pontua 74, abaixo do limiar, enquanto um
+    # órgão errado ("INSTITUTO BRASILEIRO DE MUSEUS") pontua 87 — baixar o limiar criaria
+    # falsos casamentos. Expandir as abreviações pelo vocabulário do cadastro leva o par
+    # certo a 95 e mantém o limiar alto.
+    vocab = construir_vocabulario(orgs1["org"].tolist())
+    exp2 = {n: expandir_abreviacoes(n, vocab) for n in nomes2}
+    nomes2_exp = list(exp2.values())
+    de_exp_para_original = {v: k for k, v in exp2.items()}
+
     rows, pend = [], []
     for _, r in orgs1.iterrows():
         nome, metodo, score, alvo = r["org"], "", 0.0, ""
         if not nome:
             continue
+        nome_exp = expandir_abreviacoes(nome, vocab)
         if nome in overrides and overrides[nome] in set2:
             alvo, metodo, score = overrides[nome], "manual", 100.0
         elif nome in set2:
             alvo, metodo, score = nome, "exato", 100.0
-        elif nomes2:
-            m = process.extractOne(nome, nomes2, scorer=fuzz.token_set_ratio)
-            if m and m[1] >= limiar:
-                alvo, metodo, score = m[0], "fuzzy", float(m[1])
-            else:
-                cands = process.extract(nome, nomes2, scorer=fuzz.token_set_ratio, limit=3)
+        elif nomes2_exp:
+            # dois critérios: o primeiro acha o candidato, o segundo recusa o par em que
+            # um nome é apenas subconjunto do outro
+            cands = process.extract(nome_exp, nomes2_exp, scorer=fuzz.token_set_ratio, limit=5)
+            for cand, s_set, _ in cands:
+                if s_set < limiar:
+                    break
+                if fuzz.token_sort_ratio(nome_exp, cand) >= limiar_ord:
+                    alvo = de_exp_para_original[cand]
+                    metodo = "exato" if s_set == 100 and alvo == nome else "fuzzy"
+                    score = float(s_set)
+                    break
+            if not alvo:
                 pend.append(dict(org_siape=nome, cod_org=r["cod_org"], n_ativos=int(r["n_ativos"]),
                                  grupo_nucleo=r["grupo_nucleo"],
-                                 candidatos=" | ".join(f"{c[0]} ({c[1]:.0f})" for c in cands)))
+                                 candidatos=" | ".join(
+                                     f"{de_exp_para_original[c[0]]} "
+                                     f"(set {c[1]:.0f}/ord {fuzz.token_sort_ratio(nome_exp, c[0]):.0f})"
+                                     for c in cands[:3])))
         grupo2 = nucleo.classificar(alvo) if alvo else ""
         rows.append(dict(org_siape=nome, cod_org=r["cod_org"], org_abono=alvo,
                          grupo_nucleo=r["grupo_nucleo"], grupo_abono=grupo2,

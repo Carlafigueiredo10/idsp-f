@@ -1,14 +1,14 @@
 {
- "total": 0.8546,
- "nucleo": 0.9209,
+ "total": 0.9295,
+ "nucleo": 1.0,
  "n_orgaos_f1": 343,
  "n_orgaos_f2": 197,
- "n_casados": 165,
+ "n_casados": 191,
  "por_metodo": {
-  "sem_casamento": 178,
+  "sem_casamento": 152,
   "exato": 129,
-  "fuzzy": 36
+  "fuzzy": 62
  },
- "grupo_inconsistente": 6,
+ "grupo_inconsistente": 20,
  "limiar_fuzzy": 92.0
 }

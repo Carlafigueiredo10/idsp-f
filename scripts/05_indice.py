@@ -17,9 +17,8 @@ from datetime import datetime, timezone
 
 import pandas as pd
 
-from common import INTERIM, PROCESSED, SITE_DATA, Nucleo, log, parametros, write_json
+from common import INTERIM, PROCESSED, SITE_DATA, Lentes, Nucleo, log, parametros, write_json
 
-LENTES = ("nucleo", "total")
 CLASSES = {
     ("baixo", "alto"): ("deserto_critico", "Deserto crítico"),
     ("baixo", "baixo"): ("deserto_estavel", "Deserto estável"),
@@ -66,6 +65,8 @@ def main():
     smin = int(p.get("supressao_min", 5))
     corte = p.get("corte", "mediana")
     nucleo = Nucleo()
+    lentes = Lentes()
+    LENTES = lentes.ids
 
     pop = pd.read_csv(INTERIM / "pop_uf.csv", dtype={"cod_ibge": str})
     f1 = pd.read_csv(INTERIM / "presenca_uf_org.csv", dtype=str, keep_default_na=False)
@@ -101,8 +102,12 @@ def main():
 
     saida, cortes = {}, {}
     for lente in LENTES:
-        a = f1 if lente == "total" else f1[f1.grupo_nucleo != ""]
-        b = f2 if lente == "total" else f2[f2.grupo_nucleo != ""]
+        g = lentes.grupos(lente)
+        if g == "todos":
+            a, b = f1, f2
+        else:
+            a = f1[f1.grupo_nucleo.isin(g)]
+            b = f2[f2.grupo_nucleo.isin(g)]
         b = b[b.org_atuacao.isin(orgs_f2)]
         den = a[a.org.isin(orgs_f1)]          # denominador do eixo B, mesmo universo de b
         df = pop[["cod_ibge", "sigla", "nome", "regiao", "populacao"]].rename(columns={"sigla": "uf"})
@@ -208,7 +213,10 @@ def main():
         divergencia_upag_residencia=meta_f2.get("divergencia_upag_residencia"),
         regras_de_filtro=dict(f1=meta_f1.get("regras_de_filtro"), f2=p.get("filtro_f2")),
         parametros=dict(corte=corte, supressao_min=smin, cortes=cortes),
-        grupos_nucleo=[dict(id=g["id"], nome=g["nome"], descricao=g.get("descricao", "")) for g in nucleo.grupos],
+        grupos_nucleo=[dict(id=g["id"], nome=g["nome"],
+                            descricao=" ".join((g.get("descricao") or "").split()))
+                       for g in nucleo.grupos],
+        lentes=lentes.publico(), lente_padrao=lentes.padrao,
         fora_do_escopo=["militares", "Bacen", "Judiciário", "Legislativo", "estatais",
                         "servidores estaduais e municipais"],
         licencas=dict(codigo="MIT", dados="CC BY 4.0"),
@@ -220,7 +228,8 @@ def main():
         shutil.copy(PROCESSED / f, SITE_DATA / f)
     for l in LENTES:
         top = saida[l].iloc[0]
-        log(f"[{l}] cortes={cortes[l]}  mais grave: {top.uf} ({top.classe}, gravidade {top.gravidade})")
+        log(f"[{l:11}] A mediana={cortes[l]['A_raw_lim']:6.2f}  mais grave: {top.uf} "
+            f"({top.classe}, gravidade {top.gravidade})")
     log("Índice ok")
 
 

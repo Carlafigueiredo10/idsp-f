@@ -35,11 +35,13 @@ code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9em; b
 .topo h1 { margin: .15rem 0 0; font-size: clamp(2.4rem, 8vw, 3.6rem); letter-spacing: -.02em; line-height: 1; }
 .topo .tagline { margin: .35rem 0 .75rem; font-size: clamp(1.1rem, 4vw, 1.4rem); font-weight: 600; color: #f6c6a3; }
 .topo .lead { margin: 0 0 1rem; max-width: 60ch; color: #e8e2d9; }
-.lente { display: inline-flex; border: 1px solid #7d746a; border-radius: 999px; overflow: hidden; }
+.lente { display: flex; flex-wrap: wrap; gap: .4rem; }
 .lente button {
-  background: transparent; color: #f6f2ec; border: 0; padding: .55rem 1rem; font: inherit; font-size: .95rem; cursor: pointer; min-height: 44px;
+  background: transparent; color: #f6f2ec; border: 1px solid #7d746a; border-radius: 999px;
+  padding: .5rem .9rem; font: inherit; font-size: .9rem; cursor: pointer; min-height: 44px;
 }
-.lente button.ativo { background: #f6f2ec; color: var(--ink); font-weight: 700; }
+.lente button:hover { background: #3a3530; }
+.lente button.ativo { background: #f6f2ec; color: var(--ink); font-weight: 700; border-color: #f6f2ec; }
 .lente-desc { margin: .5rem 0 0; font-size: .9rem; color: #cfc7bb; max-width: 60ch; }
 .ref { margin: .5rem 0 1rem; font-size: .8rem; color: #b5ada2; }
 .menu { display: flex; gap: 0; overflow-x: auto; border-top: 1px solid #3a3530; background: #2a2622; }

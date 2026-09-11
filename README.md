@@ -9,11 +9,25 @@ classificar cada unidade da federação em uma matriz de **presença × fragilid
 - **Fragilidade (B)** — parcela desses servidores que já cumpre os requisitos de
   aposentadoria e segue na ativa recebendo abono de permanência.
 
-O quadrante **deserto crítico** (pouca presença + muita gente já elegível) indica onde
-serviços como INSS, Institutos Federais, universidades federais, Receita Federal e IBGE
-correm o maior risco de descontinuidade. É insumo direto para **planejamento e
-dimensionamento da força de trabalho** — a política pública que o próprio conjunto
-"Abono de Permanência" declara como finalidade no dados.gov.br.
+O quadrante **deserto crítico** (pouca presença + muita gente já elegível) indica onde os
+serviços federais correm o maior risco de descontinuidade. É insumo direto para
+**planejamento e dimensionamento da força de trabalho** — a política pública que o próprio
+conjunto "Abono de Permanência" declara como finalidade no dados.gov.br.
+
+O índice tem **quatro lentes**, definidas em `config/lentes.yaml`:
+
+| Lente | Universo |
+|---|---|
+| **Serviços exclusivos** *(padrão)* | INSS, Fazenda/Receita, IBGE — só a União entrega |
+| **Educação federal** | universidades e Institutos Federais — estados e municípios também entregam |
+| **Núcleo de serviços** | as duas anteriores somadas |
+| **Executivo Federal** | todos os órgãos do universo |
+
+Separar as duas primeiras não é detalhe: somadas, São Paulo aparecia como o menor índice de
+presença do país e era classificado como deserto crítico. O vazio é inteiramente educação
+federal — São Paulo tem rede estadual própria (USP, Unicamp, Unesp) — e, nos serviços em que
+a União é a única entrega possível, o estado está acima da mediana nacional. Ver
+[METODOLOGIA.md](METODOLOGIA.md) §2.
 
 Site: <https://idsp-f.vercel.app/> · Versão v1.0, recorte por UF, referência dezembro de 2025.
 
@@ -101,7 +115,8 @@ Todo parâmetro de julgamento está em `config/`, não no código:
 
 - `parametros.yaml` — corte da matriz (mediana ou tercil), limiar de supressão, regras de
   filtro do universo, limiar do casamento fuzzy.
-- `nucleo.yaml` — quais órgãos compõem o "núcleo de serviços", por expressão regular.
+- `nucleo.yaml` — quais órgãos compõem cada grupo, por expressão regular.
+- `lentes.yaml` — quais grupos formam cada lente e qual delas abre o site.
 - `crosswalk_overrides.yaml` — casamentos manuais de nomes de órgão.
 
 Um estado ou município que queira replicar o índice sobre o seu próprio RPPS troca F1 e F2
@@ -118,11 +133,11 @@ publicado nesta versão. Detalhes em [PRIVACIDADE.md](PRIVACIDADE.md).
 ## Estrutura
 
 ```
-config/     parâmetros, definição do núcleo, overrides do crosswalk
+config/     parâmetros, grupos do núcleo, lentes, overrides do crosswalk
 scripts/    00 (dados fictícios) · 01–05 (pipeline) · common.py · run_all.sh
 tests/      invariantes do índice, da supressão e da malha
 data/       raw (ignorado) · interim · processed · geo
-site/       index.html · app.js · styles.css · data/ — publicado pelo GitHub Pages
+site/       index.html · app.js · styles.css · data/ — publicado pela Vercel
 docs/       textos de cadastro e checklist do edital
 ```
 

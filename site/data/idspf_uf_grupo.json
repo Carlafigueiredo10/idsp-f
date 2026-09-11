@@ -38,11 +38,11 @@
  {
   "uf": "RO",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "26",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "AC",
@@ -83,11 +83,11 @@
  {
   "uf": "AC",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "17",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "AM",
@@ -128,11 +128,11 @@
  {
   "uf": "AM",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "42",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "RR",
@@ -173,11 +173,11 @@
  {
   "uf": "RR",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "15",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "PA",
@@ -209,20 +209,20 @@
  {
   "uf": "PA",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "7927",
-  "n_abono": "945",
+  "n_ativos": "7930",
+  "n_abono": "946",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1192
+  "B_raw": 0.1193
  },
  {
   "uf": "PA",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "97",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "AP",
@@ -263,11 +263,11 @@
  {
   "uf": "AP",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "23",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "TO",
@@ -300,19 +300,19 @@
   "uf": "TO",
   "grupo_nucleo": "UNIV",
   "n_ativos": "1968",
-  "n_abono": "11",
+  "n_abono": "42",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.0056
+  "B_raw": 0.0213
  },
  {
   "uf": "TO",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "31",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "MA",
@@ -353,11 +353,11 @@
  {
   "uf": "MA",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "82",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "PI",
@@ -389,20 +389,20 @@
  {
   "uf": "PI",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "2976",
+  "n_ativos": "3156",
   "n_abono": "392",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1317
+  "B_raw": 0.1242
  },
  {
   "uf": "PI",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "65",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "CE",
@@ -434,20 +434,20 @@
  {
   "uf": "CE",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "5285",
+  "n_ativos": "5815",
   "n_abono": "894",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1692
+  "B_raw": 0.1537
  },
  {
   "uf": "CE",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "120",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "RN",
@@ -479,7 +479,7 @@
  {
   "uf": "RN",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "6251",
+  "n_ativos": "6252",
   "n_abono": "7",
   "nome_grupo": "Universidades",
   "suprimido": false,
@@ -488,11 +488,11 @@
  {
   "uf": "RN",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "66",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "PB",
@@ -533,11 +533,11 @@
  {
   "uf": "PB",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "69",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "PE",
@@ -569,20 +569,20 @@
  {
   "uf": "PE",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "8310",
+  "n_ativos": "8849",
   "n_abono": "1347",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1621
+  "B_raw": 0.1522
  },
  {
   "uf": "PE",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "109",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "AL",
@@ -623,11 +623,11 @@
  {
   "uf": "AL",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "55",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "SE",
@@ -668,11 +668,11 @@
  {
   "uf": "SE",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "42",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "BA",
@@ -704,20 +704,20 @@
  {
   "uf": "BA",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "8211",
-  "n_abono": "849",
+  "n_ativos": "8612",
+  "n_abono": "904",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1034
+  "B_raw": 0.105
  },
  {
   "uf": "BA",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "208",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "MG",
@@ -740,29 +740,29 @@
  {
   "uf": "MG",
   "grupo_nucleo": "IF",
-  "n_ativos": "6679",
+  "n_ativos": "8309",
   "n_abono": "177",
   "nome_grupo": "Institutos Federais",
   "suprimido": false,
-  "B_raw": 0.0265
+  "B_raw": 0.0213
  },
  {
   "uf": "MG",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "16184",
-  "n_abono": "1749",
+  "n_ativos": "27015",
+  "n_abono": "2418",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1081
+  "B_raw": 0.0895
  },
  {
   "uf": "MG",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "267",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "ES",
@@ -794,20 +794,20 @@
  {
   "uf": "ES",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "3549",
-  "n_abono": "324",
+  "n_ativos": "3551",
+  "n_abono": "325",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.0913
+  "B_raw": 0.0915
  },
  {
   "uf": "ES",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "58",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "RJ",
@@ -830,29 +830,29 @@
  {
   "uf": "RJ",
   "grupo_nucleo": "IF",
-  "n_ativos": "3872",
+  "n_ativos": "5126",
   "n_abono": "304",
   "nome_grupo": "Institutos Federais",
   "suprimido": false,
-  "B_raw": 0.0785
+  "B_raw": 0.0593
  },
  {
   "uf": "RJ",
   "grupo_nucleo": "UNIV",
   "n_ativos": "22442",
-  "n_abono": "3430",
+  "n_abono": "3776",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.1528
+  "B_raw": 0.1683
  },
  {
   "uf": "RJ",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "994",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "SP",
@@ -884,20 +884,20 @@
  {
   "uf": "SP",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "8320",
-  "n_abono": "763",
+  "n_ativos": "8435",
+  "n_abono": "767",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.0917
+  "B_raw": 0.0909
  },
  {
   "uf": "SP",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "295",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "PR",
@@ -929,20 +929,20 @@
  {
   "uf": "PR",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "9478",
+  "n_ativos": "9596",
   "n_abono": "549",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.0579
+  "B_raw": 0.0572
  },
  {
   "uf": "PR",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "147",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "SC",
@@ -974,7 +974,7 @@
  {
   "uf": "SC",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "5835",
+  "n_ativos": "5836",
   "n_abono": "607",
   "nome_grupo": "Universidades",
   "suprimido": false,
@@ -983,11 +983,11 @@
  {
   "uf": "SC",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "122",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "RS",
@@ -1019,20 +1019,20 @@
  {
   "uf": "RS",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "15599",
+  "n_ativos": "16192",
   "n_abono": "1167",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.0748
+  "B_raw": 0.0721
  },
  {
   "uf": "RS",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "136",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "MS",
@@ -1064,20 +1064,20 @@
  {
   "uf": "MS",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "3113",
-  "n_abono": "<5",
+  "n_ativos": "4615",
+  "n_abono": "337",
   "nome_grupo": "Universidades",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.073
  },
  {
   "uf": "MS",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "69",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "MT",
@@ -1118,11 +1118,11 @@
  {
   "uf": "MT",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "53",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "GO",
@@ -1163,11 +1163,11 @@
  {
   "uf": "GO",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "99",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  },
  {
   "uf": "DF",
@@ -1199,19 +1199,19 @@
  {
   "uf": "DF",
   "grupo_nucleo": "UNIV",
-  "n_ativos": "5487",
-  "n_abono": "489",
+  "n_ativos": "6210",
+  "n_abono": "490",
   "nome_grupo": "Universidades",
   "suprimido": false,
-  "B_raw": 0.0891
+  "B_raw": 0.0789
  },
  {
   "uf": "DF",
   "grupo_nucleo": "IBGE",
-  "n_ativos": "<5",
+  "n_ativos": "75",
   "n_abono": "0",
   "nome_grupo": "IBGE",
-  "suprimido": true,
-  "B_raw": null
+  "suprimido": false,
+  "B_raw": 0.0
  }
 ]

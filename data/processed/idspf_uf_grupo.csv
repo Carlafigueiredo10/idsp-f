@@ -3,134 +3,134 @@ RO,INSS,120,37,INSS,False,0.3083
 RO,FAZ,142,73,Fazenda (Receita Federal),False,0.5141
 RO,IF,162,17,Institutos Federais,False,0.1049
 RO,UNIV,1337,125,Universidades,False,0.0935
-RO,IBGE,<5,0,IBGE,True,
+RO,IBGE,26,0,IBGE,False,0.0
 AC,INSS,59,23,INSS,False,0.3898
 AC,FAZ,50,24,Fazenda (Receita Federal),False,0.48
 AC,IF,796,5,Institutos Federais,False,0.0063
 AC,UNIV,1378,125,Universidades,False,0.0907
-AC,IBGE,<5,0,IBGE,True,
+AC,IBGE,17,0,IBGE,False,0.0
 AM,INSS,199,53,INSS,False,0.2663
 AM,FAZ,277,69,Fazenda (Receita Federal),False,0.2491
 AM,IF,1800,131,Institutos Federais,False,0.0728
 AM,UNIV,3140,361,Universidades,False,0.115
-AM,IBGE,<5,0,IBGE,True,
+AM,IBGE,42,0,IBGE,False,0.0
 RR,INSS,59,19,INSS,False,0.322
 RR,FAZ,87,55,Fazenda (Receita Federal),False,0.6322
 RR,IF,763,41,Institutos Federais,False,0.0537
 RR,UNIV,994,62,Universidades,False,0.0624
-RR,IBGE,<5,0,IBGE,True,
+RR,IBGE,15,0,IBGE,False,0.0
 PA,INSS,450,112,INSS,False,0.2489
 PA,FAZ,471,126,Fazenda (Receita Federal),False,0.2675
 PA,IF,2392,123,Institutos Federais,False,0.0514
-PA,UNIV,7927,945,Universidades,False,0.1192
-PA,IBGE,<5,0,IBGE,True,
+PA,UNIV,7930,946,Universidades,False,0.1193
+PA,IBGE,97,0,IBGE,False,0.0
 AP,INSS,56,9,INSS,False,0.1607
 AP,FAZ,67,70,Fazenda (Receita Federal),False,1.0448
 AP,IF,685,7,Institutos Federais,False,0.0102
 AP,UNIV,1105,0,Universidades,False,0.0
-AP,IBGE,<5,0,IBGE,True,
+AP,IBGE,23,0,IBGE,False,0.0
 TO,INSS,104,7,INSS,False,0.0673
 TO,FAZ,42,11,Fazenda (Receita Federal),False,0.2619
 TO,IF,1231,32,Institutos Federais,False,0.026
-TO,UNIV,1968,11,Universidades,False,0.0056
-TO,IBGE,<5,0,IBGE,True,
+TO,UNIV,1968,42,Universidades,False,0.0213
+TO,IBGE,31,0,IBGE,False,0.0
 MA,INSS,472,107,INSS,False,0.2267
 MA,FAZ,94,47,Fazenda (Receita Federal),False,0.5
 MA,IF,3119,144,Institutos Federais,False,0.0462
 MA,UNIV,3373,361,Universidades,False,0.107
-MA,IBGE,<5,0,IBGE,True,
+MA,IBGE,82,0,IBGE,False,0.0
 PI,INSS,336,87,INSS,False,0.2589
 PI,FAZ,124,35,Fazenda (Receita Federal),False,0.2823
 PI,IF,2614,73,Institutos Federais,False,0.0279
-PI,UNIV,2976,392,Universidades,False,0.1317
-PI,IBGE,<5,0,IBGE,True,
+PI,UNIV,3156,392,Universidades,False,0.1242
+PI,IBGE,65,0,IBGE,False,0.0
 CE,INSS,780,176,INSS,False,0.2256
 CE,FAZ,614,151,Fazenda (Receita Federal),False,0.2459
 CE,IF,3625,157,Institutos Federais,False,0.0433
-CE,UNIV,5285,894,Universidades,False,0.1692
-CE,IBGE,<5,0,IBGE,True,
+CE,UNIV,5815,894,Universidades,False,0.1537
+CE,IBGE,120,0,IBGE,False,0.0
 RN,INSS,258,63,INSS,False,0.2442
 RN,FAZ,149,52,Fazenda (Receita Federal),False,0.349
 RN,IF,2644,119,Institutos Federais,False,0.045
-RN,UNIV,6251,7,Universidades,False,0.0011
-RN,IBGE,<5,0,IBGE,True,
+RN,UNIV,6252,7,Universidades,False,0.0011
+RN,IBGE,66,0,IBGE,False,0.0
 PB,INSS,308,104,INSS,False,0.3377
 PB,FAZ,165,63,Fazenda (Receita Federal),False,0.3818
 PB,IF,<5,5,Institutos Federais,True,
 PB,UNIV,8669,1331,Universidades,False,0.1535
-PB,IBGE,<5,0,IBGE,True,
+PB,IBGE,69,0,IBGE,False,0.0
 PE,INSS,1275,160,INSS,False,0.1255
 PE,FAZ,668,162,Fazenda (Receita Federal),False,0.2425
 PE,IF,3024,263,Institutos Federais,False,0.087
-PE,UNIV,8310,1347,Universidades,False,0.1621
-PE,IBGE,<5,0,IBGE,True,
+PE,UNIV,8849,1347,Universidades,False,0.1522
+PE,IBGE,109,0,IBGE,False,0.0
 AL,INSS,263,90,INSS,False,0.3422
 AL,FAZ,90,40,Fazenda (Receita Federal),False,0.4444
 AL,IF,724,130,Institutos Federais,False,0.1796
 AL,UNIV,3188,373,Universidades,False,0.117
-AL,IBGE,<5,0,IBGE,True,
+AL,IBGE,55,0,IBGE,False,0.0
 SE,INSS,178,48,INSS,False,0.2697
 SE,FAZ,116,21,Fazenda (Receita Federal),False,0.181
 SE,IF,1339,72,Institutos Federais,False,0.0538
 SE,UNIV,2949,235,Universidades,False,0.0797
-SE,IBGE,<5,0,IBGE,True,
+SE,IBGE,42,0,IBGE,False,0.0
 BA,INSS,1188,160,INSS,False,0.1347
 BA,FAZ,750,168,Fazenda (Receita Federal),False,0.224
 BA,IF,<5,6,Institutos Federais,True,
-BA,UNIV,8211,849,Universidades,False,0.1034
-BA,IBGE,<5,0,IBGE,True,
+BA,UNIV,8612,904,Universidades,False,0.105
+BA,IBGE,208,0,IBGE,False,0.0
 MG,INSS,1726,224,INSS,False,0.1298
 MG,FAZ,1469,338,Fazenda (Receita Federal),False,0.2301
-MG,IF,6679,177,Institutos Federais,False,0.0265
-MG,UNIV,16184,1749,Universidades,False,0.1081
-MG,IBGE,<5,0,IBGE,True,
+MG,IF,8309,177,Institutos Federais,False,0.0213
+MG,UNIV,27015,2418,Universidades,False,0.0895
+MG,IBGE,267,0,IBGE,False,0.0
 ES,INSS,250,46,INSS,False,0.184
 ES,FAZ,225,71,Fazenda (Receita Federal),False,0.3156
 ES,IF,2929,153,Institutos Federais,False,0.0522
-ES,UNIV,3549,324,Universidades,False,0.0913
-ES,IBGE,<5,0,IBGE,True,
+ES,UNIV,3551,325,Universidades,False,0.0915
+ES,IBGE,58,0,IBGE,False,0.0
 RJ,INSS,1320,460,INSS,False,0.3485
 RJ,FAZ,2133,493,Fazenda (Receita Federal),False,0.2311
-RJ,IF,3872,304,Institutos Federais,False,0.0785
-RJ,UNIV,22442,3430,Universidades,False,0.1528
-RJ,IBGE,<5,0,IBGE,True,
+RJ,IF,5126,304,Institutos Federais,False,0.0593
+RJ,UNIV,22442,3776,Universidades,False,0.1683
+RJ,IBGE,994,0,IBGE,False,0.0
 SP,INSS,3260,547,INSS,False,0.1678
 SP,FAZ,4138,716,Fazenda (Receita Federal),False,0.173
 SP,IF,4572,114,Institutos Federais,False,0.0249
-SP,UNIV,8320,763,Universidades,False,0.0917
-SP,IBGE,<5,0,IBGE,True,
+SP,UNIV,8435,767,Universidades,False,0.0909
+SP,IBGE,295,0,IBGE,False,0.0
 PR,INSS,780,90,INSS,False,0.1154
 PR,FAZ,1392,291,Fazenda (Receita Federal),False,0.2091
 PR,IF,2546,46,Institutos Federais,False,0.0181
-PR,UNIV,9478,549,Universidades,False,0.0579
-PR,IBGE,<5,0,IBGE,True,
+PR,UNIV,9596,549,Universidades,False,0.0572
+PR,IBGE,147,0,IBGE,False,0.0
 SC,INSS,970,93,INSS,False,0.0959
 SC,FAZ,604,124,Fazenda (Receita Federal),False,0.2053
 SC,IF,2660,84,Institutos Federais,False,0.0316
-SC,UNIV,5835,607,Universidades,False,0.104
-SC,IBGE,<5,0,IBGE,True,
+SC,UNIV,5836,607,Universidades,False,0.104
+SC,IBGE,122,0,IBGE,False,0.0
 RS,INSS,1097,147,INSS,False,0.134
 RS,FAZ,1362,247,Fazenda (Receita Federal),False,0.1814
 RS,IF,2304,47,Institutos Federais,False,0.0204
-RS,UNIV,15599,1167,Universidades,False,0.0748
-RS,IBGE,<5,0,IBGE,True,
+RS,UNIV,16192,1167,Universidades,False,0.0721
+RS,IBGE,136,0,IBGE,False,0.0
 MS,INSS,207,55,INSS,False,0.2657
 MS,FAZ,240,56,Fazenda (Receita Federal),False,0.2333
 MS,IF,1176,<5,Institutos Federais,True,
-MS,UNIV,3113,<5,Universidades,True,
-MS,IBGE,<5,0,IBGE,True,
+MS,UNIV,4615,337,Universidades,False,0.073
+MS,IBGE,69,0,IBGE,False,0.0
 MT,INSS,230,42,INSS,False,0.1826
 MT,FAZ,118,36,Fazenda (Receita Federal),False,0.3051
 MT,IF,1961,64,Institutos Federais,False,0.0326
 MT,UNIV,3289,321,Universidades,False,0.0976
-MT,IBGE,<5,0,IBGE,True,
+MT,IBGE,53,0,IBGE,False,0.0
 GO,INSS,391,108,INSS,False,0.2762
 GO,FAZ,278,79,Fazenda (Receita Federal),False,0.2842
 GO,IF,2000,98,Institutos Federais,False,0.049
 GO,UNIV,4620,483,Universidades,False,0.1045
-GO,IBGE,<5,0,IBGE,True,
+GO,IBGE,99,0,IBGE,False,0.0
 DF,INSS,795,204,INSS,False,0.2566
 DF,FAZ,3615,422,Fazenda (Receita Federal),False,0.1167
 DF,IF,3679,19,Institutos Federais,False,0.0052
-DF,UNIV,5487,489,Universidades,False,0.0891
-DF,IBGE,<5,0,IBGE,True,
+DF,UNIV,6210,490,Universidades,False,0.0789
+DF,IBGE,75,0,IBGE,False,0.0

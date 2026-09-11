@@ -22,6 +22,11 @@ cobertura_uf_minima_org: 0.8
 
 # Crosswalk de nomes de órgão F1 x F2
 fuzzy_limiar: 92              # token_set_ratio mínimo para casamento automático
+# Segundo critério, obrigatório junto com o primeiro. O token_set_ratio premia quando
+# um nome é subconjunto do outro: "MINISTERIO DA CIENCIA, TECNOLOGIA, INOVACOES E
+# COMUNICACOES" casava com "MINISTERIO DAS COMUNICACOES" a 92. O token_sort_ratio
+# pune a diferença de tamanho e derruba esse par para 64, sem afetar os corretos (90+).
+fuzzy_limiar_ordenado: 85
 cobertura_minima_nucleo: 0.8  # run_all.sh falha abaixo disto (lente núcleo)
 
 # Universo de F1 (Cadastro de Servidores). Regex case-insensitive sobre valores

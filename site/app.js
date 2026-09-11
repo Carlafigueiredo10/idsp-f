@@ -12,13 +12,11 @@
     presenca_consolidada: { nome: "Presença consolidada", cor: "#2f7d5b", pat: "plano",   desc: "presença alta e evasão iminente baixa" },
   };
   const PREP = { BA: "Na", PB: "Na", MG: "Em", SP: "Em", SC: "Em", PE: "Em", AL: "Em", SE: "Em", RR: "Em", RO: "Em", GO: "Em", MT: "Em", MS: "Em" };
-  const LENTE_DESC = {
-    nucleo: "INSS, Receita Federal, Institutos Federais, universidades e IBGE — os serviços federais que a população encontra no território.",
-    total: "Todos os servidores civis ativos do Executivo Federal com cargo efetivo (SIAPE).",
-  };
-  const LENTE_ROTULO = { nucleo: "do núcleo de serviços", total: "do Executivo Federal" };
-
-  const st = { lente: "nucleo", uf: null, dados: null, grupos: null, meta: null, geo: null };
+  const st = { lente: null, uf: null, dados: null, grupos: null, meta: null, geo: null };
+  // as lentes são definidas em config/lentes.yaml e chegam pelo metadata.json
+  const lentes = () => st.meta.lentes || [];
+  const lenteAtual = () => lentes().find((l) => l.id === st.lente) || lentes()[0] || {};
+  const lentePadrao = () => (st.meta && st.meta.lente_padrao) || (lentes()[0] || {}).id;
   const $ = (s) => document.querySelector(s);
   const fmtInt = (v) => (typeof v === "number" ? v.toLocaleString("pt-BR") : v);
   const fmtNum = (v, d = 2) => (v == null ? "—" : Number(v).toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d }));
@@ -74,14 +72,14 @@
     const lente = h.get("lente");
     // sem lente no link, volta ao padrão: um link compartilhado precisa mostrar
     // sempre a mesma coisa, e não herdar a lente que o visitante usou antes
-    st.lente = lente && st.dados[lente] ? lente : "nucleo";
+    st.lente = lente && st.dados[lente] ? lente : lentePadrao();
     const uf = (h.get("uf") || "").toUpperCase();
     if (uf && porUF(uf)) st.uf = uf;
   }
   function gravarHash(scroll) {
     const p = new URLSearchParams();
     if (st.uf) p.set("uf", st.uf);
-    if (st.lente !== "nucleo") p.set("lente", st.lente);
+    if (st.lente !== lentePadrao()) p.set("lente", st.lente);
     const novo = "#" + p.toString();
     if (location.hash !== novo) history.replaceState(null, "", novo || location.pathname);
     if (scroll) $("#painel").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -104,12 +102,24 @@
     $("#lnk-privacidade").href = REPO + "/blob/main/PRIVACIDADE.md";
     $("#aviso-ficticio").hidden = !m.ficticio;
     $("#citacao").textContent = `IDSP-F — Índice de Deserto de Serviço Público Federal, v${m.versao}, referência ${mesBR(m.mes_ref_f1)}. Disponível em ${location.origin}/`;
-    document.querySelectorAll(".lente button").forEach((b) => {
+    const cx = $("#lentes");
+    if (cx.childElementCount !== lentes().length) {
+      cx.innerHTML = "";
+      for (const l of lentes()) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.dataset.lente = l.id;
+        b.textContent = l.nome;
+        b.addEventListener("click", () => { st.lente = l.id; gravarHash(false); renderTudo(); });
+        cx.appendChild(b);
+      }
+    }
+    cx.querySelectorAll("button").forEach((b) => {
       const on = b.dataset.lente === st.lente;
       b.classList.toggle("ativo", on);
       b.setAttribute("aria-pressed", String(on));
     });
-    $("#lente-desc").textContent = LENTE_DESC[st.lente];
+    $("#lente-desc").textContent = lenteAtual().descricao || "";
   }
 
   // ---------------------------------------------------------------- legenda
@@ -247,11 +257,13 @@
     const B = r.B_raw == null ? "—" : fmtNum(r.B_raw * 100, 1);
     const sint = r.A_raw == null
       ? `${prep} ${r.nome}, os números desta lente foram suprimidos por serem inferiores ao limite de publicação.`
-      : `${prep} ${r.nome}, <strong>${A}</strong> servidores federais ${LENTE_ROTULO[st.lente]} por 10 mil habitantes (percentil ${fmtNum(r.A_pct, 0)}); <strong>${B}%</strong> já podem se aposentar hoje.`;
+      : `${prep} ${r.nome}, <strong>${A}</strong> servidores federais ${lenteAtual().frase || ""} por 10 mil habitantes (percentil ${fmtNum(r.A_pct, 0)}); <strong>${B}%</strong> já podem se aposentar hoje.`;
 
-    const grupos = st.grupos.filter((g) => g.uf === r.uf);
-    const maxB = d3.max(st.grupos, (g) => g.B_raw) || 1;
-    const barras = st.lente === "nucleo" ? `
+    const gl = lenteAtual().grupos;
+    const daLente = (g) => gl === "todos" || !Array.isArray(gl) || gl.includes(g.grupo_nucleo);
+    const grupos = st.grupos.filter((g) => g.uf === r.uf && daLente(g));
+    const maxB = d3.max(st.grupos.filter(daLente), (g) => g.B_raw) || 1;
+    const barras = grupos.length > 1 ? `
       <div class="barras">
         <h4 style="margin:.5rem 0 .2rem;font-size:.95rem">Fragilidade por grupo do núcleo</h4>
         ${grupos.map((g) => `
@@ -281,7 +293,7 @@
       </div>
       ${barras}
       ${flags.length ? `<p class="flags">Observações: ${flags.join("; ")}.</p>` : ""}
-      <p class="rastro">Lente: ${st.lente === "nucleo" ? "núcleo de serviços" : "Executivo Federal total"} · Cadastro SIAPE ${mesBR(st.meta.mes_ref_f1)} · Abono ${mesBR(st.meta.mes_ref_f2)} · População IBGE ${st.meta.ano_pop} · corte: ${st.meta.parametros.corte} · supressão n &lt; ${st.meta.parametros.supressao_min} · <a href="data/metadata.json">metadata.json</a> · link: <a href="#uf=${r.uf}${st.lente !== "nucleo" ? "&lente=" + st.lente : ""}">#uf=${r.uf}</a></p>`;
+      <p class="rastro">Lente: ${lenteAtual().nome} · Cadastro SIAPE ${mesBR(st.meta.mes_ref_f1)} · Abono ${mesBR(st.meta.mes_ref_f2)} · População IBGE ${st.meta.ano_pop} · corte: ${st.meta.parametros.corte} · supressão n &lt; ${st.meta.parametros.supressao_min} · <a href="data/metadata.json">metadata.json</a> · link: <a href="#uf=${r.uf}${st.lente !== "nucleo" ? "&lente=" + st.lente : ""}">#uf=${r.uf}</a></p>`;
   }
 
   // ---------------------------------------------------------------- metodologia / fontes
@@ -326,11 +338,6 @@
 
   // ---------------------------------------------------------------- eventos
   function ligarEventos() {
-    document.querySelectorAll(".lente button").forEach((b) => b.addEventListener("click", () => {
-      st.lente = b.dataset.lente;
-      gravarHash(false);
-      renderTudo();
-    }));
     $("#sel-uf").addEventListener("change", (e) => selecionar(e.target.value || null, false));
     $("#btn-print").addEventListener("click", () => { if (!st.uf) selecionar(linhas()[0].uf, false); window.print(); });
     $("#btn-share").addEventListener("click", async () => {

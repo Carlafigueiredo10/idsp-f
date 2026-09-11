@@ -206,6 +206,93 @@ class Nucleo:
         return ""
 
 
+def tokens_para_casamento(texto) -> list[str]:
+    """Quebra o nome de um órgão em palavras, tratando as abreviações do abono.
+
+    O recurso de abono trunca os nomes em 40 caracteres e abrevia sem espaço depois
+    do ponto: `UNIVERSIDADE FED.DO TRIANGULO MINEIRO`. Sem quebrar no ponto, `FED.DO`
+    vira uma palavra que não casa com nada.
+    """
+    s = norm(texto).replace("-", " ").replace(".", ". ")
+    return [t for t in re.split(r"[^A-Z0-9.]+", s) if t]
+
+
+def construir_vocabulario(nomes) -> dict[str, str]:
+    """Vocabulário de palavras inteiras, indexado por si mesmas, a partir de nomes
+    não abreviados (o cadastro). Serve para expandir as abreviações do abono."""
+    from collections import Counter
+
+    freq: Counter = Counter()
+    for nome in nomes:
+        for t in tokens_para_casamento(nome):
+            if not t.endswith(".") and len(t) > 2:
+                freq[t] += 1
+    return freq
+
+
+def expandir_abreviacoes(texto, vocabulario) -> str:
+    """`FUND. INST. BRASIL. GEOG. E ESTATISTICA` -> `FUNDACAO INSTITUTO BRASILEIRO
+    GEOGRAFIA E ESTATISTICA`.
+
+    Cada token terminado em ponto é prefixo da palavra inteira. Em vez de manter um
+    dicionário de abreviações à mão, a expansão procura no vocabulário da outra base
+    a palavra mais frequente que começa com aquele prefixo. Prefixos ambíguos ficam
+    com a palavra mais comum, e o casamento aproximado ainda precisa passar do limiar.
+    """
+    saida = []
+    for t in tokens_para_casamento(texto):
+        if t.endswith(".") and len(t) >= 3:
+            pref = t[:-1]
+            cands = [(n, w) for w, n in vocabulario.items() if w.startswith(pref)]
+            saida.append(max(cands)[1] if cands else pref)
+        else:
+            saida.append(t.rstrip("."))
+    return " ".join(saida)
+
+
+class Lentes:
+    """Recortes do índice, definidos em config/lentes.yaml.
+
+    Cada lente é um subconjunto de grupos do núcleo (ou `todos`). Separar as lentes
+    é o que impede o índice de somar serviço exclusivo com serviço concorrente e
+    chamar o resultado de deserto — ver o cabeçalho do arquivo de configuração.
+    """
+
+    def __init__(self):
+        cfg = load_yaml("lentes.yaml")
+        self.itens = cfg["lentes"]
+        if not self.itens:
+            raise SystemExit("config/lentes.yaml não define nenhuma lente")
+        ids = [x["id"] for x in self.itens]
+        if len(set(ids)) != len(ids):
+            raise SystemExit(f"ids de lente repetidos em lentes.yaml: {ids}")
+        padroes = [x["id"] for x in self.itens if x.get("padrao")]
+        if len(padroes) > 1:
+            raise SystemExit(f"mais de uma lente marcada como padrão: {padroes}")
+        self.padrao = padroes[0] if padroes else ids[0]
+        validos = set(Nucleo().ids)
+        for x in self.itens:
+            g = x.get("grupos")
+            if g != "todos" and not set(g) <= validos:
+                raise SystemExit(f"lente {x['id']} cita grupos inexistentes: {set(g) - validos}")
+
+    @property
+    def ids(self) -> list[str]:
+        return [x["id"] for x in self.itens]
+
+    def grupos(self, lente_id: str):
+        x = next(i for i in self.itens if i["id"] == lente_id)
+        return x["grupos"]
+
+    def publico(self) -> list[dict]:
+        """Definições como vão para metadata.json, para o site montar os botões."""
+        return [dict(id=x["id"], nome=x["nome"],
+                     frase=x.get("frase", ""),
+                     descricao=" ".join((x.get("descricao") or "").split()),
+                     grupos=(x["grupos"] if x["grupos"] != "todos" else "todos"),
+                     padrao=bool(x.get("padrao"))) for x in self.itens]
+
+
 def compile_list(patterns) -> list[re.Pattern]:
     return [re.compile(p, re.IGNORECASE) for p in (patterns or [])]
 

@@ -1,0 +1,56 @@
+# Lentes do índice. Cada uma recorta o conjunto de órgãos sobre o qual a presença (A)
+# e a fragilidade (B) são calculadas, e vira um botão no site.
+#
+# POR QUE SEPARAR. A lente única de "núcleo de serviços" misturava duas naturezas
+# incomparáveis e produzia leitura falsa. São Paulo aparecia como o menor índice de
+# presença do país (4,49 servidores por 10 mil habitantes, contra mediana de 16,99) e
+# era classificado como deserto crítico. Decomposto, o quadro é outro:
+#
+#   serviços exclusivos ....  SP 1,67 por 10 mil — ACIMA da mediana nacional de 1,55
+#   educação federal .......  SP 2,82 por 10 mil — o menor do país, mediana 15,70
+#
+# Ou seja: o "deserto" paulista é inteiramente educação federal, e existe porque São
+# Paulo construiu a própria rede estadual de ensino superior (USP, Unicamp, Unesp) e
+# técnica (Centro Paula Souza). Onde a União é a única entrega possível, São Paulo
+# está bem servido. Somar as duas coisas responde "onde a União está menos presente"
+# fingindo responder "onde o serviço público pode faltar ao cidadão".
+#
+# `grupos` aceita a lista de ids de config/nucleo.yaml ou a palavra `todos`.
+# `frase` completa a frase-síntese do painel: "...N servidores federais {frase} por 10 mil...".
+# `padrao: true` marca a lente que abre o site (exatamente uma).
+lentes:
+  - id: exclusivos
+    frase: em serviços exclusivos da União
+    nome: Serviços exclusivos
+    padrao: true
+    grupos: [INSS, FAZ, IBGE]
+    descricao: >-
+      INSS, Receita Federal e IBGE — serviços que só a União entrega. Onde faltam, não
+      há rede estadual ou municipal que substitua: o cidadão fica sem a quem recorrer.
+
+  - id: educacao
+    frase: em universidades e institutos federais
+    nome: Educação federal
+    grupos: [UNIV, IF]
+    descricao: >-
+      Universidades federais e Institutos Federais. Estados e municípios também mantêm
+      redes de ensino, então a ausência federal pode estar substituída — e em São Paulo
+      está. Leia esta lente como investimento federal em educação no território, não
+      como falta de escola.
+
+  - id: nucleo
+    frase: do núcleo de serviços
+    nome: Núcleo de serviços
+    grupos: [INSS, FAZ, IBGE, UNIV, IF]
+    descricao: >-
+      As duas lentes anteriores somadas: tudo o que a população encontra fisicamente no
+      território. Útil para o retrato geral, desde que se olhe a composição antes de
+      concluir — é ela que revela se o número vem de serviço exclusivo ou de educação.
+
+  - id: total
+    frase: do Executivo Federal
+    nome: Executivo Federal
+    grupos: todos
+    descricao: >-
+      Todos os servidores civis ativos do Executivo Federal com cargo efetivo (SIAPE),
+      inclusive a administração central dos ministérios.

@@ -31,17 +31,40 @@ Legislativo, estatais, servidores estaduais e municipais.
 > O IDSP-F mede presença **federal**, não capacidade estatal total do território. Um estado
 > pode ter serviço público forte e presença federal fraca.
 
-### Duas lentes
+### Quatro lentes
 
-| Lente | Universo |
-|---|---|
-| **Núcleo de serviços** | INSS, Fazenda (Receita Federal), Institutos Federais (e CEFETs e Colégio Pedro II), universidades federais e IBGE |
-| **Executivo Federal total** | todos os órgãos do universo acima |
+| Lente | Universo | Por quê |
+|---|---|---|
+| **Serviços exclusivos** *(padrão)* | INSS, Fazenda/Receita, IBGE | só a União entrega; onde falta, o cidadão não tem a quem recorrer |
+| **Educação federal** | universidades federais, Institutos Federais | estados e municípios também entregam; a ausência federal pode estar substituída |
+| **Núcleo de serviços** | as duas anteriores somadas | retrato geral do que a população encontra no território |
+| **Executivo Federal** | todos os órgãos do universo | inclui a administração central dos ministérios |
 
-O núcleo reúne os serviços federais que a população encontra fisicamente no território:
-a agência do INSS, o campus do instituto federal, o hospital universitário, a unidade da
-Receita, a agência de coleta do IBGE. A classificação é por expressão regular sobre o nome
-do órgão de exercício e do órgão superior, em `config/nucleo.yaml`.
+As lentes são definidas em `config/lentes.yaml`, não no código: id, nome, grupos e qual
+delas abre o site. Acrescentar ou recortar uma lente é editar esse arquivo.
+
+> **Decisão registrada — por que as duas primeiras são separadas.** A primeira versão tinha
+> uma lente única de "núcleo de serviços", somando os cinco grupos. Nela, São Paulo era o
+> **menor índice de presença do país** — 4,49 servidores por 10 mil habitantes contra
+> mediana nacional de 16,99 — e caía na classe *deserto crítico*.
+>
+> Decomposto, o quadro se inverte:
+>
+> | | São Paulo | mediana nacional |
+> |---|---|---|
+> | serviços exclusivos | **1,67** por 10 mil | 1,55 |
+> | educação federal | **2,82** por 10 mil | 15,70 |
+>
+> O vazio paulista é inteiramente educação federal, e tem explicação conhecida: São Paulo
+> construiu a própria rede estadual de ensino superior — USP, Unicamp, Unesp — e a rede
+> técnica do Centro Paula Souza. A União nunca precisou fazer ali o que fez no Rio Grande
+> do Norte ou no Amapá. Nos serviços em que ela é a única entrega possível, São Paulo está
+> **acima** da mediana e é classificado como presença consolidada.
+>
+> Somar as duas naturezas responde "onde a União está menos presente" fingindo responder
+> "onde o serviço público pode faltar ao cidadão". São perguntas diferentes, e agora têm
+> lentes diferentes. A lente somada continua disponível, com a composição por grupo visível
+> no painel — é ela que revela de onde vem o número antes de qualquer conclusão.
 
 > **Decisão registrada — a Receita Federal não é separável.** A Receita não é um órgão
 > próprio no cadastro de servidores: seu pessoal aparece sob `MINISTERIO DA FAZENDA`, e as
@@ -154,10 +177,32 @@ Distrito Federal por conveniência.
 ## 5. Casamento entre as bases
 
 F1 e F2 não compartilham identificador de órgão. O casamento é feito **apenas por nome de
-órgão**, em três etapas: correspondência exata sobre os nomes normalizados (sem acento,
-maiúsculas, espaços colapsados); correspondência aproximada por `token_set_ratio` acima do
-limiar configurado (92 por padrão); e, por fim, os casamentos manuais declarados em
-`config/crosswalk_overrides.yaml`.
+órgão**, e o nome vem escrito de formas diferentes nas duas bases.
+
+O recurso de abono **trunca os nomes em 40 caracteres e abrevia**:
+`FUND. INST. BRASIL. GEOG. E ESTATISTICA`, `UNIVERSIDADE FED.DO TRIANGULO MINEIRO`. Contra
+o nome inteiro, o par correto do IBGE pontuava 74 — abaixo do limiar — enquanto um órgão
+**errado**, `INSTITUTO BRASILEIRO DE MUSEUS`, pontuava 87. Baixar o limiar teria criado
+casamentos falsos; manter o limiar deixava 22.927 servidores do núcleo de fora, o IBGE
+inteiro entre eles, aparecendo zerado nos 27 estados.
+
+A solução é **expandir as abreviações antes de comparar**. Cada token terminado em ponto é
+prefixo de uma palavra inteira; em vez de um dicionário de abreviações escrito à mão, a
+expansão procura no vocabulário do cadastro — que traz os nomes completos — a palavra mais
+frequente com aquele prefixo. `FUND.` vira `FUNDACAO`, `GEOG.` vira `GEOGRAFIA`. O par do
+IBGE sobe de 74 para 95 e o limiar continua alto.
+
+O casamento então tem quatro etapas: exata sobre os nomes normalizados; **aproximada com
+dois critérios**; e os casamentos manuais de `config/crosswalk_overrides.yaml`.
+
+> **Dois critérios, não um.** O `token_set_ratio` premia quando um nome é apenas
+> subconjunto do outro: `MINISTERIO DA CIENCIA, TECNOLOGIA, INOVACOES E COMUNICACOES`
+> casava com `MINISTERIO DAS COMUNICACOES` a 92, que são ministérios diferentes. O
+> `token_sort_ratio` pune a diferença de tamanho e derruba esse par para 64, sem afetar os
+> corretos, que ficam entre 90 e 97. Um casamento só é aceito se passar nos dois.
+
+Com a expansão e o segundo critério, a cobertura do núcleo vai a **100%** e nenhum órgão
+casa com grupo diferente do seu.
 
 A **cobertura** — parcela dos servidores ativos que está em órgãos com casamento — é
 calculada por lente e publicada. O pipeline recusa-se a gerar o índice se a cobertura na
