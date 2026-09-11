@@ -57,7 +57,7 @@ instrumentos:
       O órgão demandante formula e justifica o pedido; o Ministério da Gestão e
       da Inovação em Serviços Públicos, órgão central do SIPEC, autoriza os
       concursos e aprecia previamente as redistribuições.
-    conferido: false
+    conferido: true
 
   - id: atendimento-remoto
     titulo: Atendimento remoto e desconcentração
@@ -80,7 +80,7 @@ instrumentos:
       A direção de cada órgão define os serviços ofertados a distância e adere
       ao programa de gestão; mutirões e telemedicina pericial são ativados por
       ato do Ministério da Previdência Social e do INSS.
-    conferido: false
+    conferido: true
 
   - id: cooperacao-tecnica
     titulo: Acordo de cooperação técnica entre entes
@@ -102,7 +102,7 @@ instrumentos:
       Os signatários — o órgão federal titular do serviço e o estado ou
       município parceiro. No INSS, a celebração corre pelas gerências
       executivas e superintendências regionais.
-    conferido: false
+    conferido: true
 
   - id: banco-professor-equivalente
     titulo: Banco de professor-equivalente
@@ -125,4 +125,4 @@ instrumentos:
       O dirigente máximo de cada universidade ou instituto, dentro dos limites
       do banco; o Ministério da Educação acompanha os quantitativos e pode
       redistribuir entre instituições os cargos que ficarem sem uso.
-    conferido: false
+    conferido: true
