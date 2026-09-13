@@ -24,7 +24,7 @@
     <p class="ref" id="ref"></p>
   </div>
   <nav class="menu" aria-label="Seções">
-    <a href="#mapa">Mapa</a><a href="#matriz">Matriz</a><a href="#painel">Minha UF</a><a href="#metodologia">Método</a><a href="#fontes">Fontes</a>
+    <a href="#mapa">Mapa</a><a href="#matriz">Matriz</a><a href="#decada">Década</a><a href="#painel">Minha UF</a><a href="#metodologia">Método</a><a href="#fontes">Fontes</a>
   </nav>
 </header>
 
@@ -52,6 +52,13 @@
     <summary>Ver como tabela (27 UFs, ordenadas por gravidade)</summary>
     <div class="scroll"><table id="tabela"><thead><tr><th>#</th><th>UF</th><th>Classe</th><th>Servidores /10 mil hab.</th><th>Já elegíveis</th><th>Gravidade</th></tr></thead><tbody></tbody></table></div>
   </details>
+</section>
+
+<section id="decada" aria-labelledby="h-decada" hidden>
+  <h2 id="h-decada">Uma década</h2>
+  <p class="sub">Servidores civis ativos do Executivo Federal por 10 mil habitantes, em dezembro de cada ano. Esta curva usa o total de servidores e não depende da unidade da federação — por isso atravessa a década inteira.</p>
+  <div class="serie-box"><svg id="svg-serie" role="img" aria-label="Presença federal por habitante, de 2014 a 2025"></svg></div>
+  <p class="nota-serie" id="nota-serie"></p>
 </section>
 
 <section id="painel" aria-labelledby="h-painel">
@@ -121,6 +128,7 @@
   <ul class="downloads">
     <li><a href="data/idspf_uf.csv" download>idspf_uf.csv</a> — índice por UF nas quatro lentes</li>
     <li><a href="data/idspf_uf_grupo.csv" download>idspf_uf_grupo.csv</a> — por grupo (INSS, Fazenda/Receita, IFs, universidades, IBGE)</li>
+    <li><a href="data/serie_uf.csv" download>serie_uf.csv</a> — série histórica 2014–2025 por UF e lente</li>
     <li><a href="data/idspf_uf.json" download>idspf_uf.json</a> · <a href="data/idspf_uf_grupo.json" download>idspf_uf_grupo.json</a> · <a href="data/metadata.json" download>metadata.json</a></li>
   </ul>
   <h3>Como citar</h3>

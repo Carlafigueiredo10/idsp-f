@@ -20,6 +20,12 @@ orgaos_excluir:
 # cobre mais gente que o denominador, e a fragilidade fica superestimada.
 cobertura_uf_minima_org: 0.8
 
+# Série histórica: cobertura mínima de UF que um grupo precisa ter, no ano, para que a
+# série por UF daquela lente seja publicada naquele ano. A Fazenda/Receita tem 0% de
+# territorialização de 2014 a 2022 — a lente de serviços exclusivos simplesmente não
+# existe por UF antes de 2023, e publicar a curva daria a entender que existe.
+cobertura_minima_grupo_serie: 0.75
+
 # Crosswalk de nomes de órgão F1 x F2
 fuzzy_limiar: 92              # token_set_ratio mínimo para casamento automático
 # Segundo critério, obrigatório junto com o primeiro. O token_set_ratio premia quando

@@ -31,7 +31,7 @@ import numpy as np
 import pandas as pd
 import requests
 
-from common import (INTERIM, PROCESSED, RAW, SITE_DATA, Nucleo, Territorializador,
+from common import (INTERIM, PROCESSED, RAW, SITE_DATA, Lentes, Nucleo, Territorializador,
                     any_match, cabecalho_alinhado, compile_list, detectar_sep_encoding,
                     log, norm, parametros, write_json)
 
@@ -184,6 +184,12 @@ def main():
     # A série NACIONAL usa o total de ativos, com e sem UF, e por isso é imune à primeira.
     cob = {int(a): float(g[g.uf != ""].n_ativos.sum() / max(g.n_ativos.sum(), 1))
            for a, g in serie.groupby("ano")}
+    # cobertura por grupo e ano: é ela que diz se a curva de uma lente pode ser desenhada
+    cob_grupo: dict = {}
+    for (a, g), gg in serie.groupby(["ano", "grupo_nucleo"]):
+        if g:
+            cob_grupo.setdefault(int(a), {})[g] = float(
+                gg[gg.uf != ""].n_ativos.sum() / max(gg.n_ativos.sum(), 1))
     anos = sorted(cob)
     janelas, ini_j = [], anos[0]
     for a, b in zip(anos, anos[1:]):
@@ -205,26 +211,47 @@ def main():
                      cobertura_uf=round(cob[int(r.ano)], 3)) for r in nac.itertuples()]
 
     serie = serie[serie.uf != ""]
-    tot = serie.groupby(["ano", "uf"], as_index=False).n_ativos.sum()
-    tot["lente"] = "total"
-    nuc = serie[serie.grupo_nucleo != ""].groupby(["ano", "uf"], as_index=False).n_ativos.sum()
-    nuc["lente"] = "nucleo"
-    out = pd.concat([tot, nuc], ignore_index=True).merge(
+    # uma série por lente do config: o parcial guarda o grupo de cada contagem, então
+    # os quatro recortes saem do mesmo processamento, sem rebaixar arquivo nenhum
+    lentes = Lentes()
+    lim_grupo = float(p.get("cobertura_minima_grupo_serie", 0.75))
+    pedacos = []
+    for lente in lentes.ids:
+        g = lentes.grupos(lente)
+        sub = serie if g == "todos" else serie[serie.grupo_nucleo.isin(g)]
+        if sub.empty:
+            continue
+        agrupado = sub.groupby(["ano", "uf"], as_index=False).n_ativos.sum()
+        agrupado["lente"] = lente
+        # um ano só entra na curva da lente se TODOS os grupos dela estiverem
+        # territorializados naquele ano; senão a curva mediria o cadastro
+        if g != "todos":
+            ok = {a for a in anos if all(cob_grupo.get(a, {}).get(x, 0) >= lim_grupo for x in g)}
+        else:
+            ok = {a for a in anos if cob[a] >= lim_grupo}
+        agrupado["publicavel"] = agrupado.ano.isin(ok)
+        pedacos.append(agrupado)
+    out = pd.concat(pedacos, ignore_index=True).merge(
         pop[["ano", "uf", "populacao"]], on=["ano", "uf"], how="left")
     out["A_raw"] = (out.n_ativos / out.populacao * 10_000).round(2)
+    out.loc[~out.publicavel, "A_raw"] = pd.NA
     out["janela"] = out.ano.map(lambda a: next(f"{x}-{y}" for x, y in janelas if x <= a <= y))
     out = out.sort_values(["lente", "uf", "ano"])
     out.to_csv(PROCESSED / "serie_uf.csv", index=False, encoding="utf-8")
+    out.to_csv(SITE_DATA / "serie_uf.csv", index=False, encoding="utf-8")
 
     por_lente: dict = {}
     for lente, g in out.groupby("lente"):
         por_lente[lente] = {uf: [dict(ano=int(r.ano), n=int(r.n_ativos),
                                       a=None if pd.isna(r.A_raw) else float(r.A_raw),
-                                      janela=r.janela) for r in gg.itertuples()]
+                                      janela=r.janela) for r in gg.itertuples() if r.publicavel]
                             for uf, gg in g.groupby("uf")}
     meta = dict(
         anos=anos, mes_referencia=args.mes, versao_pipeline=p.get("versao_pipeline"),
         cobertura_uf_por_ano={str(a): round(c, 3) for a, c in cob.items()},
+        cobertura_por_grupo={str(a): {g: round(v, 3) for g, v in d.items()}
+                             for a, d in sorted(cob_grupo.items())},
+        cobertura_minima_grupo=lim_grupo,
         janelas_comparaveis=[f"{x}-{y}" for x, y in janelas],
         anos_sem_populacao=sem_pop,
         nota=("A série nacional usa o total de ativos e não depende da UF, então atravessa "
@@ -232,7 +259,11 @@ def main():
               "cobertura do campo de UF no cadastro salta de 63% em 2022 para 86% em 2023, "
               "e comparar as pontas mediria o preenchimento do campo, não a presença do "
               "Estado. O IBGE não estima população em 2022 e 2023, anos de Censo, então "
-              "esses anos têm contagem absoluta e não têm taxa por habitante."))
+              "esses anos têm contagem absoluta e não têm taxa por habitante. Cada lente só "
+              "tem curva nos anos em que todos os seus grupos estão territorializados: a "
+              "Fazenda/Receita tem 0% de UF até 2022, então serviços exclusivos e núcleo "
+              "não existem por UF antes de 2023. Educação federal, com 87% a 99% em toda a "
+              "série, atravessa a década inteira."))
     write_json(PROCESSED / "serie_uf.json", dict(meta=meta, nacional=nacional, series=por_lente))
     write_json(SITE_DATA / "serie_uf.json", dict(meta=meta, nacional=nacional, series=por_lente))
 
@@ -246,12 +277,12 @@ def main():
         if y - x < 2:
             continue
         # extremos da janela que têm taxa: 2022 e 2023 não têm população publicada
-        comtaxa = sorted(out.loc[(out.lente == "total") & out.A_raw.notna()
+        comtaxa = sorted(out.loc[(out.lente == lentes.padrao) & out.A_raw.notna()
                                  & out.ano.between(x, y), "ano"].unique())
         if len(comtaxa) < 2:
             continue
         x, y = comtaxa[0], comtaxa[-1]
-        g = out[(out.lente == "total") & (out.ano.isin([x, y]))]
+        g = out[(out.lente == lentes.padrao) & (out.ano.isin([x, y]))]
         a0 = g[g.ano == x].set_index("uf").A_raw
         a1 = g[g.ano == y].set_index("uf").A_raw
         var = ((a1 - a0) / a0 * 100).dropna().sort_values()

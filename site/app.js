@@ -64,9 +64,10 @@
       )
     );
     // camada opcional: se o arquivo não existir ou vier vazio, o painel segue igual
-    const inst = await fetch("data/instrumentos.json")
-      .then((r) => (r.ok ? r.json() : null)).catch(() => null);
-    Object.assign(st, { dados, grupos, meta, geo, inst });
+    const opcional = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const [inst, serie] = await Promise.all(
+      [opcional("data/instrumentos.json"), opcional("data/serie_uf.json")]);
+    Object.assign(st, { dados, grupos, meta, geo, inst, serie });
   }
 
   // Instrumentos que se aplicam à situação da UF na lente ativa. A correspondência é
@@ -214,6 +215,89 @@
     if (sel.value !== (st.uf || "")) sel.value = st.uf || "";
   }
 
+  // ---------------------------------------------------------------- década
+  // A curva nacional usa o total de servidores, com e sem UF, e por isso atravessa a
+  // década inteira: a cobertura do campo de UF saltou em 2023 e contaminaria qualquer
+  // série por estado que cruzasse esse ponto.
+  function renderSerie() {
+    const sec = $("#decada");
+    const nac = (st.serie && st.serie.nacional) || [];
+    const pts = nac.filter((r) => r.por10k != null);
+    sec.hidden = pts.length < 3;
+    if (sec.hidden) return;
+
+    const box = sec.querySelector(".serie-box");
+    const w = Math.max(280, box.clientWidth - 16);
+    const h = Math.round(Math.min(w * 0.62, 380));
+    const m = { t: 22, r: 16, b: 34, l: 44 };
+    const svg = d3.select("#svg-serie").attr("viewBox", `0 0 ${w} ${h}`).attr("width", w).attr("height", h);
+    svg.selectAll("*").remove();
+    const anos = nac.map((r) => r.ano);
+    const x = d3.scaleLinear().domain([d3.min(anos), d3.max(anos)]).range([m.l, w - m.r]);
+    const y = d3.scaleLinear().domain([0, d3.max(pts, (r) => r.por10k) * 1.12]).range([h - m.b, m.t]);
+
+    svg.append("g").attr("class", "eixo").attr("transform", `translate(0,${h - m.b})`)
+      .call(d3.axisBottom(x).tickFormat(d3.format("d")).ticks(w < 420 ? 4 : 7));
+    svg.append("g").attr("class", "eixo").attr("transform", `translate(${m.l},0)`)
+      .call(d3.axisLeft(y).ticks(5));
+
+    // anos sem estimativa de população viram lacuna, nunca linha interpolada
+    const linha = d3.line().defined((r) => r.por10k != null)
+      .x((r) => x(r.ano)).y((r) => y(r.por10k));
+    svg.append("path").datum(nac).attr("class", "linha").attr("d", linha);
+    svg.append("g").selectAll("circle").data(pts).join("circle")
+      .attr("class", "ponto").attr("r", 3.5).attr("cx", (r) => x(r.ano)).attr("cy", (r) => y(r.por10k));
+
+    const pri = pts[0], ult = pts[pts.length - 1];
+    for (const [r, dy, anc] of [[pri, -10, "start"], [ult, -10, "end"]]) {
+      svg.append("text").attr("class", "rotulo").attr("x", x(r.ano)).attr("y", y(r.por10k) + dy)
+        .attr("text-anchor", anc).text(fmtNum(r.por10k, 1));
+    }
+    const sem = (st.serie.meta.anos_sem_populacao || []);
+    if (sem.length) {
+      const cx = x((Math.min(...sem) + Math.max(...sem)) / 2);
+      svg.append("line").attr("class", "quebra").attr("x1", cx).attr("x2", cx)
+        .attr("y1", m.t).attr("y2", h - m.b);
+      svg.append("text").attr("class", "quebra-txt").attr("x", cx).attr("y", m.t - 8)
+        .attr("text-anchor", "middle").text("sem estimativa de população");
+    }
+    const q = ((ult.por10k / pri.por10k) - 1) * 100;
+    $("#nota-serie").innerHTML =
+      `De <strong>${fmtNum(pri.por10k, 2)}</strong> em ${pri.ano} para <strong>${fmtNum(ult.por10k, 2)}</strong> em ${ult.ano}: `
+      + `<strong>${fmtNum(q, 1)}%</strong>. ${st.serie.meta.nota || ""}`;
+  }
+
+  // Curva do estado na lente ativa. Só existem os anos em que todos os grupos da lente
+  // estavam territorializados — a Fazenda, por exemplo, só tem UF a partir de 2023.
+  function sparkUF(r) {
+    const s = st.serie && st.serie.series && st.serie.series[st.lente];
+    const pts = ((s && s[r.uf]) || []).filter((p) => p.a != null);
+    if (pts.length < 3) return "";
+    const w = 420, h = 90, m = { t: 12, r: 30, b: 18, l: 8 };
+    const svg = d3.create("svg").attr("viewBox", `0 0 ${w} ${h}`).attr("aria-hidden", "true");
+    const x = d3.scaleLinear().domain(d3.extent(pts, (p) => p.ano)).range([m.l, w - m.r]);
+    const y = d3.scaleLinear().domain([0, d3.max(pts, (p) => p.a) * 1.2]).range([h - m.b, m.t]);
+    // uma linha por janela de comparabilidade: nunca ligar pontos através da quebra
+    for (const [, g] of d3.group(pts, (p) => p.janela)) {
+      if (g.length > 1) {
+        svg.append("path").attr("class", "l")
+          .attr("d", d3.line().x((p) => x(p.ano)).y((p) => y(p.a))(g));
+      }
+    }
+    svg.append("g").selectAll("circle").data(pts).join("circle")
+      .attr("class", "p").attr("r", 2.6).attr("cx", (p) => x(p.ano)).attr("cy", (p) => y(p.a));
+    const a = pts[0], b = pts[pts.length - 1];
+    svg.append("text").attr("class", "t").attr("x", x(a.ano)).attr("y", h - 5).text(a.ano);
+    svg.append("text").attr("class", "t").attr("x", x(b.ano)).attr("y", h - 5).attr("text-anchor", "end").text(b.ano);
+    svg.append("text").attr("class", "t").attr("x", x(b.ano) + 4).attr("y", y(b.a) + 4).text(fmtNum(b.a, 1));
+    const var_ = ((b.a / a.a) - 1) * 100;
+    const janelas = new Set(pts.map((p) => p.janela)).size;
+    return `<div class="spark"><h4>${a.ano} a ${b.ano}, nesta lente</h4>${svg.node().outerHTML}
+      <p class="nota">De ${fmtNum(a.a, 2)} para ${fmtNum(b.a, 2)} por 10 mil habitantes (${fmtNum(var_, 1)}%).
+      ${janelas > 1 ? "A linha é interrompida onde a cobertura do cadastro muda: os trechos não são comparáveis entre si." : ""}
+      ${pts.length < 6 ? "Nesta lente a série começa em " + a.ano + ", quando os órgãos que a compõem passaram a ser territorializados." : ""}</p></div>`;
+  }
+
   // ---------------------------------------------------------------- matriz
   function renderMatriz() {
     const box = $(".matriz-box");
@@ -315,6 +399,7 @@
         <div class="kpi"><div class="v">${fmtInt(isNaN(+r.n_ativos) ? r.n_ativos : +r.n_ativos)}</div><div class="l">servidores ativos</div><div class="p">população ${fmtInt(r.populacao)}</div></div>
       </div>
       ${barras}
+      ${sparkUF(r)}
       ${(() => {
         const ins = instrumentosDe(r);
         if (!ins.length) return "";
@@ -387,13 +472,14 @@
     });
     window.addEventListener("hashchange", () => { lerHash(); renderTudo(); });
     let t;
-    window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { renderMapa(); renderMatriz(); }, 150); });
+    window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { renderMapa(); renderSerie(); renderMatriz(); }, 150); });
   }
 
   function renderTudo() {
     renderCabecalho();
     renderLegenda();
     renderMapa();
+    renderSerie();
     renderMatriz();
     renderTabela();
     renderSelect();
